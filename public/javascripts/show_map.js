@@ -6,8 +6,10 @@
 			console.log(google.maps.Map)
 			var map = new google.maps.Map(map2[0], {
 					zoom: 3,
+					minZoom: 3,
+					maxZoom:9,
 					mapTypeId: google.maps.MapTypeId.ROADMAP,
-					center: new google.maps.LatLng(50, -97), // Mozambique
+					center: new google.maps.LatLng(50, -110), // Mozambique
 					styles:[{"stylers": [{"saturation": -25},{"lightness": 25}]}]					
 				});
 
@@ -23,6 +25,9 @@
 
 				overlay.draw = function () {
 					var overlayProjection = this.getProjection();
+						var div = d3.select("body").append("div")   
+    .attr("class", "tooltip")               
+    .style("opacity", 0);
 
 					// Turn the overlay projection into a d3 projection
 					var googleMapProjection = function (coordinates) {
@@ -37,14 +42,30 @@
 						.attr("d", path) // update existing paths
 					.enter().append("svg:path")
 						.attr("d", path).style("fill", "yellow")
-						.on("mouseover", function(d) {
+						.on("mouseover", function(d) {  
+													this.style.stroke = "#FFF"
+							this.style.strokeWidth = "3px"   
+            div.transition()        
+                .duration(200)      
+                .style("opacity", .9);      
+            div .html(d.properties.name)  
+                .style("left", (d3.event.pageX) + "px")     
+                .style("top", (d3.event.pageY - 28) + "px");    
+            })                  
+        	.on("mouseout", function(d) {       
+        									this.style.stroke = "#00F"
+            div.transition()        
+                .duration(500)      
+                .style("opacity", 0);   
+        });
+						/*.on("mouseover", function(d) {
 							console.log(d.properties.name)
 							this.style.stroke = "#FFF"
 							this.style.strokeWidth = "3px"
       					})
       					.on("mouseout",  function(d) {
 							this.style.stroke = "#00F"
-      					});
+      					});*/
 				};
 
 			};
