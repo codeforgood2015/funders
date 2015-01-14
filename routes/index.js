@@ -10,8 +10,10 @@ router.get('/map2', function(req, res){
   res.render('map2', {title: 'Map'});
 })
 
-router.get('/tests', function(req, res){
-	res.render('tests');
-})
+/* GET input form page. */
+router.get('/form1', function(req, res) {
+  res.render('form1', { title: 'Form' });
+});
+
 
 module.exports = router;
