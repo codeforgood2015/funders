@@ -87,7 +87,7 @@ router.get('/:id', function(req, res){
 			res.send(500).json({error: 'Could not find / populated all data', success: false});
 		}
 		else{
-			organization = docs.map(formatOrg);
+			organization = docs.map(formatOrg, false);
 			res.json({success: true}, message: organization);
 		}
 	});
