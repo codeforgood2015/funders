@@ -2,10 +2,10 @@
 var mongoose = require('mongoose');
 
 var schema = mongoose.Schema({
-	user: {type: String, required: true},
+    user: {type: String, required: true},
     year: {type: Number, required: true},
-	organization_name: {type: String, required: true},
-	state: {type: String, required: true} , 
+    organization_name: {type: String, required: true},
+    state: {type: String, required: true} , 
     funder_type: {type: String, required: true}, 
     asset_size: Number,
     annual_giving: {type: Number, required: true}, 
@@ -44,9 +44,7 @@ var checkLength = function(s) {
 };
 
 //TO DO: complete all the checks here!!!! :D
-Organization.schema.path('organization').validate(checkLength, "Organization name cannot be empty");
-Organization.schema.path('about').validate(checkLength, "About cannot be empty");
+/*Organization.schema.path('organization').validate(checkLength, "Organization name cannot be empty");
+Organization.schema.path('about').validate(checkLength, "About cannot be empty");*/
 
 module.exports = Organization;
-
-

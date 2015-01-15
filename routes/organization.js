@@ -4,21 +4,21 @@
 
 var express = require('express');
 var router = express.Router();
-var Organization = require('./../model/organization');
+var Organization = require('../model/organization');
 var Funding_Area = require('../model/funding_area');
 var Supported_Strategies = require('../model/supported_strategies');
 
 //Format funding area or supported strategies
-var formatFundings = function(fundings){
+/*var formatFundings = function(fundings){
 	_id: fundings._id, 
 	area: fundings.area, 
 	amount: fundings.amount, 
 	organization: fundings.organization
-}
+}*/
 
 
 //Format organization
-var formatOrg = function(organization, haveFormattedFundings, fundingArea, supportedStrategies){
+/*var formatOrg = function(organization, haveFormattedFundings, fundingArea, supportedStrategies){
 	if (haveFormattedFundings){
 		return{
 			_id: organization._id, 
@@ -49,7 +49,7 @@ var formatOrg = function(organization, haveFormattedFundings, fundingArea, suppo
 	        funding_areas: organization.funding_areas, 
 	        supported_strategies: organization.supported_strategies
 	}
-}
+}*/
 
 /*
 	GET '/organization'
@@ -61,7 +61,7 @@ var formatOrg = function(organization, haveFormattedFundings, fundingArea, suppo
 		- error: on failure, an error message
 */
 router.get('/', function(req, res){
-	Organization.find({}).sort({name: 1}).populate(['funding_area', 'supported_strategies']).exec(function(err, docs){
+	/*Organization.find({}).sort({name: 1}).populate(['funding_area', 'supported_strategies']).exec(function(err, docs){
 		if (err){
 			res.send(500).json({error: 'Could not find / populated all data', success: false});
 		}
@@ -69,7 +69,8 @@ router.get('/', function(req, res){
 			organizations = docs.map(formatOrg, false);
 			res.json({success: true}, message: organizations);
 		}
-	});
+	});*/
+	console.log("hello");
 }); 
 
 /*
@@ -81,7 +82,7 @@ router.get('/', function(req, res){
 		- message: on succes, contains one organization object
 		- error: on failure, an error message
 */
-router.get('/:id', function(req, res){
+/*router.get('/:id', function(req, res){
 	Organization.findOne({_id: req.params.id}).populate(['funding_area', 'supported_strategies']).exec(function(err, docs){
 		if (err){
 			res.send(500).json({error: 'Could not find / populated all data', success: false});
@@ -91,7 +92,7 @@ router.get('/:id', function(req, res){
 			res.json({success: true}, message: organization);
 		}
 	});
-}); 
+}); */
 
 /*
 	POST '/organization'
@@ -101,10 +102,42 @@ router.get('/:id', function(req, res){
 		-error: on failure, an error message 
 */
 router.post('/', function(req, res){
-	Organization.find({organization_name: req.body.SOMETHING??, year: req.body.SOMETHING??}, function(err, organization){
-		//TODO!!! :) 
-	})
-})
+
+    console.log("hi");
+    // get parameters from form
+    var user = req.body.user;
+    var year = req.body.year;
+    var organization = req.body.organization;
+    /*var location = req.body.location || "";
+    var funder_type = req.body.funder_type;
+    var asset_size = req.body.asset_size;
+    var annual_giving = req.body.annual_giving;
+    var annual_giving_vulnerable = req.body.annual_giving_vulnerable_population;
+    var annual_giving_homelessness = req.body.annual_giving_homelessness;
+    var state = req.body.state;
+    var funding_areas = req.body.funding_areas; // array
+    var supported_strategies = req.body.supported_strategies; // array*/
+
+    console.log(user);
+    console.log(year);
+    /*var user = req.session.user;
+    if (user == undefined){
+      utils.sendErrResponse(res, 403, 'Error: You must be logged in to use this feature');
+      return;
+    }
+
+    var listing = new schemas.Listing({"title": title, "description": description, "image": image, "category": category, "seller": user});
+    listing.save(function(err){
+      if (err){
+        utils.sendErrResponse(res, 500, 'Error: could not add listing');
+      }
+      else {
+        utils.sendSuccessResponse(res, listing);
+      }
+    });*/
+});
+
+module.exports = router;
 
 
 

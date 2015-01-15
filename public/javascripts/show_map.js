@@ -1,5 +1,6 @@
 
  $(document).ready(function(){
+ 	console.log('{“user”: “Bill”, “year”: 1999,"organization" : "Bill and Melinda Foundation","location" : "Washington","funder_type" : "family","asset_size" : "11318466","annual_giving" : "542650",“annual_giving_vulnerable_population”: 123456,“annual_giving_homelessness”: 123456,“state” : “Massachusetts”,"funding_areas" : [{"fund_area" : "Chronic homelessness", "percentage" : "50"},{"fund_area" : "Domestic Violence", "percentage" : "50}],"supported_strategies" : [{"strategy" : "Affordable Housing", "percentage": ""},{"strategy" : "Emergency Shelter", "percentage": "25"},{"strategy" : "Funding Advocacy", "percentage" : ""}]}');
   d3.json("/files/us-named.json", function (data) {
     topo = topojson.feature(data, data.objects.states);
 			var map2=$("#container");
