@@ -1,4 +1,4 @@
-//Schema for funding areas
+//Schema for populations
 
 var mongoose = require('mongoose');
 
@@ -9,7 +9,7 @@ var schema = mongoose.Schema({
 });
 
 schema.statics.create = function(area, amount, organization, callback) {
-    var newFundingArea = new Funding_Area({
+    var newPopulation = new Population({
         area: area,
         amount: amount,
         organization: organization
@@ -18,7 +18,7 @@ schema.statics.create = function(area, amount, organization, callback) {
     newFundingArea.save(callback);
 }
 
-var Funding_Area = mongoose.model('Funding_Area', schema);
+var Population = mongoose.model('Population', schema);
 
 var checkLength = function(s) {
     if (s){
@@ -28,7 +28,7 @@ var checkLength = function(s) {
     }
 };
 
-Funding_Area.schema.path('area').validate(checkLength, "Funding Area cannot be empty");
-Funding_Area.schema.path('amount').validate(checkLength, "Amount cannot be empty");
+Population.schema.path('area').validate(checkLength, "Funding Area cannot be empty");
+Population.schema.path('amount').validate(checkLength, "Amount cannot be empty");
 
-module.exports = Funding_Area;
+module.exports = Population;

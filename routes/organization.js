@@ -5,22 +5,22 @@
 var express = require('express');
 var router = express.Router();
 var Organization = require('../model/organization');
-var Funding_Area = require('../model/funding_area');
+var Population = require('../model/populations');
 var Supported_Strategies = require('../model/supported_strategies');
 
-//Format funding area or supported strategies
+//Format populations or supported strategies
 var formatFundings = function(fundings){
-	return{
-	_id: fundings._id, 
-	area: fundings.area, 
-	amount: fundings.amount, 
-	organization: fundings.organization
+
+	return {
+		_id: fundings._id, 
+		area: fundings.area, 
+		amount: fundings.amount, 
+		organization: fundings.organization
 	}
 }
 
-
 //Format organization
-var formatOrg = function(organization, haveFormattedFundings, fundingArea, supportedStrategies){
+var formatOrg = function(organization, haveFormattedFundings, populations, supportedStrategies){
 	if (haveFormattedFundings){
 		return{
 			_id: organization._id, 
@@ -33,7 +33,7 @@ var formatOrg = function(organization, haveFormattedFundings, fundingArea, suppo
 	        annual_giving: organization.annual_giving, 
 	        annual_giving_homelessness: organization.annual_giving_homelessness, 
 	        annual_giving_vulnerable_population: organization.annual_giving_vulnerable_population,
-	        funding_areas: fundingArea, 
+	        populations: populations, 
 	        supported_strategies: supportedStrategies
 		}
 	}
@@ -49,7 +49,7 @@ var formatOrg = function(organization, haveFormattedFundings, fundingArea, suppo
 	        annual_giving: organization.annual_giving, 
 	        annual_giving_homelessness: organization.annual_giving_homelessness, 
 	        annual_giving_vulnerable_population: organization.annual_giving_vulnerable_population,
-	        funding_areas: organization.funding_areas, 
+	        populations: organization.populations, 
 	        supported_strategies: organization.supported_strategies
 	    }
 	}
@@ -65,7 +65,7 @@ var formatOrg = function(organization, haveFormattedFundings, fundingArea, suppo
 		- error: on failure, an error message
 */
 router.get('/', function(req, res){
-	Organization.find({}).sort({name: 1}).populate(['funding_area', 'supported_strategies']).exec(function(err, docs){
+	Organization.find({}).sort({name: 1}).populate(['populations', 'supported_strategies']).exec(function(err, docs){
 		if (err){
 			res.send(500).json({error: 'Could not find / populated all data', success: false});
 		}
@@ -86,7 +86,7 @@ router.get('/', function(req, res){
 		- error: on failure, an error message
 */
 router.get('/:id', function(req, res){
-	Organization.findOne({_id: req.params.id}).populate(['funding_area', 'supported_strategies']).exec(function(err, docs){
+	Organization.findOne({_id: req.params.id}).populate(['populations', 'supported_strategies']).exec(function(err, docs){
 		if (err){
 			res.send(500).json({error: 'Could not find / populated all data', success: false});
 		}
