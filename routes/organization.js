@@ -25,7 +25,7 @@ var formatOrg = function(organization, haveFormattedFundings, populations, suppo
 		return{
 			_id: organization._id, 
 			organization_name: organization.organization_name,
-	        user: organization.user, 
+	        user: organization.user,
 	        year: organization.year, 
 	        state: organization.state, 
 	        funder_type: organization.funder_type, 
