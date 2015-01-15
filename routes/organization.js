@@ -10,15 +10,17 @@ var Supported_Strategies = require('../model/supported_strategies');
 
 //Format funding area or supported strategies
 var formatFundings = function(fundings){
+	return{
 	_id: fundings._id, 
 	area: fundings.area, 
 	amount: fundings.amount, 
 	organization: fundings.organization
+	}
 }
 
 
 //Format organization
-/*var formatOrg = function(organization, haveFormattedFundings, fundingArea, supportedStrategies){
+var formatOrg = function(organization, haveFormattedFundings, fundingArea, supportedStrategies){
 	if (haveFormattedFundings){
 		return{
 			_id: organization._id, 
@@ -36,6 +38,7 @@ var formatFundings = function(fundings){
 		}
 	}
 	else{
+		return {
 		_id: organization._id, 
 			organization_name: organization.organization_name,
 	        user: organization.user, 
@@ -48,8 +51,9 @@ var formatFundings = function(fundings){
 	        annual_giving_vulnerable_population: organization.annual_giving_vulnerable_population,
 	        funding_areas: organization.funding_areas, 
 	        supported_strategies: organization.supported_strategies
+	    }
 	}
-}*/
+}
 
 /*
 	GET '/organization'
@@ -61,16 +65,15 @@ var formatFundings = function(fundings){
 		- error: on failure, an error message
 */
 router.get('/', function(req, res){
-	/*Organization.find({}).sort({name: 1}).populate(['funding_area', 'supported_strategies']).exec(function(err, docs){
+	Organization.find({}).sort({name: 1}).populate(['funding_area', 'supported_strategies']).exec(function(err, docs){
 		if (err){
 			res.send(500).json({error: 'Could not find / populated all data', success: false});
 		}
 		else{
 			organizations = docs.map(formatOrg, false);
-			res.json({success: true}, message: organizations);
+			res.json({success: true, message: organizations});
 		}
-	});*/
-	console.log("hello");
+	});
 }); 
 
 /*
@@ -82,17 +85,17 @@ router.get('/', function(req, res){
 		- message: on succes, contains one organization object
 		- error: on failure, an error message
 */
-/*router.get('/:id', function(req, res){
+router.get('/:id', function(req, res){
 	Organization.findOne({_id: req.params.id}).populate(['funding_area', 'supported_strategies']).exec(function(err, docs){
 		if (err){
 			res.send(500).json({error: 'Could not find / populated all data', success: false});
 		}
 		else{
 			organization = docs.map(formatOrg, false);
-			res.json({success: true}, message: organization);
+			res.json({success: true, message: organization});
 		}
 	});
-}); */
+}); 
 
 /*
 	POST '/organization'
