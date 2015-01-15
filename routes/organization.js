@@ -10,12 +10,13 @@ var Supported_Strategies = require('../model/supported_strategies');
 
 //Format funding area or supported strategies
 var formatFundings = function(fundings){
-	_id: fundings._id, 
-	area: fundings.area, 
-	amount: fundings.amount, 
-	organization: fundings.organization
+	return {
+		_id: fundings._id, 
+		area: fundings.area, 
+		amount: fundings.amount, 
+		organization: fundings.organization
+	}
 }
-
 
 //Format organization
 /*var formatOrg = function(organization, haveFormattedFundings, fundingArea, supportedStrategies){
@@ -67,7 +68,7 @@ router.get('/', function(req, res){
 		}
 		else{
 			organizations = docs.map(formatOrg, false);
-			res.json({success: true}, message: organizations);
+			res.json({success: true, message: organizations});
 		}
 	});*/
 	console.log("hello");
@@ -89,7 +90,7 @@ router.get('/', function(req, res){
 		}
 		else{
 			organization = docs.map(formatOrg, false);
-			res.json({success: true}, message: organization);
+			res.json({success: true, message: organization});
 		}
 	});
 }); */
