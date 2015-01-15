@@ -9,12 +9,12 @@ var Funding_Area = require('../model/funding_area');
 var Supported_Strategies = require('../model/supported_strategies');
 
 //Format funding area or supported strategies
-/*var formatFundings = function(fundings){
+var formatFundings = function(fundings){
 	_id: fundings._id, 
 	area: fundings.area, 
 	amount: fundings.amount, 
 	organization: fundings.organization
-}*/
+}
 
 
 //Format organization
