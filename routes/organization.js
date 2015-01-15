@@ -111,7 +111,7 @@ router.post('/', function(req, res){
     var user = req.body.user;
     var year = req.body.year;
     var organization = req.body.organization;
-    /*var location = req.body.location || "";
+    var location = req.body.location || "";
     var funder_type = req.body.funder_type;
     var asset_size = req.body.asset_size;
     var annual_giving = req.body.annual_giving;
@@ -121,8 +121,11 @@ router.post('/', function(req, res){
     var populations = req.body.populations; // array
     var supported_strategies = req.body.supported_strategies; // array*/
 
-    console.log(user);
-    console.log(year);
+    console.log(populations);
+    populations.forEach(function(population){
+    	console.log(population.fund_area);
+    	console.log(population.percentage);
+    })
     /*var user = req.session.user;
     if (user == undefined){
       utils.sendErrResponse(res, 403, 'Error: You must be logged in to use this feature');
