@@ -33,8 +33,8 @@ var formatOrg = function(organization, haveFormattedFundings, fundingArea, suppo
 	        annual_giving: organization.annual_giving, 
 	        annual_giving_homelessness: organization.annual_giving_homelessness, 
 	        annual_giving_vulnerable_population: organization.annual_giving_vulnerable_population,
-	        funding_areas: organization.funding_areas, 
-	        supported_strategies: organization.supported_strategies
+	        funding_areas: fundingArea, 
+	        supported_strategies: supportedStrategies
 		}
 	}
 	else{
@@ -111,18 +111,21 @@ router.post('/', function(req, res){
     var user = req.body.user;
     var year = req.body.year;
     var organization = req.body.organization;
-    /*var location = req.body.location || "";
+    var location = req.body.location || "";
     var funder_type = req.body.funder_type;
     var asset_size = req.body.asset_size;
     var annual_giving = req.body.annual_giving;
     var annual_giving_vulnerable = req.body.annual_giving_vulnerable_population;
     var annual_giving_homelessness = req.body.annual_giving_homelessness;
     var state = req.body.state;
-    var funding_areas = req.body.funding_areas; // array
+    var populations = req.body.populations; // array
     var supported_strategies = req.body.supported_strategies; // array*/
 
-    console.log(user);
-    console.log(year);
+    console.log(populations);
+    populations.forEach(function(population){
+    	console.log(population.fund_area);
+    	console.log(population.percentage);
+    })
     /*var user = req.session.user;
     if (user == undefined){
       utils.sendErrResponse(res, 403, 'Error: You must be logged in to use this feature');
