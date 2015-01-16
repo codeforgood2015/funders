@@ -9,6 +9,13 @@ var utils = require('../utils.js');
 router.get('/', function(req, res){
 	if (req.query.q){
 		console.log(req.query.q);
+		Population.find({area: req.query.q}).populate(['organization']).exec(function(err, docs){
+			orgs_list = []
+			docs.forEach(function(doc){
+				orgs_list.push(doc.organization);
+			})
+			utils.sendSuccessResponse(res, orgs_list);
+		})
 	}
 	else {
 		utils.sendSuccessResponse(res);
