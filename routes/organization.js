@@ -104,11 +104,7 @@ router.get('/', function(req, res){
 		if (req.query.funders_member){
 			queryString.push({isFundersMember: req.query.fundesr_member});
 		}
-<<<<<<< HEAD
-=======
-		console.log(queryString);
 
->>>>>>> 4cd4a09c0712c091a3db3498424371625dd8f093
 		Organization.find({$and: queryString}).sort({name: 1}).exec(function(err, docs){
 			if (err){
 				console.log(err)
