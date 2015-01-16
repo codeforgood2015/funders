@@ -28,7 +28,7 @@ var checkLength = function(s) {
     }
 };
 
-Population.schema.path('area').validate(checkLength, "Funding Area cannot be empty");
-Population.schema.path('amount').validate(checkLength, "Amount cannot be empty");
+//Population.schema.path('area').validate(checkLength, "Funding Area cannot be empty");
+//Population.schema.path('amount').validate(checkLength, "Amount cannot be empty");
 
 module.exports = Population;
