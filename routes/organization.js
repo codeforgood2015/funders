@@ -80,39 +80,43 @@ router.get('/', function(req, res){
 			queryString.push({year: parseInt(req.query.year)});
 		}
 		if (req.query.funder_type){
+			console.log(req.query.state);
 			queryString.push({funder_type: req.query.funder_type})
 		}
 		if (req.query.populations){
 			var query = req.query.populations;
 			var populations = query.split(",");
-			console.log(populations);
+			populations.forEach(function(pop){
+				queryString.push({"populations.area": pop})
+			})
 		}
 		if (req.query.supported_strategies){
 			var query = req.query.supported_strategies;
 			var strategies = query.split(",");
-			console.log(strategies);
+			strategies.forEach(function(str){
+				queryString.push({"supported_strategies.area": str})
+			})
 		}
 		if (req.query.national){
-			console.log(req.query.state);
+			// req.query.national must be true or false
+			queryString.push({isNational: req.query.national});
 		}
 		if (req.query.funders_member){
-			console.log(req.query.state);
+			queryString.push({isFundersMember: req.query.fundesr_member});
 		}
 		console.log(queryString);
-	Organization.find({year: 1999, year: 2001}).sort({name: 1}).exec(function(err, docs){
-		//Organization.find(queryString.substring(0, queryString.length - 1)).sort({name: 1}).exec(function(err, docs){
+
+		Organization.find({$and: queryString}).sort({name: 1}).exec(function(err, docs){
 			if (err){
 				console.log(err)
 				utils.sendErrResponse(res, 500, 'Could not find data');
-			//res.send(500).json({error: 'Could not find / populated all data', success: false});
 			}
 			else{
 				organizations = docs.map(formatOrg);
 				console.log(organizations);
 				utils.sendSuccessResponse(res, {message: organizations});
-				//res.json({success: true, message: organizations});
 			}	
-	})
+		})
 	}
 	else{
 		Organization.find({}).sort({name: 1}).exec(function(err, docs){
@@ -148,47 +152,9 @@ router.get('/', function(req, res){
 
 router.get('/testing', function(req, res){
 	console.log(req.query.q);
-	var k = req.query.q.split(' ');
-	console.log('k');
-	console.log(k);
+	console.log(req.query.length);
 })
 
-// /*
-// 	GET '/organization/:id'
-// 	-> returns the organization with the corresponding id
-// 	No request parameters
-// 	Response: 
-// 		- success: true if server succeeded in getting that organization
-// 		- message: on succes, contains one organization object
-// 		- error: on failure, an error message
-// */
-// router.get('/:id', function(req, res){
-// 	Organization.findOne({_id: req.params.id}).exec(function(err, docs){
-// 		if (err){
-// 			res.send(500).json({error: 'Could not find data', success: false});
-// 		}
-// 		else{
-// 			organization = docs.map(formatOrg);
-// 			res.json({success: true, message: organization});
-// 		}
-// 	});
-// }); 
-
-// /*
-// 	GET '/organization/state/:state'
-//  	filter by state
-// */
-// router.get('/state/:state', function(req, res){
-// 	Organization.findOne({state: req.params.state}).exec(function(err, docs){
-// 		if (err){
-// 			res.send(500).json({error: 'Could not find data', success: false});
-// 		}
-// 		else{
-// 			organization = docs.map(formatOrg);
-// 			res.json({success: true, message: organization});
-// 		}
-// 	});
-// }); 
 
 
 
