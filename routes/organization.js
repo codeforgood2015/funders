@@ -21,26 +21,27 @@ var formatFundings = function(fundings){
 }
 
 //Format organization
-var formatOrg = function(organization, haveFormattedFundings, populations, supportedStrategies){
-	if (haveFormattedFundings){
-		return{
-			_id: organization._id, 
-			organization_name: organization.organization_name,
-	        user: organization.user,
-	        year: organization.year, 
-	        state: organization.state, 
-	        funder_type: organization.funder_type, 
-	        asset_size: organization.asset_size, 
-	        annual_grantmaking: organization.annual_grantmaking, 
-	        annual_grantmaking_homelessness: organization.annual_grantmaking_homelessness, 
-	        annual_grantmaking_vulnerable_population: organization.annual_grantmaking_vulnerable_population,
-	        populations: populations, 
-	        supported_strategies: supportedStrategies, 
-	        isNational: organization.isNational, 
-	        isFundersMember: organization.isFundersMember
-		}
-	}
-	else{
+// var formatOrg = function(organization, haveFormattedFundings, populations, supportedStrategies){
+var formatOrg = function(organization){
+	// if (haveFormattedFundings){
+	// 	return{
+	// 		_id: organization._id, 
+	// 		organization_name: organization.organization_name,
+	//         user: organization.user,
+	//         year: organization.year, 
+	//         state: organization.state, 
+	//         funder_type: organization.funder_type, 
+	//         asset_size: organization.asset_size, 
+	//         annual_grantmaking: organization.annual_grantmaking, 
+	//         annual_grantmaking_homelessness: organization.annual_grantmaking_homelessness, 
+	//         annual_grantmaking_vulnerable_population: organization.annual_grantmaking_vulnerable_population,
+	//         populations: populations, 
+	//         supported_strategies: supportedStrategies, 
+	//         isNational: organization.isNational, 
+	//         isFundersMember: organization.isFundersMember
+	// 	}
+	// }
+	// else{
 		return {
 		_id: organization._id, 
 			organization_name: organization.organization_name,
@@ -57,7 +58,7 @@ var formatOrg = function(organization, haveFormattedFundings, populations, suppo
 	       	isNational: organization.isNational, 
 	        isFundersMember: organization.isFundersMember
 	    }
-	}
+	// }
 }
 
 /*
@@ -70,14 +71,14 @@ var formatOrg = function(organization, haveFormattedFundings, populations, suppo
 		- error: on failure, an error message
 */
 router.get('/', function(req, res){
-	Organization.find({}).sort({name: 1}).populate(['populations', 'supported_strategies']).exec(function(err, docs){
+	Organization.find({}).sort({name: 1}).exec(function(err, docs){
 		if (err){
 			console.log(err)
-			utils.sendErrResponse(res, 500, 'Could not find / populated all data');
+			utils.sendErrResponse(res, 500, 'Could not find data');
 			//res.send(500).json({error: 'Could not find / populated all data', success: false});
 		}
 		else{
-			organizations = docs.map(formatOrg, false);
+			organizations = docs.map(formatOrg);
 			console.log(organizations);
 			utils.sendSuccessResponse(res, {message: organizations});
 			//res.json({success: true, message: organizations});
@@ -95,16 +96,33 @@ router.get('/', function(req, res){
 		- error: on failure, an error message
 */
 router.get('/:id', function(req, res){
-	Organization.findOne({_id: req.params.id}).populate(['populations', 'supported_strategies']).exec(function(err, docs){
+	Organization.findOne({_id: req.params.id}).exec(function(err, docs){
 		if (err){
-			res.send(500).json({error: 'Could not find / populated all data', success: false});
+			res.send(500).json({error: 'Could not find data', success: false});
 		}
 		else{
-			organization = docs.map(formatOrg, false);
+			organization = docs.map(formatOrg);
 			res.json({success: true, message: organization});
 		}
 	});
 }); 
+
+/*
+	GET '/organization/state/:state'
+ 	filter by state
+*/
+router.get('/state/:state', function(req, res){
+	Organization.findOne({state: req.params.state}).exec(function(err, docs){
+		if (err){
+			res.send(500).json({error: 'Could not find data', success: false});
+		}
+		else{
+			organization = docs.map(formatOrg);
+			res.json({success: true, message: organization});
+		}
+	});
+}); 
+
 
 /*
 	POST '/organization'
