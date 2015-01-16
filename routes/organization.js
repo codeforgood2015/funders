@@ -71,7 +71,7 @@ var formatOrg = function(organization){
 		- error: on failure, an error message
 */
 router.get('/', function(req, res){
-	if (req.query){
+	if (Object.keys(req.query).length !== 0){
 		var queryString = [];
 		if (req.query.state){
 			queryString.push({state: req.query.state});
@@ -104,10 +104,7 @@ router.get('/', function(req, res){
 		if (req.query.funders_member){
 			queryString.push({isFundersMember: req.query.fundesr_member});
 		}
-		console.log(queryString);
-	Organization.find({$and: queryString}).sort({name: 1}).exec(function(err, docs){
-		//Organization.find({$and: [{"populations.area":"Chronic homelessness"}, {"populations.area": "Domestic violence"}]}).sort({name: 1}).exec(function(err, docs){
-		//Organization.find(queryString.substring(0, queryString.length - 1)).sort({name: 1}).exec(function(err, docs){
+		Organization.find({$and: queryString}).sort({name: 1}).exec(function(err, docs){
 			if (err){
 				console.log(err)
 				utils.sendErrResponse(res, 500, 'Could not find data');
@@ -136,19 +133,6 @@ router.get('/', function(req, res){
 			}	
 	})
 	}
-	/*Organization.find({}).sort({name: 1}).exec(function(err, docs){
-		if (err){
-			console.log(err)
-			utils.sendErrResponse(res, 500, 'Could not find data');
-			//res.send(500).json({error: 'Could not find / populated all data', success: false});
-		}
-		else{
-			organizations = docs.map(formatOrg);
-			console.log(organizations);
-			utils.sendSuccessResponse(res, {message: organizations});
-			//res.json({success: true, message: organizations});
-		}
-	});*/
 }); 
 
 
