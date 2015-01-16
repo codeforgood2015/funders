@@ -104,19 +104,22 @@ router.get('/', function(req, res){
 		if (req.query.funders_member){
 			queryString.push({isFundersMember: req.query.fundesr_member});
 		}
+<<<<<<< HEAD
+=======
+		console.log(queryString);
+
+>>>>>>> 4cd4a09c0712c091a3db3498424371625dd8f093
 		Organization.find({$and: queryString}).sort({name: 1}).exec(function(err, docs){
 			if (err){
 				console.log(err)
 				utils.sendErrResponse(res, 500, 'Could not find data');
-			//res.send(500).json({error: 'Could not find / populated all data', success: false});
 			}
 			else{
 				organizations = docs.map(formatOrg);
 				console.log(organizations);
 				utils.sendSuccessResponse(res, {message: organizations});
-				//res.json({success: true, message: organizations});
 			}	
-	})
+		})
 	}
 	else{
 		Organization.find({}).sort({name: 1}).exec(function(err, docs){
@@ -136,42 +139,11 @@ router.get('/', function(req, res){
 }); 
 
 
-// /*
-// 	GET '/organization/:id'
-// 	-> returns the organization with the corresponding id
-// 	No request parameters
-// 	Response: 
-// 		- success: true if server succeeded in getting that organization
-// 		- message: on succes, contains one organization object
-// 		- error: on failure, an error message
-// */
-// router.get('/:id', function(req, res){
-// 	Organization.findOne({_id: req.params.id}).exec(function(err, docs){
-// 		if (err){
-// 			res.send(500).json({error: 'Could not find data', success: false});
-// 		}
-// 		else{
-// 			organization = docs.map(formatOrg);
-// 			res.json({success: true, message: organization});
-// 		}
-// 	});
-// }); 
+router.get('/testing', function(req, res){
+	console.log(req.query.q);
+	console.log(req.query.length);
+})
 
-// /*
-// 	GET '/organization/state/:state'
-//  	filter by state
-// */
-// router.get('/state/:state', function(req, res){
-// 	Organization.findOne({state: req.params.state}).exec(function(err, docs){
-// 		if (err){
-// 			res.send(500).json({error: 'Could not find data', success: false});
-// 		}
-// 		else{
-// 			organization = docs.map(formatOrg);
-// 			res.json({success: true, message: organization});
-// 		}
-// 	});
-// }); 
 
 
 
