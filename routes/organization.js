@@ -71,10 +71,6 @@ var formatOrg = function(organization){
 		- error: on failure, an error message
 */
 router.get('/', function(req, res){
-<<<<<<< HEAD
-
-	Organization.find({}).sort({name: 1}).exec(function(err, docs){
-=======
 	if (req.query){
 		var queryString = [];
 		if (req.query.state){
@@ -103,7 +99,7 @@ router.get('/', function(req, res){
 			console.log(req.query.state);
 		}
 		console.log(queryString);
-	Organization.find({$and: queryString}).sort({name: 1}).exec(function(err, docs){
+	Organization.find({year: 1999, year: 2001}).sort({name: 1}).exec(function(err, docs){
 		//Organization.find(queryString.substring(0, queryString.length - 1)).sort({name: 1}).exec(function(err, docs){
 			if (err){
 				console.log(err)
