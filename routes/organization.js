@@ -80,26 +80,33 @@ router.get('/', function(req, res){
 			queryString.push({year: parseInt(req.query.year)});
 		}
 		if (req.query.funder_type){
+			console.log(req.query.state);
 			queryString.push({funder_type: req.query.funder_type})
 		}
 		if (req.query.populations){
 			var query = req.query.populations;
 			var populations = query.split(",");
-			console.log(populations);
+			populations.forEach(function(pop){
+				queryString.push({"populations.area": pop})
+			})
 		}
 		if (req.query.supported_strategies){
 			var query = req.query.supported_strategies;
 			var strategies = query.split(",");
-			console.log(strategies);
+			strategies.forEach(function(str){
+				queryString.push({"supported_strategies.area": str})
+			})
 		}
 		if (req.query.national){
-			console.log(req.query.state);
+			// req.query.national must be true or false
+			queryString.push({isNational: req.query.national});
 		}
 		if (req.query.funders_member){
-			console.log(req.query.state);
+			queryString.push({isFundersMember: req.query.fundesr_member});
 		}
 		console.log(queryString);
 	Organization.find({$and: queryString}).sort({name: 1}).exec(function(err, docs){
+		//Organization.find({$and: [{"populations.area":"Chronic homelessness"}, {"populations.area": "Domestic violence"}]}).sort({name: 1}).exec(function(err, docs){
 		//Organization.find(queryString.substring(0, queryString.length - 1)).sort({name: 1}).exec(function(err, docs){
 			if (err){
 				console.log(err)
