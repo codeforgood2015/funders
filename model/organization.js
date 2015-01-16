@@ -11,11 +11,13 @@ var schema = mongoose.Schema({
     annual_grantmaking: {type: Number, required: true}, 
     annual_grantmaking_vulnerable_population: Number, 
     annual_grantmaking_homelessness: Number, 
-    populations: [{type: mongoose.Schema.ObjectId, ref: 'Funding_Area'}],//to ref to another database, 
-    supported_strategies: [{type: mongoose.Schema.ObjectId, ref: 'Supported_Strategies'}]
+    populations: [{type: mongoose.Schema.ObjectId, ref: 'Population'}],//to ref to another database, 
+    supported_strategies: [{type: mongoose.Schema.ObjectId, ref: 'Supported_Strategies'}], 
+    isNationa: {type: Boolean, required: true},
+    isFundersMember: {type: Boolean, required: true}
 });
 
-schema.statics.create = function(org_name, user, year, state, funder_type, asset_size, annual_grantmaking, annual_grantmaking_homelessness, annual_grantmaking_vulnerable_population, callback) {
+schema.statics.create = function(org_name, user, year, state, funder_type, asset_size, annual_grantmaking, annual_grantmaking_homelessness, annual_grantmaking_vulnerable_population, isNational, isFundersMember, callback) {
     var newOrganization = new Organization({
         organization_name: org_name,
         user: user, 
@@ -27,7 +29,9 @@ schema.statics.create = function(org_name, user, year, state, funder_type, asset
         annual_grantmaking_homelessness: annual_grantmaking_homelessness, 
         annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable_population,
         populations: [], 
-        supported_strategies: []
+        supported_strategies: [], 
+        isNational: isNational, 
+        isFundersMember: isFundersMember
     });
 
     newOrganization.save(callback);

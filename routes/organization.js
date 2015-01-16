@@ -34,7 +34,9 @@ var formatOrg = function(organization, haveFormattedFundings, populations, suppo
 	        annual_giving_homelessness: organization.annual_giving_homelessness, 
 	        annual_giving_vulnerable_population: organization.annual_giving_vulnerable_population,
 	        populations: populations, 
-	        supported_strategies: supportedStrategies
+	        supported_strategies: supportedStrategies, 
+	        isNational: organization.isNational, 
+	        isFundersMember: organization.isFundersMember
 		}
 	}
 	else{
@@ -50,7 +52,9 @@ var formatOrg = function(organization, haveFormattedFundings, populations, suppo
 	        annual_giving_homelessness: organization.annual_giving_homelessness, 
 	        annual_giving_vulnerable_population: organization.annual_giving_vulnerable_population,
 	        populations: organization.populations, 
-	        supported_strategies: organization.supported_strategies
+	        supported_strategies: organization.supported_strategies, 
+	       	isNational: organization.isNational, 
+	        isFundersMember: organization.isFundersMember
 	    }
 	}
 }
