@@ -124,6 +124,7 @@ router.get('/state/:state', function(req, res){
 }); 
 
 
+
 /*
 	POST '/organization'
 	Response: 
@@ -146,9 +147,11 @@ router.post('/', function(req, res){
     var state = req.body.state;
     var populations = req.body.populations; // array
     var supported_strategies = req.body.supported_strategies; // array*/
+    var isNational = req.body.isNational; 
+    var isFundersMember = req.body.isFundersMember;
 
     //var org = new Organization({user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state, populations: populations_list,supported_strategies:strategies_list});
-    var org = new Organization({user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
+    var org = new Organization({isNational: isNational, isFundersMember: isFundersMember, user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
 
     populations_list = [];
     populations.forEach(function(population){
