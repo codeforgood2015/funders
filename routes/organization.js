@@ -71,6 +71,7 @@ var formatOrg = function(organization){
 		- error: on failure, an error message
 */
 router.get('/', function(req, res){
+
 	Organization.find({}).sort({name: 1}).exec(function(err, docs){
 		if (err){
 			console.log(err)
@@ -86,6 +87,13 @@ router.get('/', function(req, res){
 	});
 }); 
 
+
+router.get('/testing', function(req, res){
+	console.log(req.query.q);
+	var k = req.query.q.split(' ');
+	console.log('k');
+	console.log(k);
+})
 
 // /*
 // 	GET '/organization/:id'
