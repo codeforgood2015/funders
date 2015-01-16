@@ -71,8 +71,70 @@ var formatOrg = function(organization){
 		- error: on failure, an error message
 */
 router.get('/', function(req, res){
+<<<<<<< HEAD
 
 	Organization.find({}).sort({name: 1}).exec(function(err, docs){
+=======
+	if (req.query){
+		var queryString = [];
+		if (req.query.state){
+			queryString.push({state: req.query.state});
+		}
+		if (req.query.year){
+			queryString.push({year: parseInt(req.query.year)});
+		}
+		if (req.query.funder_type){
+			queryString.push({funder_type: req.query.funder_type})
+		}
+		if (req.query.populations){
+			var query = req.query.populations;
+			var populations = query.split(",");
+			console.log(populations);
+		}
+		if (req.query.supported_strategies){
+			var query = req.query.supported_strategies;
+			var strategies = query.split(",");
+			console.log(strategies);
+		}
+		if (req.query.national){
+			console.log(req.query.state);
+		}
+		if (req.query.funders_member){
+			console.log(req.query.state);
+		}
+		console.log(queryString);
+	Organization.find({$and: queryString}).sort({name: 1}).exec(function(err, docs){
+		//Organization.find(queryString.substring(0, queryString.length - 1)).sort({name: 1}).exec(function(err, docs){
+			if (err){
+				console.log(err)
+				utils.sendErrResponse(res, 500, 'Could not find data');
+			//res.send(500).json({error: 'Could not find / populated all data', success: false});
+			}
+			else{
+				organizations = docs.map(formatOrg);
+				console.log(organizations);
+				utils.sendSuccessResponse(res, {message: organizations});
+				//res.json({success: true, message: organizations});
+			}	
+	})
+	}
+	else{
+		Organization.find({}).sort({name: 1}).exec(function(err, docs){
+			if (err){
+				console.log(err)
+				utils.sendErrResponse(res, 500, 'Could not find data');
+			//res.send(500).json({error: 'Could not find / populated all data', success: false});
+			}
+			else{
+				organizations = docs.map(formatOrg);
+				console.log(organizations);
+				utils.sendSuccessResponse(res, {message: organizations});
+				//res.json({success: true, message: organizations});
+			}	
+	})
+	}
+	/*Organization.find({}).sort({name: 1}).exec(function(err, docs){
+
 		if (err){
 			console.log(err)
 			utils.sendErrResponse(res, 500, 'Could not find data');
@@ -84,7 +146,7 @@ router.get('/', function(req, res){
 			utils.sendSuccessResponse(res, {message: organizations});
 			//res.json({success: true, message: organizations});
 		}
-	});
+	});*/
 }); 
 
 
