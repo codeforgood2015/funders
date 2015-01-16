@@ -152,30 +152,33 @@ router.post('/', function(req, res){
 
     populations_list = [];
     populations.forEach(function(population){
-    	pop = new Population({area: population.fund_area, amount: population.percentage, organization: org._id});
-    	populations_list.push(pop._id);
-    	pop.save(function(err){
+    	//pop = new Population({area: population.fund_area, amount: population.percentage, organization: org._id});
+    	pop = {area: population.fund_area, amount: population.percentage};
+    	console.log(pop);
+    	populations_list.push(pop);
+    	/*pop.save(function(err){
     		if (err){
     			console.log(err);
     		}
-    	})
+    	})*/
     })
 
     strategies_list = [];
     supported_strategies.forEach(function(strategy){
     	//console.log(strategy)
-    	str = new Supported_Strategies({area: strategy.strategy, amount: strategy.percentage, organization: org._id});
-    	strategies_list.push(str._id);
-    	str.save(function(err){
+    	//str = new Supported_Strategies({area: strategy.strategy, amount: strategy.percentage, organization: org._id});
+    	str = {area: strategy.strategy, amount: strategy.percentage};
+    	strategies_list.push(str);
+    	/*(str.save(function(err){
     		if(err){
     			console.log(err);
     		}
-    	})
+    	})*/
     })
 
     org.populations = populations_list;
     org.supported_strategies = strategies_list;
-    //console.log(org);
+    console.log(org);
     org.save(function(err){
     	if (err){
 			utils.sendErrResponse(res, 500, 'Could not find / populated all data');

@@ -9,7 +9,7 @@ var utils = require('../utils.js');
 /*router.get('/', function(req, res){
 	if (req.query.q){
 		console.log(req.query.q);
-		Population.find({area: req.query.q}).populate(['organization']).exec(function(err, docs){
+		Supported_Strategies.find({area: req.query.q}).populate(['organization']).exec(function(err, docs){
 			orgs_list = []
 			docs.forEach(function(doc){
 				orgs_list.push(doc.organization);
@@ -22,13 +22,12 @@ var utils = require('../utils.js');
 	}
 })*/
 
-
 //   GET /keywords/?q=keyword1+keyword2+...
 router.get('/', function(req, res){
 	if (req.query.q){
 		console.log(req.query.q);
 		//Organization.find({'year': req.query.q}).exec(function(err, docs){
-		Organization.find({'populations.area': req.query.q}).exec(function(err, docs){
+		Organization.find({'supported_strategies.area': req.query.q}).exec(function(err, docs){
 			utils.sendSuccessResponse(res, docs);
 		})
 	}
@@ -36,6 +35,7 @@ router.get('/', function(req, res){
 		utils.sendSuccessResponse(res);
 	}
 })
+
 
 
 module.exports = router;
