@@ -7,6 +7,7 @@ var router = express.Router();
 var Organization = require('../model/organization');
 var Population = require('../model/populations');
 var Supported_Strategies = require('../model/supported_strategies');
+var utils = require('../utils.js');
 
 //Format populations or supported strategies
 var formatFundings = function(fundings){
@@ -30,9 +31,9 @@ var formatOrg = function(organization, haveFormattedFundings, populations, suppo
 	        state: organization.state, 
 	        funder_type: organization.funder_type, 
 	        asset_size: organization.asset_size, 
-	        annual_giving: organization.annual_giving, 
-	        annual_giving_homelessness: organization.annual_giving_homelessness, 
-	        annual_giving_vulnerable_population: organization.annual_giving_vulnerable_population,
+	        annual_grantmaking: organization.annual_grantmaking, 
+	        annual_grantmaking_homelessness: organization.annual_grantmaking_homelessness, 
+	        annual_grantmaking_vulnerable_population: organization.annual_grantmaking_vulnerable_population,
 	        populations: populations, 
 	        supported_strategies: supportedStrategies, 
 	        isNational: organization.isNational, 
@@ -48,9 +49,9 @@ var formatOrg = function(organization, haveFormattedFundings, populations, suppo
 	        state: organization.state, 
 	        funder_type: organization.funder_type, 
 	        asset_size: organization.asset_size, 
-	        annual_giving: organization.annual_giving, 
-	        annual_giving_homelessness: organization.annual_giving_homelessness, 
-	        annual_giving_vulnerable_population: organization.annual_giving_vulnerable_population,
+	        annual_grantmaking: organization.annual_grantmaking, 
+	        annual_grantmaking_homelessness: organization.annual_grantmaking_homelessness, 
+	        annual_grantmaking_vulnerable_population: organization.annual_grantmaking_vulnerable_population,
 	        populations: organization.populations, 
 	        supported_strategies: organization.supported_strategies, 
 	       	isNational: organization.isNational, 
@@ -71,11 +72,15 @@ var formatOrg = function(organization, haveFormattedFundings, populations, suppo
 router.get('/', function(req, res){
 	Organization.find({}).sort({name: 1}).populate(['populations', 'supported_strategies']).exec(function(err, docs){
 		if (err){
-			res.send(500).json({error: 'Could not find / populated all data', success: false});
+			console.log(err)
+			utils.sendErrResponse(res, 500, 'Could not find / populated all data');
+			//res.send(500).json({error: 'Could not find / populated all data', success: false});
 		}
 		else{
 			organizations = docs.map(formatOrg, false);
-			res.json({success: true, message: organizations});
+			console.log(organizations);
+			utils.sendSuccessResponse(res, {message: organizations});
+			//res.json({success: true, message: organizations});
 		}
 	});
 }); 
@@ -110,25 +115,56 @@ router.get('/:id', function(req, res){
 */
 router.post('/', function(req, res){
 
-    console.log("hi");
     // get parameters from form
     var user = req.body.user;
     var year = req.body.year;
     var organization = req.body.organization;
-    var location = req.body.location || "";
+    var location = req.body.location;
     var funder_type = req.body.funder_type;
     var asset_size = req.body.asset_size;
-    var annual_giving = req.body.annual_giving;
-    var annual_giving_vulnerable = req.body.annual_giving_vulnerable_population;
-    var annual_giving_homelessness = req.body.annual_giving_homelessness;
+    var annual_grantmaking = req.body.annual_grantmaking;
+    var annual_grantmaking_vulnerable = req.body.annual_grantmaking_vulnerable_population;
+    var annual_grantmaking_homelessness = req.body.annual_grantmaking_homelessness;
     var state = req.body.state;
     var populations = req.body.populations; // array
     var supported_strategies = req.body.supported_strategies; // array*/
 
-    console.log(populations);
+    //var org = new Organization({user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state, populations: populations_list,supported_strategies:strategies_list});
+    var org = new Organization({user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
+
+    populations_list = [];
     populations.forEach(function(population){
-    	console.log(population.fund_area);
-    	console.log(population.percentage);
+    	pop = new Population({area: population.fund_area, amount: population.percentage, organization: org._id});
+    	populations_list.push(pop._id);
+    	pop.save(function(err){
+    		if (err){
+    			console.log(err);
+    		}
+    	})
+    })
+
+    strategies_list = [];
+    supported_strategies.forEach(function(strategy){
+    	//console.log(strategy)
+    	str = new Supported_Strategies({area: strategy.strategy, amount: strategy.percentage, organization: org._id});
+    	strategies_list.push(str._id);
+    	str.save(function(err){
+    		if(err){
+    			console.log(err);
+    		}
+    	})
+    })
+
+    org.populations = populations_list;
+    org.supported_strategies = strategies_list;
+    //console.log(org);
+    org.save(function(err){
+    	if (err){
+			utils.sendErrResponse(res, 500, 'Could not find / populated all data');
+    	}
+    	else {
+			res.json({success: true, message: "added organization"});
+    	}
     })
     /*var user = req.session.user;
     if (user == undefined){

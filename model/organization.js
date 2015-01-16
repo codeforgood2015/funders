@@ -15,6 +15,7 @@ var schema = mongoose.Schema({
     supported_strategies: [{type: mongoose.Schema.ObjectId, ref: 'Supported_Strategies'}], 
     isNationa: {type: Boolean, required: true},
     isFundersMember: {type: Boolean, required: true}
+
 });
 
 schema.statics.create = function(org_name, user, year, state, funder_type, asset_size, annual_grantmaking, annual_grantmaking_homelessness, annual_grantmaking_vulnerable_population, isNational, isFundersMember, callback) {
