@@ -12,10 +12,9 @@ var schema = mongoose.Schema({
     annual_grantmaking_vulnerable_population: Number, 
     annual_grantmaking_homelessness: Number, 
     populations: [{type: mongoose.Schema.Types.Mixed}],//to ref to another database, 
-    supported_strategies: [{type: mongoose.Schema.Types.Mixed}]
+    supported_strategies: [{type: mongoose.Schema.Types.Mixed}],
     isNational: {type: Boolean, required: true},
     isFundersMember: {type: Boolean, required: true}
-
 });
 
 schema.statics.create = function(org_name, user, year, state, funder_type, asset_size, annual_grantmaking, annual_grantmaking_homelessness, annual_grantmaking_vulnerable_population, isNational, isFundersMember, callback) {

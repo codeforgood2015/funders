@@ -62,11 +62,11 @@ var formatOrg = function(organization){
 }
 
 /*
-	GET '/organization'
-	-> returns all the organizations
+	GET '/organization/?q=variable1+variable2+....'
+	if q is not defined, then all organizations will be returned
 	No request parameters
 	Response: 
-		- success: true if server succeeded in getting all companies
+		- success: true if server succeeded in getting requested organization
 		- message: on succes, contains all organization objects 
 		- error: on failure, an error message
 */
@@ -86,42 +86,44 @@ router.get('/', function(req, res){
 	});
 }); 
 
-/*
-	GET '/organization/:id'
-	-> returns the organization with the corresponding id
-	No request parameters
-	Response: 
-		- success: true if server succeeded in getting that organization
-		- message: on succes, contains one organization object
-		- error: on failure, an error message
-*/
-router.get('/:id', function(req, res){
-	Organization.findOne({_id: req.params.id}).exec(function(err, docs){
-		if (err){
-			res.send(500).json({error: 'Could not find data', success: false});
-		}
-		else{
-			organization = docs.map(formatOrg);
-			res.json({success: true, message: organization});
-		}
-	});
-}); 
 
-/*
-	GET '/organization/state/:state'
- 	filter by state
-*/
-router.get('/state/:state', function(req, res){
-	Organization.findOne({state: req.params.state}).exec(function(err, docs){
-		if (err){
-			res.send(500).json({error: 'Could not find data', success: false});
-		}
-		else{
-			organization = docs.map(formatOrg);
-			res.json({success: true, message: organization});
-		}
-	});
-}); 
+// /*
+// 	GET '/organization/:id'
+// 	-> returns the organization with the corresponding id
+// 	No request parameters
+// 	Response: 
+// 		- success: true if server succeeded in getting that organization
+// 		- message: on succes, contains one organization object
+// 		- error: on failure, an error message
+// */
+// router.get('/:id', function(req, res){
+// 	Organization.findOne({_id: req.params.id}).exec(function(err, docs){
+// 		if (err){
+// 			res.send(500).json({error: 'Could not find data', success: false});
+// 		}
+// 		else{
+// 			organization = docs.map(formatOrg);
+// 			res.json({success: true, message: organization});
+// 		}
+// 	});
+// }); 
+
+// /*
+// 	GET '/organization/state/:state'
+//  	filter by state
+// */
+// router.get('/state/:state', function(req, res){
+// 	Organization.findOne({state: req.params.state}).exec(function(err, docs){
+// 		if (err){
+// 			res.send(500).json({error: 'Could not find data', success: false});
+// 		}
+// 		else{
+// 			organization = docs.map(formatOrg);
+// 			res.json({success: true, message: organization});
+// 		}
+// 	});
+// }); 
+
 
 
 /*
@@ -146,9 +148,11 @@ router.post('/', function(req, res){
     var state = req.body.state;
     var populations = req.body.populations; // array
     var supported_strategies = req.body.supported_strategies; // array*/
+    var isNational = req.body.isNational; 
+    var isFundersMember = req.body.isFundersMember;
 
     //var org = new Organization({user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state, populations: populations_list,supported_strategies:strategies_list});
-    var org = new Organization({user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
+    var org = new Organization({isNational: isNational, isFundersMember: isFundersMember, user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
 
     populations_list = [];
     populations.forEach(function(population){
