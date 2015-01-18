@@ -2,8 +2,21 @@
 <html>
     
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- <script src="js/bootstrap.min.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet"> -->
+
+<script>
+$( document ).ready(function() {
+    $('input[type=checkbox]').click(function(){
+    	if (this.checked){
+    		console.log(this.value);
+    		$(this).parent().append("<input type='text' name='"+ this.value + "'>");
+    	}
+    });
+
+});
+
+</script>
 
 <style>
 body{
@@ -114,6 +127,8 @@ select{
 	    <option>United Way</option>
 	</select>
 <br>
+
+<div class="area" id="funding_area">
 <span class="inputlabel">Funding Area: </span><br>
 	<input type="checkbox" name="fund_area" value="chronic_homelessness">Chronic Homelessness<br>
 	<input type="checkbox" name="fund_area" value="domestic_violence">Domestic Violence <br>
@@ -126,8 +141,11 @@ select{
 	<input type="checkbox" name="fund_area" value="rural_population">Rural Population <br>
 	<input type="checkbox" name="fund_area" value="veterans">Veterans<br>
 	<input type="checkbox" name="fund_area" value="youth">Youth/Young Adults
+</div>
 <br>
-    
+
+   
+<div class="area" id="supported_strat_area">
 <span class="inputlabel">Supported Strategies: </span><br>
 	<input type="checkbox" name="strategies" value="affordable_housing">Affordable Housing <br>
 	<input type="checkbox" name="strategies" value="community_plan">Community Plan <br>
@@ -142,6 +160,7 @@ select{
 	<input type="checkbox" name="strategies" value="supportive_services">Supportive Services <br>
 	<input type="checkbox" name="strategies" value="transitional_housing">Transitional Housing <br>
 	<input type="checkbox" name="strategies" value="workforce">Workforce Development 
+</div>
 <br>
 <button type="submit" class="btn" id = "nextbutton">Next</button>
 
