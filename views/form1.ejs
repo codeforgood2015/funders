@@ -2,19 +2,20 @@
 <html>
     
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<!-- <script src="js/bootstrap.min.js"></script>
-<link href="css/bootstrap.min.css" rel="stylesheet"> -->
+<script src="js/bootstrap.min.js"></script>
+<script src="javascripts/currency.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet">
 
 <script>
-$( document ).ready(function() {
-    $('input[type=checkbox]').click(function(){
-    	if (this.checked){
-    		console.log(this.value);
-    		$(this).parent().append("<input type='text' name='"+ this.value + "'>");
-    	}
-    });
+// $( document ).ready(function() {
+//     $('input[type=checkbox]').click(function(){
+//     	if (this.checked){
+//     		console.log(this.value);
+//     		$(this).parent().append("<input type='text' name='"+ this.value + "'>");
+//     	}
+//     });
 
-});
+// });
 
 </script>
 
@@ -45,12 +46,13 @@ select{
 <body>
 
 
-<form action="form2.ejs" method="post">
-<span class="inputlabel">Organization:</span>
-	<input type="text" name="firstname">
+<form action="/organization" method="post">
+<span class="inputlabel">*Organization:</span>
+	<input type="text" name="firstname" required>
 <br>
 <span class="inputlabel">State:</span>   
-	<select name="state">
+	<select name="state" required>
+		<option disabled='disabled'>State</option>
 	    <option value="AL">Alabama</option>
 		<option value="AK">Alaska</option>
 		<option value="AZ">Arizona</option>
@@ -105,14 +107,14 @@ select{
 	</select>
 <br>
     
-<span class="inputlabel">Address:</span>
-	<input type="text" name="lastname">
+<span class="inputlabel">*Address:</span>
+	<input type="text" name="lastname" required>
 <br>
-<span class="inputlabel">Asset Size:</span>
-	<input type="text" name="asset">
+<span class="inputlabel">*Asset Size: $</span>
+	<input type="number" name="asset" onblur="this.value=CurrencyFormatted(this.value)" required>
 <br>
-<span class="inputlabel">Yearly Donation:</span>
-	<input type="text" name="yearDonation">
+<span class="inputlabel">*Yearly Donation: $</span>
+	<input type="number" name="yearDonation" onblur="this.value=CurrencyFormatted(this.value)"required>
 <br>
 <span class="inputlabel">Type of Funder: </span>
 	<select name="fundertype">
@@ -162,6 +164,7 @@ select{
 	<input type="checkbox" name="strategies" value="workforce">Workforce Development 
 </div>
 <br>
+<p> *These fields are required</p>
 <button type="submit" class="btn" id = "nextbutton">Next</button>
 
 </form>

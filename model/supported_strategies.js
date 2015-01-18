@@ -28,7 +28,7 @@ var checkLength = function(s) {
     }
 };
 
-Supported_Strategies.schema.path('area').validate(checkLength, "Funding Area cannot be empty");
-Supported_Strategiesschema.path('amount').validate(checkLength, "Amount cannot be empty");
+/*Supported_Strategies.schema.path('area').validate(checkLength, "Funding Area cannot be empty");
+Supported_Strategiesschema.path('amount').validate(checkLength, "Amount cannot be empty");*/
 
 module.exports = Supported_Strategies;
