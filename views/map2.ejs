@@ -10,12 +10,13 @@
             <script src = "/javascripts/datamaps.usa.min.js"></script>
 
     <script src="/javascripts/show_us_states.js" style="position: relative; width: 500px; height: 300px;"></script>
+    <script src="/javascripts/filter.js"></script>
   </head>
   <body>
-    <select>
+    <select id = "funding_area">
       <option selected="selected" disabled="disabled">Funding Area</option>
-  <option value="chronic_homelessness">Chronic homelessness</option>
-  <option value="domestic_violence">Domestic violence</option>
+  <option value="Chronic homelessness">Chronic homelessness</option>
+  <option value="Domestic violence">Domestic violence</option>
   <option value="employment">Employment</option>
   <option value="families">Families</option>
   <option value="lgbt">LGBT</option>
@@ -26,23 +27,33 @@
   <option value="veterans">Veterans</option>
   <option value="youth">Youth/young adults</option>
 </select> 
+<p>Funding Area</p>
+  <input type = "checkbox" name = "funding_area" value ="Chronic homelessness">Chronic homelessness<br/>
+  <input type = "checkbox" name = "funding_area" value ="Domestic violence">Domestic violence<br/>
+  <input type = "checkbox" name = "funding_area" value = "Employment">Employment<br/>
+  <input type = "checkbox" name = "funding_area" value = "Families">Families<br/>
+  <input type = "checkbox" name = "funding_area" value = "LGBT">LGBT<br/>
+  <input type = "checkbox" name = "funding_area" value = "Mental/physical health">Mental/physical health<br/>
+  <input type = "checkbox" name = "funding_area" value = "Older adults/seniors">Older adults/seniors<br/>
+  <input type = "checkbox" name = "funding_area" value = "Reentry from criminal justice system">Reentry from criminal justice system<br/>
+  <input type = "checkbox" name = "funding_area" value = "Rural populations">Rural populations</br>
+  <input type = "checkbox" name = "funding_area" value = "Veterans">Veterans</br>
+  <input type = "checkbox" name = "funding_area" value = "Youth/young adults">Youth/young adults</br>
 
-    <select>
-      <option selected="selected" disabled="disabled">Supported Strategies</option>
-  <option value="affordable_housing">Affordable housing</option>
-  <option value="community_plan">Community plan</option>
-  <option value="emergency_shelter">Emergency shelter</option>
-  <option value="funding_advocacy">Funding advocacy</option>
-  <option value="housing">Housing First</option>
-  <option value="permanent">Permanent supportive housing</option>
-  <option value="prevention">Prevention</option>
-  <option value="public_education">Public education</option>
-  <option value="public_policy">Public policy/systems change</option>
-  <option value="rapid_rehousing">Rapid Re-housing</option>
-  <option value="supportive_services">Supportive services</option>
-    <option value="transitional housing">Transitional housing</option>
-  <option value="workforce">Workforce development</option>
-</select> 
+<p>Supported Strategies</p>
+  <input type = "checkbox" name = "supported_strategies" value ="Affordable housing">Affordable housing<br/>
+  <input type = "checkbox" name = "supported_strategies" value ="Community plan">Community plan<br/>
+  <input type = "checkbox" name = "supported_strategies" value = "Emergency shelter">Emergency shelter<br/>
+  <input type = "checkbox" name = "supported_strategies" value = "Funding advocacy">Funding advocacy<br/>
+  <input type = "checkbox" name = "supported_strategies" value = "Housing First">Housing First<br/>
+  <input type = "checkbox" name = "supported_strategies" value = "Permanent supportive housing">Permanent supportive housing<br/>
+  <input type = "checkbox" name = "supported_strategies" value = "Prevention">Prevention<br/>
+  <input type = "checkbox" name = "supported_strategies" value = "Public education">Public education<br/>
+  <input type = "checkbox" name = "supported_strategies" value = "Public policy/systems change">Public policy/systems change</br>
+  <input type = "checkbox" name = "supported_strategies" value = "Rapid Re-housing">Rapid Re-housing</br>
+  <input type = "checkbox" name = "supported_strategies" value = "Supportive services">Supportive services</br>
+  <input type = "checkbox" name = "supported_strategies" value = "Transitional housing">Transitional housing</br>
+  <input type = "checkbox" name = "supported_strategies" value = "Workforce development">Workforce development</br>
 
     <select>
       <option selected="selected" disabled="disabled">Funding Type</option>
