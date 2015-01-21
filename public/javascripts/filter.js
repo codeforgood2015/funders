@@ -2,6 +2,7 @@ $(document).ready(function(){
 
 
 	var data = {}
+	var states = {}
 	var w = 1500;
 	var h = 900;
 	var currentMousePos = { x: -1, y: -1 };
@@ -62,19 +63,61 @@ $(document).ready(function(){
 	})
 
 	function createMap(data){
-
-
+		console.log(data);
 			//Load in GeoJSON data
+			data.forEach(function(funder){
+				if (!states[funder.state]){
+					states[funder.state] = funder.annual_grantmaking
+				}
+				else{
+					states[funder.state] += funder.annual_grantmaking
+				}
+
+			})
+							console.log (states)
 			d3.json("/files/us-states.json", function(json) {
 				scale = d3.scale.linear().domain([0, d3.max(data, function(d){
 					return d.annual_grantmaking;
-				})]).range([3, 50]);
+				})]).range([3, 10]);
+
+				for (var i = 0; i < json.features.length; i++){
+					var state = json.features[i].properties.name
+
+					if (states[state]){
+						json.features[i].properties.value = states[state];
+					}
+					/*else {
+						json.features[i].properties.value = 0;
+					}*/
+				}
+
+				var color = d3.scale.quantize()
+								.range(["rgb(237,248,233)","rgb(186,228,179)","rgb(116,196,118)","rgb(49,163,84)","rgb(0,109,44)"]);
+				color.domain([
+					d3.min(json.features, function(d) { return d.properties.value; }), 
+					d3.max(json.features, function(d) { return d.properties.value; })
+				]);
+
+				console.log(json.features)
 				//Bind data and create one path per GeoJSON feature
 				svg.selectAll("path")
 					.data(json.features)
 					.enter()
 					.append("path")
 					.attr("d", path)
+					.style("fill", function(d) {
+					   		//Get data value
+					   		var value = d.properties.value;
+					   		
+					   		if (value) {
+					   			//If value exists…
+					   			console.log(color(value))
+						   		return color(value);
+					   		} else {
+					   			//If value is undefined…
+						   		return "#ccc";
+					   		}
+					   });
 					/*.on("mouseover", function(d) {
 						//Update the tooltip position and value/*
 						d3.select("#tooltip")
@@ -92,6 +135,7 @@ $(document).ready(function(){
 						d3.select("#tooltip").classed("hidden", true);
 					
 			   		})*/
+
 
 				svg.selectAll("circle")
 					.data(data)
