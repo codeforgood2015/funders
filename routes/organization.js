@@ -45,8 +45,9 @@ var formatOrg = function(organization){
 		return {
 		_id: organization._id, 
 			organization_name: organization.organization_name,
-	        user: organization.user, 
 	        year: organization.year, 
+	        longitude: organization.longitude,
+	        latitude: organization.latitude,
 	        state: organization.state, 
 	        funder_type: organization.funder_type, 
 	        asset_size: organization.asset_size, 
@@ -151,78 +152,60 @@ router.get('/testing', function(req, res){
 		-error: on failure, an error message 
 */
 router.post('/', function(req, res){
-	console.log(req.body);
     // get parameters from form
-   //  var user = req.body.user;
-   //  var year = req.body.year;
-   //  var organization = req.body.organization;
-   //  var location = req.body.location;
-   //  var funder_type = req.body.funder_type;
-   //  var asset_size = req.body.asset_size;
-   //  var annual_grantmaking = req.body.annual_grantmaking;
-   //  var annual_grantmaking_vulnerable = req.body.annual_grantmaking_vulnerable_population;
-   //  var annual_grantmaking_homelessness = req.body.annual_grantmaking_homelessness;
-   //  var state = req.body.state;
-   //  var populations = req.body.populations; // array
-   //  var supported_strategies = req.body.supported_strategies; // array*/
-   //  var isNational = req.body.isNational; 
-   //  var isFundersMember = req.body.isFundersMember;
+    var user = req.body.user;
+    var year = req.body.year;
+    var organization = req.body.organization;
+    var address = req.body.address;
+    var latitude = req.body.latitude;
+    var longitude = req.body.longitude;
+    var funder_type = req.body.funder_type;
+    var asset_size = req.body.asset_size;
+    var annual_grantmaking = req.body.yearDonation;
+    var annual_grantmaking_vulnerable = req.body.annual_grantmaking_vulnerable_population || "";
+    var annual_grantmaking_homelessness = req.body.annual_grantmaking_homelessness || "";
+    var state = req.body.state;
+    var populations = req.body.populations; // array
+    var supported_strategies = req.body.supported_strategies; // array*/
+    var isNational = req.body.isNational; 
+    var isFundersMember = req.body.isFundersMember;
 
-   //  //var org = new Organization({user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state, populations: populations_list,supported_strategies:strategies_list});
-   //  var org = new Organization({isNational: isNational, isFundersMember: isFundersMember, user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
+    console.log(latitude)
+    console.log(longitude)
 
-   //  populations_list = [];
-   //  populations.forEach(function(population){
-   //  	//pop = new Population({area: population.fund_area, amount: population.percentage, organization: org._id});
-   //  	pop = {area: population.fund_area, amount: population.percentage};
-   //  	console.log(pop);
-   //  	populations_list.push(pop);
-   //  	/*pop.save(function(err){
-   //  		if (err){
-   //  			console.log(err);
-   //  		}
-   //  	})*/
-   //  })
+    //var org = new Organization({user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state, populations: populations_list,supported_strategies:strategies_list});
+    var org = new Organization({latitude: latitude, longitude: longitude, isNational: isNational, isFundersMember: isFundersMember, year:year, organization_name: organization, address:address, asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
 
-   //  strategies_list = [];
-   //  supported_strategies.forEach(function(strategy){
-   //  	//console.log(strategy)
-   //  	//str = new Supported_Strategies({area: strategy.strategy, amount: strategy.percentage, organization: org._id});
-   //  	str = {area: strategy.strategy, amount: strategy.percentage};
-   //  	strategies_list.push(str);
-   //  	/*(str.save(function(err){
-   //  		if(err){
-   //  			console.log(err);
-   //  		}
-   //  	})*/
-   //  })
+    funder_type_list = [];
+    funder_type.forEach(function(funder){
+    	funder_type_list.push(funder);
+    })
 
-   //  org.populations = populations_list;
-   //  org.supported_strategies = strategies_list;
-   //  console.log(org);
-   //  org.save(function(err){
-   //  	if (err){
-			// utils.sendErrResponse(res, 500, 'Could not find / populated all data');
-   //  	}
-   //  	else {
-			// res.json({success: true, message: "added organization"});
-   //  	}
-   //  })
-   //  /*var user = req.session.user;
-   //  if (user == undefined){
-   //    utils.sendErrResponse(res, 403, 'Error: You must be logged in to use this feature');
-   //    return;
-   //  }
+    populations_list = [];
+    populations.forEach(function(population){
+    	pop = {area: population.area, amount: population.amount};
+    	populations_list.push(pop);
+    })
 
-   //  var listing = new schemas.Listing({"title": title, "description": description, "image": image, "category": category, "seller": user});
-   //  listing.save(function(err){
-   //    if (err){
-   //      utils.sendErrResponse(res, 500, 'Error: could not add listing');
-   //    }
-   //    else {
-   //      utils.sendSuccessResponse(res, listing);
-   //    }
-   //  });*/
+    strategies_list = [];
+    supported_strategies.forEach(function(strategy){
+    	str = {area: strategy.area, amount: strategy.amount};
+    	strategies_list.push(str);
+    })
+
+    org.funder_type = funder_type_list;
+    org.populations = populations_list;
+    org.supported_strategies = strategies_list;
+
+    console.log(org);
+    org.save(function(err){
+    	if (err){
+			utils.sendErrResponse(res, 500, 'Could not find / populated all data');
+    	}
+    	else {
+			res.json({success: true, message: "added organization"});
+    	}
+    })
 });
 
 module.exports = router;
