@@ -1,21 +1,21 @@
 $(document).ready(function(){
 	var data = {}
-			var w = 750;
-			var h = 450;
-			//Define map projection
-			var projection = d3.geo.albersUsa()
-			.translate([w/2, h/2]).scale([1000]);
+	var w = 1000;
+	var h = 600;
+	//Define map projection
+	var projection = d3.geo.albersUsa()
+		.translate([w/2, h/2]).scale([1100]);
 			//Define path generator
-			var path = d3.geo.path()
-			.projection(projection);
+	var path = d3.geo.path()
+		.projection(projection);
 			//Create SVG element
-			svg = d3.select("body")
-			.append("svg")
-			.attr("width", w)
-			.attr("height", h);
+	svg = d3.select("body")
+		.append("svg")
+		.attr("width", w)
+		.attr("height", h);
+	var scale;
 
 	$.get('/organization/', function(data){
-  			//console.log(data.content);
   			createMap(data.content.message);
   		});
 	//createMap(data);
@@ -51,12 +51,13 @@ $(document).ready(function(){
 	})
 
 	function createMap(data){
-			//Width and height
-			console.log(data);
 
 			//Load in GeoJSON data
 			d3.json("/files/us-states.json", function(json) {
-				
+			scale = d3.scale.linear().domain([0, d3.max(data, function(d){
+				console.log(d);
+				return d.annual_grantmaking;
+			})]).range([2, 50]);
 				//Bind data and create one path per GeoJSON feature
 				svg.selectAll("path")
 				.data(json.features)
@@ -75,40 +76,19 @@ $(document).ready(function(){
 				.attr("cy", function(d) {
 					return projection([d.longitude, d.latitude])[1];
 				})
-				.attr("r", 5)
+				//.attr("r", 5)
+				.attr("r", function(d) {
+					console.log(scale(d.annual_grantmaking))
+					return scale(d.annual_grantmaking);
+					//return scale(d)
+				})
 				.style("fill", "yellow")
 				.style("opacity", 0.75);
-		/*for (var i = 0; i < data.length; i++) {
-
-            //Grab state name
-            console.log(data[i].state)
-            var dataState = data[i].state;
-        }*/
-
-            //Grab data value, and convert from string to float
-            /*var dataValue = parseFloat(data[i].value);
-
-            //Find the corresponding state inside the GeoJSON
-            for (var j = 0; j < json.features.length; j++) {
-
-            	var jsonState = json.features[j].properties.name;
-
-            	if (dataState == jsonState) {
-
-                //Copy the data value into the JSON
-                json.features[j].properties.value = dataValue;
-
-                //Stop looking through the JSON
-                break;
-
-            }*/
 
         });
 		}
 
 		function updateMap(data){
-			console.log(data);
-			console.log(svg);
 
 			var keyFn = function(d) { return [d.longitude, d.latitude]; };
 
@@ -118,13 +98,17 @@ $(document).ready(function(){
 				.enter()
 				.append("circle")
 				.attr("cx", function(d) {
-					console.log(d);
+					console.log(d.annual_grantmaking);
 					return projection([d.longitude, d.latitude])[0];
 				})
 				.attr("cy", function(d) {
 					return projection([d.longitude, d.latitude])[1];
 				})
-				.attr("r", 5)
+				.attr("r", function(d) {
+					//console.log(scale(d))
+					return scale(d.annual_grantmaking)
+				})
+				//.attr("r", 10)
 				.style("fill", "yellow")
 				.style("opacity", 0.75);
 						circles.exit().remove();
@@ -133,7 +117,6 @@ $(document).ready(function(){
 		function returnQuery(dataObj){
 			var queryString = decodeURIComponent($.param(dataObj));
 			$.get('/organization/?' + queryString, function(data){
-				console.log(data.content);
 				updateMap(data.content.message);
 			});
 		}
