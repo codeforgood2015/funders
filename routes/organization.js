@@ -219,7 +219,9 @@ router.post('/', function(req, res){
 			utils.sendErrResponse(res, 500, 'Could not find / populated all data');
     	}
     	else {
-			res.json({success: true, message: "added organization"});
+			//res.json({success: true, message: "added organization"});
+			//res.render('map2');
+			res.redirect('/map2');
     	}
     })
 });

@@ -98,7 +98,21 @@ $(document).ready(function(){
 					d3.max(json.features, function(d) { return d.properties.value; })
 				]);
 
-				console.log(json.features)
+var legend = d3.select('#legend')
+  .append('ul')
+    .attr('class', 'list-inline');
+
+var keys = legend.selectAll('li.key')
+    .data(color.range());
+
+keys.enter().append('li')
+    .attr('class', 'key')
+    .style('border-top-color', String)
+    .text(function(d) {
+        var r = color.invertExtent(d);
+        console.log(r)
+        return "$" + r[0].toFixed(2);
+    });
 				//Bind data and create one path per GeoJSON feature
 				svg.selectAll("path")
 					.data(json.features)
@@ -110,8 +124,6 @@ $(document).ready(function(){
 					   		var value = d.properties.value;
 					   		
 					   		if (value) {
-					   			//If value exists…
-					   			console.log(color(value))
 						   		return color(value);
 					   		} else {
 					   			//If value is undefined…
@@ -185,7 +197,6 @@ $(document).ready(function(){
 				.enter()
 				.append("circle")
 				.attr("cx", function(d) {
-					console.log(d.annual_grantmaking);
 					return projection([d.longitude, d.latitude])[0];
 				})
 				.attr("cy", function(d) {
@@ -197,7 +208,6 @@ $(document).ready(function(){
 				.style("fill", "yellow")
 				.style("opacity", 0.75)
 					.on("mouseover", function(d) {
-						console.log(d)
 						//Get this bar's x/y values, then augment for the tooltip
 						var xPosition = parseFloat(d3.select(this).attr("cx")) + 80;
 						var yPosition = parseFloat(d3.select(this).attr("cy")) + h/2;
