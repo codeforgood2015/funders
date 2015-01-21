@@ -109,9 +109,11 @@ $(document).ready(function(){
 		function updateMap(data){
 			console.log(data);
 			console.log(svg);
+
+			var keyFn = function(d) { return [d.longitude, d.latitude]; };
+
 			var circles = svg.selectAll("circle")
-				.data(data)
-			circles.exit().remove();
+				.data(data, keyFn)
 			circles
 				.enter()
 				.append("circle")
@@ -125,6 +127,7 @@ $(document).ready(function(){
 				.attr("r", 5)
 				.style("fill", "yellow")
 				.style("opacity", 0.75);
+						circles.exit().remove();
 			//circles.exit().remove();
 		}
 		function returnQuery(dataObj){
