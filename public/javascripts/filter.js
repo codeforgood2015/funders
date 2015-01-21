@@ -2,6 +2,7 @@ $(document).ready(function(){
 	var data = {}
 	var w = 1500;
 	var h = 900;
+	var currentMousePos = { x: -1, y: -1 };
 	//Define map projection
 	var projection = d3.geo.albersUsa()
 		.translate([w/2, h/2]).scale([1600]);
@@ -18,6 +19,11 @@ $(document).ready(function(){
 	$.get('/organization/', function(data){
   		createMap(data.content.message);
   	});
+
+  	$(document).mousemove(function(event) {
+        currentMousePos.x = event.pageX;
+        currentMousePos.y = event.pageY;
+    });
 
 	$("input[name='funding_area']").change(function(){
 		var populations = ""
@@ -54,13 +60,30 @@ $(document).ready(function(){
 			d3.json("/files/us-states.json", function(json) {
 				scale = d3.scale.linear().domain([0, d3.max(data, function(d){
 					return d.annual_grantmaking;
-				})]).range([2, 50]);
+				})]).range([3, 50]);
 				//Bind data and create one path per GeoJSON feature
 				svg.selectAll("path")
 					.data(json.features)
 					.enter()
 					.append("path")
-					.attr("d", path);
+					.attr("d", path)
+					/*.on("mouseover", function(d) {
+						//Update the tooltip position and value
+						d3.select("#tooltip")
+						.style("left", currentMousePos.x + "px")
+						.style("top", currentMousePos.y + "px")						
+						.select("#value")
+						.text(d.properties.name);
+			   
+						//Show the tooltip
+						d3.select("#tooltip").classed("hidden", false);
+			   		})
+			   		.on("mouseout", function() {
+			   
+						//Hide the tooltip
+						d3.select("#tooltip").classed("hidden", true);
+					
+			   		})*/
 
 				svg.selectAll("circle")
 					.data(data)
@@ -78,17 +101,18 @@ $(document).ready(function(){
 					.style("fill", "yellow")
 					.style("opacity", 0.75)
 					.on("mouseover", function(d) {
-						console.log(d)
 						//Get this bar's x/y values, then augment for the tooltip
 						var xPosition = parseFloat(d3.select(this).attr("cx")) + 80;
 						var yPosition = parseFloat(d3.select(this).attr("cy")) + h/2;
 
 						//Update the tooltip position and value
 						d3.select("#tooltip")
-						.style("left", xPosition + "px")
-						.style("top", yPosition + "px")						
-						.select("#value")
-						.text(d.organization_name);
+						.style("left", currentMousePos.x + "px")
+						.style("top", currentMousePos.y + "px")						
+						.select("#text")
+						.html("Organization: " + d.organization_name + 
+							"<br>Asset size: $" + d.asset_size + 
+							"<br>Annual grantmaking: $" + d.annual_grantmaking)
 			   
 						//Show the tooltip
 						d3.select("#tooltip").classed("hidden", false);
@@ -123,7 +147,29 @@ $(document).ready(function(){
 					return scale(d.annual_grantmaking)
 				})
 				.style("fill", "yellow")
-				.style("opacity", 0.75);
+				.style("opacity", 0.75)
+					.on("mouseover", function(d) {
+						console.log(d)
+						//Get this bar's x/y values, then augment for the tooltip
+						var xPosition = parseFloat(d3.select(this).attr("cx")) + 80;
+						var yPosition = parseFloat(d3.select(this).attr("cy")) + h/2;
+
+						//Update the tooltip position and value
+						d3.select("#tooltip")
+						.style("left", currentMousePos.x + "px")
+						.style("top", currentMousePos.y + "px")						
+						.select("#value")
+						.text(d.organization_name);
+			   
+						//Show the tooltip
+						d3.select("#tooltip").classed("hidden", false);
+			   		})
+			   		.on("mouseout", function() {
+			   
+						//Hide the tooltip
+						d3.select("#tooltip").classed("hidden", true);
+					
+			   		})
 			circles.exit().remove();
 		}
 		function returnQuery(dataObj){
