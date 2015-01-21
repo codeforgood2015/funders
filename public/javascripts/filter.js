@@ -76,7 +76,29 @@ $(document).ready(function(){
 						return scale(d.annual_grantmaking);
 					})
 					.style("fill", "yellow")
-					.style("opacity", 0.75);
+					.style("opacity", 0.75)
+					.on("mouseover", function(d) {
+						console.log(d)
+						//Get this bar's x/y values, then augment for the tooltip
+						var xPosition = parseFloat(d3.select(this).attr("cx")) + 80;
+						var yPosition = parseFloat(d3.select(this).attr("cy")) + h/2;
+
+						//Update the tooltip position and value
+						d3.select("#tooltip")
+						.style("left", xPosition + "px")
+						.style("top", yPosition + "px")						
+						.select("#value")
+						.text(d.organization_name);
+			   
+						//Show the tooltip
+						d3.select("#tooltip").classed("hidden", false);
+			   		})
+			   		.on("mouseout", function() {
+			   
+						//Hide the tooltip
+						d3.select("#tooltip").classed("hidden", true);
+					
+			   		})
 
         	});
 		}
