@@ -62,161 +62,17 @@ select{
 <body>
 
 <div class="container">
+<form class="form-horizontal" id="input_form">
+	<div class="form-group">
+<label class="inputlabel control-label col-sm-2">*Organization:</label>
+<div class="col-sm-10">
+	<input type="text" class="form-control" id = "organization" name="organization" required>
+</div>
+</div>
 
-<<<<<<< HEAD
-	<form class="form-horizontal" role="form" action="/organization" method="post">
-		<div class="form-group">
-			<label class="inputlabel control-label col-sm-2">*Organization: </label>
-			<div class="col-sm-10">
-				<input class="form-control" type="text" name="firstname" required>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="inputlabel control-label col-sm-2">State: </label>   
-			<div class="col-sm-10">
-				<select name="state" class="form-control" required>
-					<option disabled='disabled'>State</option>
-				    <option value="AL">Alabama</option>
-					<option value="AK">Alaska</option>
-					<option value="AZ">Arizona</option>
-					<option value="AR">Arkansas</option>
-					<option value="CA">California</option>
-					<option value="CO">Colorado</option>
-					<option value="CT">Connecticut</option>
-					<option value="DE">Delaware</option>
-					<option value="DC">District Of Columbia</option>
-					<option value="FL">Florida</option>
-					<option value="GA">Georgia</option>
-					<option value="HI">Hawaii</option>
-					<option value="ID">Idaho</option>
-					<option value="IL">Illinois</option>
-					<option value="IN">Indiana</option>
-					<option value="IA">Iowa</option>
-					<option value="KS">Kansas</option>
-					<option value="KY">Kentucky</option>
-					<option value="LA">Louisiana</option>
-					<option value="ME">Maine</option>
-					<option value="MD">Maryland</option>
-					<option value="MA">Massachusetts</option>
-					<option value="MI">Michigan</option>
-					<option value="MN">Minnesota</option>
-					<option value="MS">Mississippi</option>
-					<option value="MO">Missouri</option>
-					<option value="MT">Montana</option>
-					<option value="NE">Nebraska</option>
-					<option value="NV">Nevada</option>
-					<option value="NH">New Hampshire</option>
-					<option value="NJ">New Jersey</option>
-					<option value="NM">New Mexico</option>
-					<option value="NY">New York</option>
-					<option value="NC">North Carolina</option>
-					<option value="ND">North Dakota</option>
-					<option value="OH">Ohio</option>
-					<option value="OK">Oklahoma</option>
-					<option value="OR">Oregon</option>
-					<option value="PA">Pennsylvania</option>
-					<option value="RI">Rhode Island</option>
-					<option value="SC">South Carolina</option>
-					<option value="SD">South Dakota</option>
-					<option value="TN">Tennessee</option>
-					<option value="TX">Texas</option>
-					<option value="UT">Utah</option>
-					<option value="VT">Vermont</option>
-					<option value="VA">Virginia</option>
-					<option value="WA">Washington</option>
-					<option value="WV">West Virginia</option>
-					<option value="WI">Wisconsin</option>
-					<option value="WY">Wyoming</option>
-				</select>
-			</div>
-		</div>
-		    
-		<div class="form-group">
-			<label class="inputlabel control-label col-sm-2">*Address: </label>
-			<div class="col-sm-10">
-				<input class="form-control" type="text" name="lastname" required>
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label class="inputlabel control-label col-sm-2">*Asset Size: $</label>
-			<div class="col-sm-10">
-				<input class="form-control" type="number" name="asset" onblur="this.value=CurrencyFormatted(this.value)" required>
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label class="inputlabel control-label col-sm-2">*Yearly Amount <!-- Invested Towards Solutions to Homelessness -->: $</label>
-			<div class="col-sm-10">
-				<input class="form-control" type="number" name="yearDonation" onblur="this.value=CurrencyFormatted(this.value)"required>
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label class="inputlabel control-label col-sm-2">Type of Funder: </label>
-			<div class="col-sm-10">
-				<select class="form-control" name="fundertype">
-				    <option>Community Foundation</option>
-				    <option>Corporate Giving Program</option>
-				    <option>Family Foundation</option>
-				    <option>Independent Foundation</option>
-				    <option>Individual Philanthorpist</option>
-				    <option>Operating Foundation</option>
-				    <option>Private Foundation</option>
-				    <option>Public Charity</option>
-				    <option>United Way</option>
-				</select>
-			</div>
-		</div>
-
-		<div class="form-group area" id="funding_area">
-			<label class="inputlabel control-label col-sm-2">Funding Area: </label>
-			<div class="col-sm-10">
-				<input type="checkbox" name="fund_area" value="chronic_homelessness">Chronic Homelessness<br>
-				<input type="checkbox" name="fund_area" value="domestic_violence">Domestic Violence <br>
-				<input type="checkbox" name="fund_area" value="employment">Employment <br>
-				<input type="checkbox" name="fund_area" value="families">Families <br>
-				<input type="checkbox" name="fund_area" value="lgbt">LGBT <br>
-				<input type="checkbox" name="fund_area" value="mental/physical_health">Mental/Physical Health<br>
-				<input type="checkbox" name="fund_area" value="older_adults/seniors">Older Adults/Seniors <br>
-				<input type="checkbox" name="fund_area" value="reentry_criminal_justice">Reentry from Criminal Justice System <br>
-				<input type="checkbox" name="fund_area" value="rural_population">Rural Population <br>
-				<input type="checkbox" name="fund_area" value="veterans">Veterans<br>
-				<input type="checkbox" name="fund_area" value="youth">Youth/Young Adults
-			</div>
-		</div>
-		<br>
-
-		   
-		<div class="form-group area" id="supported_strat_area">
-			<label class="inputlabel control-label col-sm-2">Supported Strategies: </label>
-			<div class="col-sm-10">
-				<input type="checkbox" name="strategies" value="affordable_housing">Affordable Housing <br>
-				<input type="checkbox" name="strategies" value="community_plan">Community Plan <br>
-				<input type="checkbox" name="strategies" value="emergency_shelter">Emergency Shelter <br>
-				<input type="checkbox" name="strategies" value="funding_advocacy">Funding Advocacy <br>
-				<input type="checkbox" name="strategies" value="housing_first">Housing First <br>
-				<input type="checkbox" name="strategies" value="permanent_supportive_housing">Permanent Supportive Housing <br>
-				<input type="checkbox" name="strategies" value="prevention">Prevention <br>
-				<input type="checkbox" name="strategies" value="public_education">Public Education <br>
-				<input type="checkbox" name="strategies" value="publc_policy">Public Poicy/System Change <br>
-				<input type="checkbox" name="strategies" value="rapid_re_housing">Rapid Re-Housing <br>
-				<input type="checkbox" name="strategies" value="supportive_services">Supportive Services <br>
-				<input type="checkbox" name="strategies" value="transitional_housing">Transitional Housing <br>
-				<input type="checkbox" name="strategies" value="workforce">Workforce Development 
-			</div>
-		</div>
-		<br>
-		<p> *These fields are required</p>
-
-		<button type="submit" class="btn" id = "nextbutton">Next</button>
-=======
-<form id="input_form">
-<span class="inputlabel">*Organization:</span>
-	<input type="text" id = "organization" name="organization" required>
-<br>
-<span class="inputlabel">*Year:</span>   
-	<select name="year" required>
+<div class="form-group">
+<label class="inputlabel control-label col-sm-2">*Year:</label>   <div class = "col-sm-10">
+	<select name="year" class = "form-control" required>
 	    <option value="2014">2014</option>
 		<option value="2013">2013</option>
 		<option value="2012">2012</option>
@@ -236,9 +92,13 @@ select{
 		<option value="1998">1998</option>
 		<option value="1997">1997</option>
 	</select>
-<br>
-<span class="inputlabel">*State:</span>   
-	<select name="state" required>
+</div>
+</div>
+
+<div class="form-group">
+<label class="inputlabel control-label col-sm-2">*State:</label>   
+<div class="col-sm-10">
+	<select name="state" class="form-control" required>
 		<option disabled='disabled'>State</option>
 	    <option value="AL">Alabama</option>
 		<option value="AK">Alaska</option>
@@ -292,24 +152,48 @@ select{
 		<option value="WI">Wisconsin</option>
 		<option value="WY">Wyoming</option>
 	</select>
-<br>
-    
-<span class="inputlabel">*Address:</span>
-	<input id = "address" type="text" name="address" required>
-<br>
-<span class="inputlabel">*Asset Size: $</span>
-	<input name="asset" onblur="this.value=CurrencyFormatted(this.value)" required>
-<br>
-<span class="inputlabel">*Yearly Donation: $</span>
-	<input name="yearDonation" onblur="this.value=CurrencyFormatted(this.value)"required>
-<br>
-<span class="inputlabel">*National Funding?</span>
+</div>
+</div>
+
+<div class = "form-group">
+<label class="inputlabel control-label col-sm-2">*Address:</label>
+<div class="col-sm-10">
+	<input class="form-control" id = "address" type="text" name="address" required>
+</div>
+</div>
+
+<div class = "form-group">
+<label class="inputlabel control-label col-sm-2">*Asset Size: $</label>
+<div class="col-sm-10">
+	<input class="form-control" name="asset" onblur="this.value=CurrencyFormatted(this.value)" required>
+</div>
+</div>
+
+<div class = "form-group">
+<label class="inputlabel control-label col-sm-2">*Yearly Donation: $</label>
+<div class="col-sm-10">
+	<input class = "form-control" name="yearDonation" onblur="this.value=CurrencyFormatted(this.value)"required>
+</div>
+</div>
+
+<div class="form-group">
+<label class="inputlabel control-label col-sm-2">*National Funding?</label>
+<div class="col-sm-10">
 	Yes <input type="radio" name="national" value="yes" required>
-	No <input type="radio" name="national" value="no" required><br>
-<span class="inputlabel">*Member of Funders Together?</span>
+	No <input type="radio" name="national" value="no" required>
+</div>
+</div>
+
+<div class="form-group">
+<label class="inputlabel control-label col-sm-2">*Member of Funders Together?</label>
+<div class="col-sm-10">
 	Yes <input type="radio" name="isMember" value="yes" required>
-	No <input type="radio" name="isMember" value="no" required><br>
-<span class="inputlabel">Type of Funder: </span><br>
+	No <input type="radio" name="isMember" value="no" required></div>
+</div>
+
+<div class="form-group">
+<label class="inputlabel control-label col-sm-2">Type of Funder: </label>
+<div class="col-sm-10">
 	    <input type="checkbox" name = "funder_type" value="Community Foundation">Community Foundation<br/>
 	   	<input type="checkbox" name = "funder_type" value = "Corporate Giving Program">Corporate Giving Program<br/>
 		<input type="checkbox" name = "funder_type" value = "Family Foundation">Family Foundation<br/>
@@ -319,9 +203,12 @@ select{
 	    <input type="checkbox" name = "funder_type" value = "Private Foundation">Private Foundation<br/>	     
 	    <input type="checkbox" name = "funder_type" value = "Public Charity">Public Charity<br/>
 	    <input type="checkbox" name = "funder_type" value = "United Way">United Way<br/>
-<br>
+</div>
+</div>
 
-<span class="inputlabel">Populations: </span><br>
+<div class="form-group">
+<label class="inputlabel control-label col-sm-2">Populations: </label>
+<div class = "col-sm-10">
 	<input type="checkbox" name="fund_area" id = "chronic_homelessness" value="Chronic Homelessness">Chronic Homelessness<br>
 		<fieldset id="chronic_homelessness_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" name="chronic_homelessness" onblur="this.value=CurrencyFormatted(this.value)" required>
@@ -366,9 +253,12 @@ select{
 		<fieldset id="youth_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" onblur="this.value=CurrencyFormatted(this.value)" required>
 		</fieldset>
-<br>
-    
-<span class="inputlabel">Supported Strategies: </span><br>
+</div>
+</div>
+  
+<div class="form-group"> 
+<label class="inputlabel control-label col-sm-2">Supported Strategies: </label>
+<div class="col-sm-10">
 	<input type="checkbox" name="strategies" id = "affordable_housing" value="Affordable Housing">Affordable Housing <br>
 		<fieldset id="affordable_housing_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" onblur="this.value=CurrencyFormatted(this.value)" required>
@@ -421,12 +311,10 @@ select{
 			<fieldset id="workforce_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" onblur="this.value=CurrencyFormatted(this.value)" required>
 		</fieldset>
-<br>
+</div>
+</div>
 <p> *These fields are required</p>
 <button type="submit" class="btn" id = "nextbutton">Submit</button>
-
-</form>
->>>>>>> 2ae746c1e4aa63f19a1d3ba5c335d2eaa293298b
 
 	</form>
 
