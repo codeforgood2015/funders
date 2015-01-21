@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+
 	var data = {}
 	var w = 1500;
 	var h = 900;
@@ -24,6 +26,10 @@ $(document).ready(function(){
         currentMousePos.x = event.pageX;
         currentMousePos.y = event.pageY;
     });
+
+    $("#close").click(function(){
+    	d3.select("#tooltip").classed("hidden", true);
+    })
 
 	$("input[name='funding_area']").change(function(){
 		var populations = ""
@@ -56,6 +62,8 @@ $(document).ready(function(){
 	})
 
 	function createMap(data){
+
+
 			//Load in GeoJSON data
 			d3.json("/files/us-states.json", function(json) {
 				scale = d3.scale.linear().domain([0, d3.max(data, function(d){
@@ -68,7 +76,7 @@ $(document).ready(function(){
 					.append("path")
 					.attr("d", path)
 					/*.on("mouseover", function(d) {
-						//Update the tooltip position and value
+						//Update the tooltip position and value/*
 						d3.select("#tooltip")
 						.style("left", currentMousePos.x + "px")
 						.style("top", currentMousePos.y + "px")						
@@ -100,7 +108,8 @@ $(document).ready(function(){
 					})
 					.style("fill", "yellow")
 					.style("opacity", 0.75)
-					.on("mouseover", function(d) {
+
+		.on("mouseover", function(d) {
 						//Get this bar's x/y values, then augment for the tooltip
 						var xPosition = parseFloat(d3.select(this).attr("cx")) + 80;
 						var yPosition = parseFloat(d3.select(this).attr("cy")) + h/2;
@@ -110,20 +119,15 @@ $(document).ready(function(){
 						.style("left", currentMousePos.x + "px")
 						.style("top", currentMousePos.y + "px")						
 						.select("#text")
+
 						.html("Organization: " + d.organization_name + 
 							"<br>Asset size: $" + d.asset_size + 
-							"<br>Annual grantmaking: $" + d.annual_grantmaking)
+							"<br>Annual grantmaking: $" + d.annual_grantmaking +
+							"<br><a href=/organization/" + d._id + ">More Info</a>")
 			   
 						//Show the tooltip
 						d3.select("#tooltip").classed("hidden", false);
 			   		})
-			   		.on("mouseout", function() {
-			   
-						//Hide the tooltip
-						d3.select("#tooltip").classed("hidden", true);
-					
-			   		})
-
         	});
 		}
 

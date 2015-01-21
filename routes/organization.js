@@ -135,6 +135,22 @@ router.get('/', function(req, res){
 	}
 }); 
 
+router.get('/:org_id', function(req, res){
+	//console.log(req.params.org_id);
+	Organization.findOne({_id: req.params.org_id}).exec(function(err, docs){
+		if (err){
+			console.log(err)
+			utils.sendErrResponse(res, 500, 'Could not find data');
+		//res.send(500).json({error: 'Could not find / populated all data', success: false});
+		}
+		else{
+				//organizations = docs.map(formatOrg);
+				//console.log(organizations);
+			utils.sendSuccessResponse(res, docs);
+				//res.json({success: true, message: organizations});
+		}	
+	})	
+})
 
 router.get('/testing', function(req, res){
 	console.log(req.query.q);
