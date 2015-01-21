@@ -91,8 +91,8 @@ $(document).ready(function(){
 					}*/
 				}
 
-				var color = d3.scale.quantize()
-								.range(["rgb(237,248,233)","rgb(186,228,179)","rgb(116,196,118)","rgb(49,163,84)","rgb(0,109,44)"]);
+				var color = d3.scale.quantize().range(colorbrewer.Blues[5]);
+								//.range(["rgb(237,248,233)","rgb(186,228,179)","rgb(116,196,118)","rgb(49,163,84)","rgb(0,109,44)"]);
 				color.domain([
 					d3.min(json.features, function(d) { return d.properties.value; }), 
 					d3.max(json.features, function(d) { return d.properties.value; })

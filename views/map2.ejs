@@ -4,12 +4,10 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/map_style.css' />
+    <link rel='stylesheet' href='/stylesheets/colorbrewer.css' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        <script type="text/javascript" src="/javascripts/topojson.js"></script>
-            <script src = "/javascripts/datamaps.usa.min.js"></script>
-
-    <!--<script src="/javascripts/show_us_states.js" style="position: relative; width: 500px; height: 300px;"></script>-->
+    <script src="/javascripts/colorbrewer.js"></script>
     <script src="/javascripts/filter.js"></script>
   </head>
   <body>
@@ -55,7 +53,7 @@
 </select> 
     <div id="container"></div>
 
-         <div id="tooltip">
+         <div id="tooltip" class="hidden">
       <p><span id="text"></span></p>
      <button id="close">Close</button>
     </div>
