@@ -45,8 +45,9 @@ var formatOrg = function(organization){
 		return {
 		_id: organization._id, 
 			organization_name: organization.organization_name,
-	        user: organization.user, 
 	        year: organization.year, 
+	        longitude: organization.longitude,
+	        latitude: organization.latitude,
 	        state: organization.state, 
 	        funder_type: organization.funder_type, 
 	        asset_size: organization.asset_size, 
