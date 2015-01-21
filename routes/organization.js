@@ -151,54 +151,51 @@ router.get('/testing', function(req, res){
 		-error: on failure, an error message 
 */
 router.post('/', function(req, res){
-	console.log(req.body);
     // get parameters from form
     var user = req.body.user;
     var year = req.body.year;
     var organization = req.body.organization;
-    var location = req.body.location;
+    var address = req.body.address;
+    var latitude = req.body.latitude;
+    var longitude = req.body.longitude;
     var funder_type = req.body.funder_type;
     var asset_size = req.body.asset_size;
-    var annual_grantmaking = req.body.annual_grantmaking;
-    var annual_grantmaking_vulnerable = req.body.annual_grantmaking_vulnerable_population;
-    var annual_grantmaking_homelessness = req.body.annual_grantmaking_homelessness;
+    var annual_grantmaking = req.body.yearDonation;
+    var annual_grantmaking_vulnerable = req.body.annual_grantmaking_vulnerable_population || "";
+    var annual_grantmaking_homelessness = req.body.annual_grantmaking_homelessness || "";
     var state = req.body.state;
     var populations = req.body.populations; // array
     var supported_strategies = req.body.supported_strategies; // array*/
     var isNational = req.body.isNational; 
     var isFundersMember = req.body.isFundersMember;
 
+    console.log(latitude)
+    console.log(longitude)
+
     //var org = new Organization({user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state, populations: populations_list,supported_strategies:strategies_list});
-    var org = new Organization({isNational: isNational, isFundersMember: isFundersMember, user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
+    var org = new Organization({latitude: latitude, longitude: longitude, isNational: isNational, isFundersMember: isFundersMember, year:year, organization_name: organization, address:address, asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
+
+    funder_type_list = [];
+    funder_type.forEach(function(funder){
+    	funder_type_list.push(funder);
+    })
 
     populations_list = [];
     populations.forEach(function(population){
-    	//pop = new Population({area: population.fund_area, amount: population.percentage, organization: org._id});
-    	pop = {area: population.fund_area, amount: population.percentage};
-    	console.log(pop);
+    	pop = {area: population.area, amount: population.amount};
     	populations_list.push(pop);
-    	/*pop.save(function(err){
-    		if (err){
-    			console.log(err);
-    		}
-    	})*/
     })
 
     strategies_list = [];
     supported_strategies.forEach(function(strategy){
-    	//console.log(strategy)
-    	//str = new Supported_Strategies({area: strategy.strategy, amount: strategy.percentage, organization: org._id});
-    	str = {area: strategy.strategy, amount: strategy.percentage};
+    	str = {area: strategy.area, amount: strategy.amount};
     	strategies_list.push(str);
-    	/*(str.save(function(err){
-    		if(err){
-    			console.log(err);
-    		}
-    	})*/
     })
 
+    org.funder_type = funder_type_list;
     org.populations = populations_list;
     org.supported_strategies = strategies_list;
+
     console.log(org);
     org.save(function(err){
     	if (err){

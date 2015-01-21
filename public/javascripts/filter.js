@@ -1,56 +1,41 @@
-var query = "";
-var pquery = "";
-var squery = "";
-
 $(document).ready(function(){
+	var data = {}
 
 	$("input[name='funding_area']").change(function(){
-		pquery = "?populations="
+		var populations = ""
 		$("input[name='funding_area']:checked").each(function() {
-			pquery += this.value + ","
+			populations += this.value + ","
 		});
-		if (pquery == "?populations="){
-			pquery = "";
-			query = "?" + squery;
+		if (populations != ""){
+			populations = populations.substring(0, populations.length-1);
+			data.populations = populations;
 		}
-		else {
-			pquery = pquery.substring(0, pquery.length-1)
-			if (squery == ""){
-				query = pquery
-				console.log(query);
-			}
-			else {
-				query = pquery + "&" + squery
-			}
+		else{
+			delete data.populations;
 		}
-		$.get('/organization/' + query, function(data){
-  			console.log(data.content);
-  		});
+		returnQuery(data);
   	})
 
   	$("input[name='supported_strategies']").change(function(){
-		squery = "supported_strategies="
-		console.log(squery);
+		var strategies = ""
 		$("input[name='supported_strategies']:checked").each(function() {
-			console.log(this)
-			squery += this.value + ","
+			strategies += this.value + ","
 		});
-		if (squery == "supported_strategies="){
-			squery = "";
+		if (strategies != ""){
+			strategies = strategies.substring(0, strategies.length-1);
+			data.supported_strategies = strategies;
 		}
-		else {
-			squery = squery.substring(0, squery.length-1)
+		else{
+			delete data.supported_strategies;
+		}
+		returnQuery(data);
+  	})
 
-			if (pquery == ""){
-				query = "?" + squery
-			}
-			else {
-				query = pquery + "&" + squery;
-			}
-		}
-		console.log(query);
-		$.get('/organization/' + query, function(data){
+  	function returnQuery(dataObj){
+		var queryString = decodeURIComponent($.param(dataObj));
+		$.get('/organization/?' + queryString, function(data){
   			console.log(data.content);
   		});
-  	})
+	}
+
 })
