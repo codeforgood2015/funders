@@ -38,7 +38,22 @@ $(document).ready(function(){
   			});	
   		}
   		else {
+  			document.getElementById("strategies").selectedIndex = 0;
   			$.get('/organization/population/' + this.value, function(data){
+  				updateMap(data.content.message);
+  			});
+  		}
+  	})
+
+	$("#strategies").change(function(){
+  		if (this.value == "All"){
+  		  	$.get('/organization/', function(data){
+  				updateMap(data.content.message);
+  			});	
+  		}
+  		else {
+  		  	document.getElementById("populations").selectedIndex = 0;
+  			$.get('/organization/strategy/' + this.value, function(data){
   				updateMap(data.content.message);
   			});
   		}
@@ -78,6 +93,11 @@ $(document).ready(function(){
 		returnQuery(data);
 	})
 
+	$("#year").change(function(){
+		data.year = this.value; 
+ 		returnQuery(data);
+  	})
+
 	function updateMap(data){
 		var states = {}
 		data.forEach(function(funder){
@@ -87,7 +107,6 @@ $(document).ready(function(){
 			else{
 				states[funder.state] += funder.annual_grantmaking
 			}
-
 		})
 		//Load in GeoJSON data
 		d3.json("/files/us-states.json", function(json) {

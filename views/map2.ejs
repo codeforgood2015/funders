@@ -12,7 +12,8 @@
     <script src="/javascripts/filter.js"></script>
   </head>
   <body>
-<p>Populations</p>
+    <a href = "/form1">Go To Input Form</a>
+<h3>Populations</h3>
   <input type = "checkbox" name = "funding_area" value ="Chronic Homelessness">Chronic Homelessness
   <input type = "checkbox" name = "funding_area" value ="Domestic Violence">Domestic Violence
   <input type = "checkbox" name = "funding_area" value = "Employment">Employment
@@ -24,12 +25,11 @@
   <input type = "checkbox" name = "funding_area" value = "Rural Populations">Rural Populations
   <input type = "checkbox" name = "funding_area" value = "Veterans">Veterans
   <input type = "checkbox" name = "funding_area" value = "Youth/Young Adults">Youth/Young Adults
-<br><br>
-<p>Supported Strategies</p>
-  <input type = "checkbox" name = "supported_strategies" value ="Affordable housing">Affordable Housing
-  <input type = "checkbox" name = "supported_strategies" value ="Community plan">Community Plan
-  <input type = "checkbox" name = "supported_strategies" value = "Emergency shelter">Emergency Shelter
-  <input type = "checkbox" name = "supported_strategies" value = "Funding advocacy">Funding Advocacy
+<h3>Supported Strategies</h3>
+  <input type = "checkbox" name = "supported_strategies" value ="Affordable Housing">Affordable Housing
+  <input type = "checkbox" name = "supported_strategies" value ="Community Plan">Community Plan
+  <input type = "checkbox" name = "supported_strategies" value = "Emergency Shelter">Emergency Shelter
+  <input type = "checkbox" name = "supported_strategies" value = "Funding Advocacy">Funding Advocacy
   <input type = "checkbox" name = "supported_strategies" value = "Housing First">Housing First
   <input type = "checkbox" name = "supported_strategies" value = "Permanent Supportive Housing">Permanent Supportive Housing
   <input type = "checkbox" name = "supported_strategies" value = "Prevention">Prevention
@@ -40,8 +40,30 @@
   <input type = "checkbox" name = "supported_strategies" value = "Transitional Housing">Transitional Housing
   <input type = "checkbox" name = "supported_strategies" value = "Workforce Development">Workforce Development
 
+  <h3>Year:</h3>
+  <select id="year">
+      <option value="2014">2014</option>
+    <option value="2013">2013</option>
+    <option value="2012">2012</option>
+    <option value="2011">2011</option>
+    <option value="2010">2010</option>
+    <option value="2009">2009</option>
+    <option value="2008">2008</option>
+    <option value="2007">2007</option>
+    <option value="2006">2006</option>
+    <option value="2005">2005</option>
+    <option value="2004">2004</option>
+    <option value="2003">2003</option>
+    <option value="2002">2002</option>
+    <option value="2001">2001</option>
+    <option value="2000">2000</option>
+    <option value="1999">1999</option>
+    <option value="1998">1998</option>
+    <option value="1997">1997</option>
+  </select>
 
-<p>Populations</p>
+<h3>View Funding towards different areas</h3>
+Populations: 
     <select id="populations">
       <option selected="selected" value="All">All</option>
       <option value="Chronic Homelessness">Chronic Homelessness</option>
@@ -55,20 +77,27 @@
       <option value="Rural Populations">Rural Populations</option>
       <option value="Veterans">Veterans</option>
       <option value="Youth/Young Adults">Youth/Young Adults</option>
-</select>
+    </select>
 
-    <select>
-      <option selected="selected" disabled="disabled">Funding Type</option>
-  <option value="community_foundation">Community Foundation</option>
-  <option value="corporate_giving">Corporate giving program</option>
-  <option value="family">Family foundation</option>
-  <option value="independent">Independent foundation</option>
-  <option value="individual">Individual philanthropist</option>
-  <option value="operating">Operating foundation</option>
-  <option value="private">Private foundation</option>
-  <option value="public">Public charity</option>
-  <option value="united">United way</option>
-</select> 
+Supported Strategies: 
+    <select id="strategies">
+      <option selected="selected" value="All">All</option>
+      <option value="Affordable Housing">Affordable Housing</option>
+      <option value="Community Plan">Community Plan</option>
+      <option value="Emergency Shelter">Emergency Shelter</option>
+      <option value="Funding Advocacy">Funding Advocacy</option>
+      <option value="Housing First">Housing First</option>
+      <option value="Permanent Supportive Housing">Permanent Supportive Housing</option>
+      <option value="Prevention">Prevention</option>
+      <option value="Public Education">Public Education</option>
+      <option value="Public Policy/Systems Change">Public Policy/Systems Change</option>
+      <option value="Rapid Re-Housing">Rapid Re-Housing</option>
+      <option value="Supportive Services">Supportive Services</option>
+      <option value="Transitional Housing">Transitional Housing</option>
+      <option value="Workforce Development">Workforce Development</option>
+    </select>
+
+
     <div id="legend">Total Annual Grantmaking</div>
     <div id="container"></div>
 
