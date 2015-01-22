@@ -62,6 +62,55 @@ var formatOrg = function(organization){
 	// }
 }
 
+var formatOrgPopulation = function(organization, population){
+	// if (haveFormattedFundings){
+	// 	return{
+	// 		_id: organization._id, 
+	// 		organization_name: organization.organization_name,
+	//         user: organization.user,
+	//         year: organization.year, 
+	//         state: organization.state, 
+	//         funder_type: organization.funder_type, 
+	//         asset_size: organization.asset_size, 
+	//         annual_grantmaking: organization.annual_grantmaking, 
+	//         annual_grantmaking_homelessness: organization.annual_grantmaking_homelessness, 
+	//         annual_grantmaking_vulnerable_population: organization.annual_grantmaking_vulnerable_population,
+	//         populations: populations, 
+	//         supported_strategies: supportedStrategies, 
+	//         isNational: organization.isNational, 
+	//         isFundersMember: organization.isFundersMember
+	// 	}
+	// }
+	// else{
+					console.log(population)
+		var amount = 0;
+		organization.populations.forEach(function(pop){
+			//console.log(pop.area)
+
+			if (pop.area == population){
+				amount = parseFloat(pop.amount)
+			}
+		})
+		return {
+		_id: organization._id, 
+			organization_name: organization.organization_name,
+	        year: organization.year, 
+	        longitude: organization.longitude,
+	        latitude: organization.latitude,
+	        state: organization.state, 
+	        funder_type: organization.funder_type, 
+	        asset_size: organization.asset_size, 
+	        annual_grantmaking: amount, 
+	        annual_grantmaking_homelessness: organization.annual_grantmaking_homelessness, 
+	        annual_grantmaking_vulnerable_population: organization.annual_grantmaking_vulnerable_population,
+	        populations: organization.populations, 
+	        supported_strategies: organization.supported_strategies, 
+	       	isNational: organization.isNational, 
+	        isFundersMember: organization.isFundersMember
+	    }
+	// }
+}
+
 /*
 	GET '/organization/?q=variable1+variable2+....'
 	if q is not defined, then all organizations will be returned
@@ -113,7 +162,6 @@ router.get('/', function(req, res){
 			}
 			else{
 				organizations = docs.map(formatOrg);
-				console.log(organizations);
 				utils.sendSuccessResponse(res, {message: organizations});
 			}	
 		})
@@ -127,7 +175,6 @@ router.get('/', function(req, res){
 			}
 			else{
 				organizations = docs.map(formatOrg);
-				console.log(organizations);
 				utils.sendSuccessResponse(res, {message: organizations});
 				//res.json({success: true, message: organizations});
 			}	
@@ -149,6 +196,24 @@ router.get('/:org_id', function(req, res){
 			utils.sendSuccessResponse(res, docs);
 				//res.json({success: true, message: organizations});
 		}	
+	})	
+})
+
+router.get('/population/:population', function(req, res){
+		Organization.find({"populations.area": req.params.population}).sort({name: 1}).exec(function(err, docs){
+			if (err){
+				console.log(err)
+				utils.sendErrResponse(res, 500, 'Could not find data');
+			//res.send(500).json({error: 'Could not find / populated all data', success: false});
+			}
+			else{
+				//organizations = docs.map(formatOrgPopulation, req.params.population);
+				organizations = docs.map(function(d){
+					return formatOrgPopulation(d, req.params.population);
+				})
+				utils.sendSuccessResponse(res, {message: organizations});
+				//res.json({success: true, message: organizations});
+			}	
 	})	
 })
 

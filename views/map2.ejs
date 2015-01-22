@@ -12,33 +12,50 @@
     <script src="/javascripts/filter.js"></script>
   </head>
   <body>
-<p>Funding Area</p>
-  <input type = "checkbox" name = "funding_area" value ="Chronic Homelessness">Chronic Homelessness<br/>
-  <input type = "checkbox" name = "funding_area" value ="Domestic Violence">Domestic Violence<br/>
-  <input type = "checkbox" name = "funding_area" value = "Employment">Employment<br/>
-  <input type = "checkbox" name = "funding_area" value = "Families">Families<br/>
-  <input type = "checkbox" name = "funding_area" value = "LGBT">LGBT<br/>
-  <input type = "checkbox" name = "funding_area" value = "Mental/Physical health">Mental/Physical health<br/>
-  <input type = "checkbox" name = "funding_area" value = "Older Adults/Seniors">Older Adults/Seniors<br/>
-  <input type = "checkbox" name = "funding_area" value = "Reentry from Criminal Justice System">Reentry from Criminal Justice System<br/>
-  <input type = "checkbox" name = "funding_area" value = "Rural Populations">Rural Populations</br>
-  <input type = "checkbox" name = "funding_area" value = "Veterans">Veterans</br>
-  <input type = "checkbox" name = "funding_area" value = "Youth/Young adults">Youth/Young adults</br>
-
+<p>Populations</p>
+  <input type = "checkbox" name = "funding_area" value ="Chronic Homelessness">Chronic Homelessness
+  <input type = "checkbox" name = "funding_area" value ="Domestic Violence">Domestic Violence
+  <input type = "checkbox" name = "funding_area" value = "Employment">Employment
+  <input type = "checkbox" name = "funding_area" value = "Families">Families
+  <input type = "checkbox" name = "funding_area" value = "LGBT">LGBT
+  <input type = "checkbox" name = "funding_area" value = "Mental/Physical Health">Mental/Physical Health
+  <input type = "checkbox" name = "funding_area" value = "Older Adults/Seniors">Older Adults/Seniors
+  <input type = "checkbox" name = "funding_area" value = "Reentry from Criminal Justice System">Reentry from Criminal Justice System
+  <input type = "checkbox" name = "funding_area" value = "Rural Populations">Rural Populations
+  <input type = "checkbox" name = "funding_area" value = "Veterans">Veterans
+  <input type = "checkbox" name = "funding_area" value = "Youth/Young Adults">Youth/Young Adults
+<br><br>
 <p>Supported Strategies</p>
-  <input type = "checkbox" name = "supported_strategies" value ="Affordable housing">Affordable Housing<br/>
-  <input type = "checkbox" name = "supported_strategies" value ="Community plan">Community Plan<br/>
-  <input type = "checkbox" name = "supported_strategies" value = "Emergency shelter">Emergency Shelter<br/>
-  <input type = "checkbox" name = "supported_strategies" value = "Funding advocacy">Funding Advocacy<br/>
-  <input type = "checkbox" name = "supported_strategies" value = "Housing First">Housing First<br/>
-  <input type = "checkbox" name = "supported_strategies" value = "Permanent Supportive Housing">Permanent Supportive Housing<br/>
-  <input type = "checkbox" name = "supported_strategies" value = "Prevention">Prevention<br/>
-  <input type = "checkbox" name = "supported_strategies" value = "Public Education">Public Education<br/>
-  <input type = "checkbox" name = "supported_strategies" value = "Public Policy/Systems Change">Public Policy/Systems Change</br>
-  <input type = "checkbox" name = "supported_strategies" value = "Rapid Re-Housing">Rapid Re-Housing</br>
-  <input type = "checkbox" name = "supported_strategies" value = "Supportive Services">Supportive Services</br>
-  <input type = "checkbox" name = "supported_strategies" value = "Transitional Housing">Transitional Housing</br>
-  <input type = "checkbox" name = "supported_strategies" value = "Workforce Development">Workforce Development</br>
+  <input type = "checkbox" name = "supported_strategies" value ="Affordable housing">Affordable Housing
+  <input type = "checkbox" name = "supported_strategies" value ="Community plan">Community Plan
+  <input type = "checkbox" name = "supported_strategies" value = "Emergency shelter">Emergency Shelter
+  <input type = "checkbox" name = "supported_strategies" value = "Funding advocacy">Funding Advocacy
+  <input type = "checkbox" name = "supported_strategies" value = "Housing First">Housing First
+  <input type = "checkbox" name = "supported_strategies" value = "Permanent Supportive Housing">Permanent Supportive Housing
+  <input type = "checkbox" name = "supported_strategies" value = "Prevention">Prevention
+  <input type = "checkbox" name = "supported_strategies" value = "Public Education">Public Education
+  <input type = "checkbox" name = "supported_strategies" value = "Public Policy/Systems Change">Public Policy/Systems Change
+  <input type = "checkbox" name = "supported_strategies" value = "Rapid Re-Housing">Rapid Re-Housing
+  <input type = "checkbox" name = "supported_strategies" value = "Supportive Services">Supportive Services
+  <input type = "checkbox" name = "supported_strategies" value = "Transitional Housing">Transitional Housing
+  <input type = "checkbox" name = "supported_strategies" value = "Workforce Development">Workforce Development
+
+
+<p>Populations</p>
+    <select id="populations">
+      <option selected="selected" value="All">All</option>
+      <option value="Chronic Homelessness">Chronic Homelessness</option>
+      <option value="Domestic Violence">Domestic Violence</option>
+      <option value="Employment">Employment</option>
+      <option value="Families">Families</option>
+      <option value="LGBT">LGBT</option>
+      <option value="Mental/Physical Health">Mental/Physical Health</option>
+      <option value="Older Adults/Seniors">Older Adults/Seniors</option>
+      <option value="Reentry from Criminal Justice System">Reentry from Criminal Justice System</option>
+      <option value="Rural Populations">Rural Populations</option>
+      <option value="Veterans">Veterans</option>
+      <option value="Youth/Young Adults">Youth/Young Adults</option>
+</select>
 
     <select>
       <option selected="selected" disabled="disabled">Funding Type</option>
@@ -52,7 +69,7 @@
   <option value="public">Public charity</option>
   <option value="united">United way</option>
 </select> 
-    <div id="legend">Annual Grantmaking</div>
+    <div id="legend">Total Annual Grantmaking</div>
     <div id="container"></div>
 
          <div id="tooltip" class="hidden">
