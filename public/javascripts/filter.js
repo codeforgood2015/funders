@@ -100,9 +100,7 @@ $(document).ready(function(){
 			}
 
 			var color = d3.scale.quantize().range(colorbrewer.Blues[5]);
-			color.domain([
-				d3.min(json.features, function(d) { return d.properties.value; }), 
-				d3.max(json.features, function(d) { return d.properties.value; })
+			color.domain([0, d3.max(json.features, function(d) { return d.properties.value; })
 			]);
 
 			scale = d3.scale.linear().domain([0, d3.max(data, function(d){
@@ -124,6 +122,9 @@ $(document).ready(function(){
 				.style('border-top-color', String)
 				.text(function(d) {
 					var r = color.invertExtent(d);
+					if (isNaN(r[0])){
+						return "";
+					}
 					return "$" + r[0].toFixed(2);
 				});
 
@@ -133,13 +134,16 @@ $(document).ready(function(){
 				.enter()
 				.append("path")
 				.attr("d", path)
+				.style("stroke-width", 1)
+				.style("stroke", 'black')
 				.style("fill", function(d) {
 				   	//Get data value
 				   	var value = d.properties.value;
 				   	if (value) {
 				   		return color(value);
-				   	} else {
-				   			return "#ccc";
+				   	} 
+				   	else {
+				   		return "#efefef";
 				   	}
 				});
 
@@ -153,9 +157,10 @@ $(document).ready(function(){
 				   	var value = d.properties.value;
 				   	if (value) {
 				   		return color(value);
-				   	} else {
+				   	} 
+				   	else {
 				   		//If value is undefined…
-				   		return "#ccc";
+				   		return "#efefef";
 				   	}
 				});
 
@@ -174,7 +179,7 @@ $(document).ready(function(){
 				.attr("cy", function(d) {
 					return projection([d.longitude, d.latitude])[1];
 				})     
-				.style("fill", "yellow")
+				.style("fill", "red")
 				.style("opacity", 1)
 				.attr("r", 0).transition().duration(500)
 				.attr("r", function(d) {
