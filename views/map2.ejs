@@ -2,18 +2,93 @@
 <html>
   <head>
     <title><%= title %></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/map_style.css' />
     <link rel='stylesheet' href='/stylesheets/colorbrewer.css' />
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="/javascripts/colorbrewer.js"></script>
     <script src="/javascripts/filter.js"></script>
+
+    <!-- Include the Bootstrap Multiselect plugin's CSS and JS: -->
+    <script type="text/javascript" src="/javascripts/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="/stylesheets/bootstrap-multiselect.css" type="text/css"/>
+    <!-- Initialize the plugin: -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#population-dropdown').multiselect({
+              includeSelectAllOption: true,
+              buttonText: function(options, select){
+                if (options.length === 0) {
+                    return 'None Selected ▾';
+                }
+                else{
+                  var labels = [];
+                  options.each(function() {
+                    if ($(this).attr('label') !== undefined) {
+                      labels.push($(this).attr('label'));
+                    }
+                    else {
+                      labels.push($(this).html());
+                    }
+                  });
+                  return labels.join(', ') + ' ▾';
+                }
+              }
+            });
+            $('#strategies-dropdown').multiselect({
+              includeSelectAllOption: true,
+              numberDisplayed: 13,
+              buttonText: function(options, select){
+                if (options.length === 0) {
+                    return 'None Selected ▾';
+                }
+                else{
+                  var labels = [];
+                  options.each(function() {
+                    if ($(this).attr('label') !== undefined) {
+                      labels.push($(this).attr('label'));
+                    }
+                    else {
+                      labels.push($(this).html());
+                    }
+                  });
+                  return labels.join(', ') + ' ▾';
+                }
+              }
+            });
+        });
+    </script>
+
+    <style>
+
+    </style>
+
   </head>
   <body>
     <a href = "/form1">Go To Input Form</a>
+
+
 <h3>Populations</h3>
+
+  <select id="population-dropdown" multiple="multiple">
+    <option name = "funding_area" value ="Chronic Homelessness">Chronic Homelessness</option>
+    <option name = "funding_area" value ="Domestic Violence">Domestic Violence</option>
+    <option name = "funding_area" value = "Employment">Employment</option>
+    <option name = "funding_area" value = "Families">Families</option>
+    <option name = "funding_area" value = "LGBT">LGBT</option>
+    <option name = "funding_area" value = "Mental/Physical Health">Mental/Physical Health</option>
+    <option name = "funding_area" value = "Older Adults/Seniors">Older Adults/Seniors</option>
+    <option name = "funding_area" value = "Reentry from Criminal Justice System">Reentry from Criminal Justice System</option>
+    <option name = "funding_area" value = "Rural Populations">Rural Populations</option>
+    <option name = "funding_area" value = "Veterans">Veterans</option>
+    <option name = "funding_area" value = "Youth/Young Adults">Youth/Young Adults</option>
+  </select>
+
+  <br>
+
   <input type = "checkbox" name = "funding_area" value ="Chronic Homelessness">Chronic Homelessness
   <input type = "checkbox" name = "funding_area" value ="Domestic Violence">Domestic Violence
   <input type = "checkbox" name = "funding_area" value = "Employment">Employment
@@ -26,6 +101,25 @@
   <input type = "checkbox" name = "funding_area" value = "Veterans">Veterans
   <input type = "checkbox" name = "funding_area" value = "Youth/Young Adults">Youth/Young Adults
 <h3>Supported Strategies</h3>
+
+  <select id="strategies-dropdown" multiple="multiple">
+    <option name = "supported_strategies" value ="Affordable Housing">Affordable Housing</option>
+    <option name = "supported_strategies" value ="Community Plan">Community Plan</option>
+    <option name = "supported_strategies" value = "Emergency Shelter">Emergency Shelter</option>
+    <option name = "supported_strategies" value = "Funding Advocacy">Funding Advocacy</option>
+    <option name = "supported_strategies" value = "Housing First">Housing First</option>
+    <option name = "supported_strategies" value = "Permanent Supportive Housing">Permanent Supportive Housing</option>
+    <option name = "supported_strategies" value = "Prevention">Prevention</option>
+    <option name = "supported_strategies" value = "Public Education">Public Education</option>
+    <option name = "supported_strategies" value = "Public Policy/Systems Change">Public Policy/Systems Change</option>
+    <option name = "supported_strategies" value = "Rapid Re-Housing">Rapid Re-Housing</option>
+    <option name = "supported_strategies" value = "Supportive Services">Supportive Services</option>
+    <option name = "supported_strategies" value = "Transitional Housing">Transitional Housing</option>
+    <option name = "supported_strategies" value = "Workforce Development">Workforce Development</option>
+  </select>
+
+  <br>
+
   <input type = "checkbox" name = "supported_strategies" value ="Affordable Housing">Affordable Housing
   <input type = "checkbox" name = "supported_strategies" value ="Community Plan">Community Plan
   <input type = "checkbox" name = "supported_strategies" value = "Emergency Shelter">Emergency Shelter
