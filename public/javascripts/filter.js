@@ -183,7 +183,7 @@ $(document).ready(function(){
 				   	}
 				});
 
-			var keyFn = function(d) { return [d.longitude, d.latitude, d.organization_name]; };
+			var keyFn = function(d) { return d._id; };
 
 			var force = d3.layout.force()
     					.size([w, h]);
@@ -254,33 +254,47 @@ $(document).ready(function(){
 
     		node.exit().transition().duration(700)
     				.style("opacity", 0).remove();
+
 			function addForce(){
-				console.log(nodes)
+
+				var collide = true;
+
+				while (collide){
+					collide = false;
 			for (var i = 0; i < nodes.length; i++){
 				for (var j = i; j < nodes.length; j++){
 					if (i != j){
-						var lon1 = nodes[i].longitude;
-						var lon2 = nodes[j].longitude;
-						var lat1 = nodes[i].latitude;
-						var lat2 = nodes[i].latitude;
+						var c1 = nodes[i];
+						var c2 = nodes[j];
 
-						var r = scale(nodes[i].annual_grantmaking) + scale(nodes[j].annual_grantmaking)
+						var lon1 = c1.longitude;
+						var lon2 = c1.longitude;
+						var lat1 = c1.latitude;
+						var lat2 = c2.latitude;
+
+						var r = scale(nodes[i].annual_grantmaking) + scale(nodes[j].annual_grantmaking);
 
 						var d = Math.sqrt((lon2 - lon1) * (lon2 - lon1) + (lat2 - lat1) * (lat2 - lat1));
 
-						if (10 * d < r){
-							console.log(i,j)
-							nodes[i].longitude -= 0.25 * ((r-d)) * d;
-							nodes[j].longitude += 0.25 * ((r-d)) * d;
-							nodes[i].latitude -= 0.25 * ((r-d)) * d;
-							nodes[j].latitude += 0.25 * ((r-d)) * d;
+						if ((75 * d) < r){
+							c1.longitude -= 0.1;
+							c1.latitude -= 0.1;
 						}
 					}
 				}
 			}
-			}
 
-			force.start();
+		}
+
+		    		node
+    			.attr("cx", function(d) {
+					return projection([d.longitude, d.latitude])[0];
+				})
+				.attr("cy", function(d) {
+					return projection([d.longitude, d.latitude])[1];
+				})
+
+			}
 		})
 	}
 
