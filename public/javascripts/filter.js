@@ -124,7 +124,7 @@ $(document).ready(function(){
 
 			scale = d3.scale.linear().domain([0, d3.max(data, function(d){
 				return d.annual_grantmaking;
-			})]).range([3, 30]);
+			})]).range([5, 25]);
 
 			var keys = legend.selectAll('li.key')
 							.data(color.range());
@@ -170,7 +170,7 @@ $(document).ready(function(){
 			svg.selectAll("path")
 				.data(json.features)
 				.attr("d", path)
-				.transition().duration(500)
+				.transition().duration(700)
 				.style("fill", function(d) {
 				   	//Get data value
 				   	var value = d.properties.value;
@@ -185,41 +185,54 @@ $(document).ready(function(){
 
 			var keyFn = function(d) { return [d.longitude, d.latitude, d.organization_name]; };
 
-			var circles = svg.selectAll("circle")
-							.data(data, keyFn)
+			var force = d3.layout.force()
+    					.size([w, h]);
 
-			// new circles
-			circles
-				.enter()
-				.append("circle")
-				.attr("cx", function(d) {
-					return projection([d.longitude, d.latitude])[0];
+			var nodes = data;
+
+			  // Create the node circles.
+  			var node = svg.selectAll(".node")
+      					.data(nodes, keyFn)
+      			node
+    					.enter().append("circle")
+      					.attr("class", "node")
+      					.attr("cx", function(d) {
+							return projection([d.longitude, d.latitude])[0];
+						})
+						.attr("cy", function(d) {
+							return projection([d.longitude, d.latitude])[1];
+						})
+				.style("fill", function(d){
+					if (d.isNational){
+						return "red";
+					}
+					else {
+						return "green";
+					}
 				})
-				.attr("cy", function(d) {
-					return projection([d.longitude, d.latitude])[1];
-				})     
-				.style("fill", "red")
 				.style("opacity", 1)
-				.attr("r", 0).transition().duration(500)
+				.attr("r", 0).transition().duration(700)
 				.attr("r", function(d) {
 					return scale(d.annual_grantmaking);
 				})
+				.call(addForce)
 
-			// update circles
-    		circles
+    		node
     			.attr("cx", function(d) {
 					return projection([d.longitude, d.latitude])[0];
 				})
 				.attr("cy", function(d) {
 					return projection([d.longitude, d.latitude])[1];
 				})
-				.transition().duration(500)
+				.transition().duration(700)
 				.attr("r", function(d) {
 					return scale(d.annual_grantmaking);
 				})
+				.call(addForce)
+			//force.charge(-1).nodes(nodes);
+			
 
-			// tooltips for circles
-			circles
+			node
     			.on("mouseover", function(d) {
 					//Get this bar's x/y values, then augment for the tooltip
 					var xPosition = parseFloat(d3.select(this).attr("cx")) + 80;
@@ -239,8 +252,35 @@ $(document).ready(function(){
 				})
 
 
-    		circles.exit().transition().duration(500)
+    		node.exit().transition().duration(700)
     				.style("opacity", 0).remove();
+			function addForce(){
+				console.log(nodes)
+			for (var i = 0; i < nodes.length; i++){
+				for (var j = i; j < nodes.length; j++){
+					if (i != j){
+						var lon1 = nodes[i].longitude;
+						var lon2 = nodes[j].longitude;
+						var lat1 = nodes[i].latitude;
+						var lat2 = nodes[i].latitude;
+
+						var r = scale(nodes[i].annual_grantmaking) + scale(nodes[j].annual_grantmaking)
+
+						var d = Math.sqrt((lon2 - lon1) * (lon2 - lon1) + (lat2 - lat1) * (lat2 - lat1));
+
+						if (10 * d < r){
+							console.log(i,j)
+							nodes[i].longitude -= 0.25 * ((r-d)) * d;
+							nodes[j].longitude += 0.25 * ((r-d)) * d;
+							nodes[i].latitude -= 0.25 * ((r-d)) * d;
+							nodes[j].latitude += 0.25 * ((r-d)) * d;
+						}
+					}
+				}
+			}
+			}
+
+			force.start();
 		})
 	}
 
