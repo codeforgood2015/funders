@@ -98,6 +98,7 @@
 								dataType: "json",
 								success: function(data){
 									console.log(data);
+									window.location = "/";
 
 								},
 								error: function(xhr, status){

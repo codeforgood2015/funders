@@ -132,7 +132,6 @@ router.get('/', function(req, res){
 			})
 		}
 		if (req.query.national){
-			// req.query.national must be true or false
 			queryString.push({isNational: req.query.national});
 		}
 		if (req.query.funders_member){
@@ -155,12 +154,10 @@ router.get('/', function(req, res){
 			if (err){
 				console.log(err)
 				utils.sendErrResponse(res, 500, 'Could not find data');
-			//res.send(500).json({error: 'Could not find / populated all data', success: false});
 			}
 			else{
 				organizations = docs.map(formatOrg);
 				utils.sendSuccessResponse(res, {message: organizations});
-				//res.json({success: true, message: organizations});
 			}	
 	})
 	}
@@ -172,13 +169,9 @@ router.get('/:org_id', function(req, res){
 		if (err){
 			console.log(err)
 			utils.sendErrResponse(res, 500, 'Could not find data');
-		//res.send(500).json({error: 'Could not find / populated all data', success: false});
 		}
 		else{
-				//organizations = docs.map(formatOrg);
-				//console.log(organizations);
 			utils.sendSuccessResponse(res, docs);
-				//res.json({success: true, message: organizations});
 		}	
 	})	
 })
@@ -244,10 +237,6 @@ router.post('/', function(req, res){
     var isNational = req.body.isNational; 
     var isFundersMember = req.body.isFundersMember;
 
-    console.log(latitude)
-    console.log(longitude)
-
-    //var org = new Organization({user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state, populations: populations_list,supported_strategies:strategies_list});
     var org = new Organization({latitude: latitude, longitude: longitude, isNational: isNational, isFundersMember: isFundersMember, year:year, organization_name: organization, address:address, asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
 
     funder_type_list = [];
@@ -277,9 +266,7 @@ router.post('/', function(req, res){
 			utils.sendErrResponse(res, 500, 'Could not find / populated all data');
     	}
     	else {
-			//res.json({success: true, message: "added organization"});
-			//res.render('map2');
-			res.redirect('/map2');
+			res.json({success: true, message: "added organization"});
     	}
     })
 });

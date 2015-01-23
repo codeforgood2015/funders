@@ -229,7 +229,6 @@ $(document).ready(function(){
 					return scale(d.annual_grantmaking);
 				})
 				.call(addForce)
-			//force.charge(-1).nodes(nodes);
 			
 
 			node
@@ -255,6 +254,8 @@ $(document).ready(function(){
     		node.exit().transition().duration(700)
     				.style("opacity", 0).remove();
 
+			force.gravity(3.0).charge(-1).nodes(nodes);
+    		force.start();
 			function addForce(){
 
 				var collide = true;
