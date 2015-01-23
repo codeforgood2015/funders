@@ -31,6 +31,57 @@ $(document).ready(function(){
 		currentMousePos.y = event.pageY;
 	});
 
+            $('#population-dropdown').multiselect({
+              includeSelectAllOption: true,
+              buttonText: function(options, select){
+                if (options.length === 0) {
+                    delete data.populations;
+                	returnQuery(data);
+                    return 'None Selected ▾';
+                }
+                else{
+                  var labels = [];
+                  options.each(function() {
+                    if ($(this).attr('label') !== undefined) {
+                      labels.push($(this).attr('label'));
+                    }
+                    else {
+                      labels.push($(this).html());
+                    }
+                  });
+                  data.populations = labels.join(',');
+                  returnQuery(data);
+                  return labels.join(', ') + ' ▾';
+                }
+              }
+            });
+            $('#strategies-dropdown').multiselect({
+              includeSelectAllOption: true,
+              numberDisplayed: 13,
+              buttonText: function(options, select){
+                if (options.length === 0) {
+                	delete data.supported_strategies;
+                	returnQuery(data);
+
+                    return 'None Selected ▾';
+                }
+                else{
+                  var labels = [];
+                  options.each(function() {
+                    if ($(this).attr('label') !== undefined) {
+                      labels.push($(this).attr('label'));
+                    }
+                    else {
+                      labels.push($(this).html());
+                    }
+                  });
+                  data.supported_strategies = labels.join(',');
+                  returnQuery(data);
+                  return labels.join(', ') + ' ▾';
+                }
+              }
+            });
+
 	$("#populations").change(function(){
   		if (this.value == "All"){
   		  	$.get('/organization/', function(data){
@@ -63,7 +114,7 @@ $(document).ready(function(){
 		d3.select("#tooltip").classed("hidden", true);
 	})
 
-	$("input[name='funding_area']").change(function(){
+	/*$("input[name='funding_area']").change(function(){
 		var populations = ""
 		$("input[name='funding_area']:checked").each(function() {
 			populations += this.value + ","
@@ -90,8 +141,10 @@ $(document).ready(function(){
 		else{
 			delete data.supported_strategies;
 		}
+
+		                  console.log(data)
 		returnQuery(data);
-	})
+	})*/
 
 	$("#year").change(function(){
 		data.year = this.value; 

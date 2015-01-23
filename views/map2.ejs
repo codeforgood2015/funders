@@ -18,47 +18,7 @@
     <!-- Initialize the plugin: -->
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#population-dropdown').multiselect({
-              includeSelectAllOption: true,
-              buttonText: function(options, select){
-                if (options.length === 0) {
-                    return 'None Selected ▾';
-                }
-                else{
-                  var labels = [];
-                  options.each(function() {
-                    if ($(this).attr('label') !== undefined) {
-                      labels.push($(this).attr('label'));
-                    }
-                    else {
-                      labels.push($(this).html());
-                    }
-                  });
-                  return labels.join(', ') + ' ▾';
-                }
-              }
-            });
-            $('#strategies-dropdown').multiselect({
-              includeSelectAllOption: true,
-              numberDisplayed: 13,
-              buttonText: function(options, select){
-                if (options.length === 0) {
-                    return 'None Selected ▾';
-                }
-                else{
-                  var labels = [];
-                  options.each(function() {
-                    if ($(this).attr('label') !== undefined) {
-                      labels.push($(this).attr('label'));
-                    }
-                    else {
-                      labels.push($(this).html());
-                    }
-                  });
-                  return labels.join(', ') + ' ▾';
-                }
-              }
-            });
+
         });
     </script>
 
@@ -87,9 +47,9 @@
     <option name = "funding_area" value = "Youth/Young Adults">Youth/Young Adults</option>
   </select>
 
-  <br>
+ <br>
 
-  <input type = "checkbox" name = "funding_area" value ="Chronic Homelessness">Chronic Homelessness
+ <input type = "checkbox" name = "funding_area" value ="Chronic Homelessness">Chronic Homelessness
   <input type = "checkbox" name = "funding_area" value ="Domestic Violence">Domestic Violence
   <input type = "checkbox" name = "funding_area" value = "Employment">Employment
   <input type = "checkbox" name = "funding_area" value = "Families">Families
