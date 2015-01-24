@@ -1,28 +1,29 @@
 $(document).ready(function(){
 	var data = {}
+
+	var data_json;
 	//var states = {}
 	var color;
-	//var scale;
-	var w = 1500;
-	var h = 900;
 	var currentMousePos = { x: -1, y: -1 };
 	var legend = d3.select('#legend')
 					.append('ul')
 					.attr('class', 'list-inline');
+	//var scale;
+	var w = parseInt(d3.select('#container').style('width'));
+	var h = w * 0.6;
+	var currentMousePos = { x: -1, y: -1 };
 
-	//Define map projection
-	var projection = d3.geo.albersUsa()
-	.translate([w/2, h/2]).scale([1600]);
-		//Define path generator
-	var path = d3.geo.path()
-		.projection(projection);
-			//Create SVG element
 	svg = d3.select("#container")
 			.append("svg")
 			.attr("width", w)
 			.attr("height", h);
 
+
+$(window).on('resize', function(){
+	updateMap(data_json);
+})
 	$.get('/organization/', function(data){
+		data_json = data.content.message;
 		updateMap(data.content.message);
 	});
 
@@ -85,12 +86,14 @@ $(document).ready(function(){
 	$("#populations").change(function(){
   		if (this.value == "All"){
   		  	$.get('/organization/', function(data){
+  		  		data_json = data.content.message;
   				updateMap(data.content.message);
   			});	
   		}
   		else {
   			document.getElementById("strategies").selectedIndex = 0;
   			$.get('/organization/population/' + this.value, function(data){
+  				data_json = data.content.message;
   				updateMap(data.content.message);
   			});
   		}
@@ -99,12 +102,14 @@ $(document).ready(function(){
 	$("#strategies").change(function(){
   		if (this.value == "All"){
   		  	$.get('/organization/', function(data){
+  		  		data_json = data.content.message;
   				updateMap(data.content.message);
   			});	
   		}
   		else {
   		  	document.getElementById("populations").selectedIndex = 0;
   			$.get('/organization/strategy/' + this.value, function(data){
+  				data_json = data.content.message;
   				updateMap(data.content.message);
   			});
   		}
@@ -152,6 +157,17 @@ $(document).ready(function(){
   	})
 
 	function updateMap(data){
+
+		w = parseInt(d3.select('#container').style('width'));
+		h = w * 0.6;
+
+	//Define map projection
+	var projection = d3.geo.albersUsa()
+	.translate([w/2, h/2]).scale([w]);
+		//Define path generator
+	var path = d3.geo.path()
+		.projection(projection);
+
 		var states = {}
 		data.forEach(function(funder){
 			if (!states[funder.state]){
@@ -355,6 +371,7 @@ $(document).ready(function(){
 	function returnQuery(dataObj){
 		var queryString = decodeURIComponent($.param(dataObj));
 		$.get('/organization/?' + queryString, function(data){
+			  		  		data_json = data.content.message;
 			updateMap(data.content.message);
 		});
 	}
