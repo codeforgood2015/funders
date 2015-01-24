@@ -193,7 +193,7 @@ $(window).on('resize', function(){
 
 			scale = d3.scale.linear().domain([0, d3.max(data, function(d){
 				return d.annual_grantmaking;
-			})]).range([5, 25]);
+			})]).range([w/250, w/50]);
 
 			var keys = legend.selectAll('li.key')
 							.data(color.range());
