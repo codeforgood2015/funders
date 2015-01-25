@@ -3,10 +3,13 @@ $(document).ready(function(){
   var data_json;
   var w = parseInt(d3.select('#container').style('width'));
   var h = w * 0.6;
-    var x, y, k;
   var centered;
 
     var currentMousePos = { x: -1, y: -1 };
+
+    var legend = d3.select('#legend')
+          .append('ul')
+          .attr('class', 'list-inline');
 
 var projection = d3.geo.albersUsa()
     .scale(w)
@@ -28,6 +31,9 @@ svg.append("rect")
 
 var g = svg.append("g");
 
+$(window).on('resize', function(){
+  updateMap(data_json);
+})
   $.get('/organization/', function(data){
     data_json = data.content.message;
     updateMap(data.content.message);
@@ -127,7 +133,17 @@ var g = svg.append("g");
 
 function updateMap(data){
 
-      var states = {}
+    w = parseInt(d3.select('#container').style('width'));
+    h = w * 0.6;
+
+   projection = d3.geo.albersUsa()
+    .scale(w)
+    .translate([w / 2, h / 2]);
+
+    path = d3.geo.path()
+    .projection(projection);
+
+    var states = {}
     data.forEach(function(funder){
       if (!states[funder.state]){
         states[funder.state] = funder.annual_grantmaking
@@ -138,6 +154,7 @@ function updateMap(data){
     })
 
 d3.json("/files/us-states.json", function(error, json) {
+
       for (var i = 0; i < json.features.length; i++){
         var state = json.features[i].properties.name
 
@@ -153,8 +170,28 @@ d3.json("/files/us-states.json", function(error, json) {
         return d.annual_grantmaking;
       })]).range([w/250, w/50]);
 
-  g.append("g")
-    .selectAll("path")
+        var keys = legend.selectAll('li.key')
+              .data(color.range());
+
+      keys.enter().append('li')
+            .attr('class', 'key')
+            .style('border-top-color', String)
+            .text(function(d) {
+              var r = color.invertExtent(d);
+              return "$" + r[0].toFixed(2);
+            });
+
+      keys.attr('class', 'key')
+        .style('border-top-color', String)
+        .text(function(d) {
+          var r = color.invertExtent(d);
+          if (isNaN(r[0])){
+            return "";
+          }
+          return "$" + r[0].toFixed(2);
+        });
+
+    g.selectAll("path")
       .data(json.features)
     .enter().append("path")
       .attr("d", path)
@@ -170,14 +207,30 @@ d3.json("/files/us-states.json", function(error, json) {
             else {
               return "#efefef";
             }
-        });;
+        });
+
+      g.selectAll("path")
+        .data(json.features)
+        .attr("d", path)
+        .transition().duration(750)
+        .style("fill", function(d) {
+            //Get data value
+            var value = d.properties.value;
+            if (value) {
+              return color(value);
+            } 
+            else {
+              //If value is undefined…
+              return "#efefef";
+            }
+        });
 
       var keyFn = function(d) { return d._id; };
 
       var nodes = data;
 
         // Create the node circles.
-        var node = svg.selectAll(".node")
+        var node = g.selectAll(".node")
                 .data(nodes, keyFn)
             node
               .enter().append("circle")
@@ -197,18 +250,25 @@ d3.json("/files/us-states.json", function(error, json) {
           }
         })
         .style("opacity", 1)
-        .attr("r", 0).transition().duration(700)
+        .attr("r", 0).transition().duration(750)
         .attr("r", function(d) {
           return scale(d.annual_grantmaking);
         })
 
         node
-        .transition().duration(700)
+           .attr("cx", function(d) {
+              return projection([d.longitude, d.latitude])[0];
+            })
+            .attr("cy", function(d) {
+              return projection([d.longitude, d.latitude])[1];
+            })
+        .transition().duration(750)
+
         .attr("r", function(d) {
           return scale(d.annual_grantmaking);
-        }).attr("transform", "translate(" + w / 2 + "," + h / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+        })
 
-              node
+        node
           .on("mouseover", function(d) {
           //Get this bar's x/y values, then augment for the tooltip
           var xPosition = parseFloat(d3.select(this).attr("cx")) + 80;
@@ -228,14 +288,13 @@ d3.json("/files/us-states.json", function(error, json) {
         })
 
 
-        node.exit().transition().duration(700)
+        node.exit().transition().duration(750)
             .style("opacity", 0).remove();
 });
 }
 
 function clicked(d) {
-  //console.log(d == centered);
-  //console.log(d, centered)
+      var x, y, k;
   if (d && centered !== d.id) {
     var centroid = path.centroid(d);
     x = centroid[0];
@@ -253,16 +312,9 @@ function clicked(d) {
       .classed("active", centered && function(d) { return d === centered; });
 
   g.transition()
-      .duration(750)
+      .duration(1000)
       .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
       .style("stroke-width", 1.5 / k + "px");
-
-g.selectAll("circle")
-.transition()
-.duration(750)
-.attr("transform", "translate(" + w / 2 + "," + h / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
-
-  updateMap(data_json);
 }
 
   function returnQuery(dataObj){
