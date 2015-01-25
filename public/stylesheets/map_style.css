@@ -40,3 +40,8 @@ li.key {
 .node {
   stroke: #000;
 }
+
+.background {
+  fill: none;
+  pointer-events: all;
+}
