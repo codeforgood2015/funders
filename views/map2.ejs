@@ -15,23 +15,19 @@
     <!-- Include the Bootstrap Multiselect plugin's CSS and JS: -->
     <script type="text/javascript" src="/javascripts/bootstrap-multiselect.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap-multiselect.css" type="text/css"/>
-    <!-- Initialize the plugin: -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-        });
-    </script>
-
     <style>
 
     </style>
 
   </head>
   <body>
-    <a href = "/form1">Go To Input Form</a>
 
+    <div id="container" class="container">
 
-<h3>Populations</h3>
+<div id = "left">
+            <a href = "/form1">Go To Input Form</a>
+  <h3>Filter By:</h3>
+<h4>Populations</h4>
 
   <select id="population-dropdown" multiple="multiple">
     <option name = "funding_area" value ="Chronic Homelessness">Chronic Homelessness</option>
@@ -49,7 +45,7 @@
 
  <br>
 
- <input type = "checkbox" name = "funding_area" value ="Chronic Homelessness">Chronic Homelessness
+<!-- <input type = "checkbox" name = "funding_area" value ="Chronic Homelessness">Chronic Homelessness
   <input type = "checkbox" name = "funding_area" value ="Domestic Violence">Domestic Violence
   <input type = "checkbox" name = "funding_area" value = "Employment">Employment
   <input type = "checkbox" name = "funding_area" value = "Families">Families
@@ -59,8 +55,8 @@
   <input type = "checkbox" name = "funding_area" value = "Reentry from Criminal Justice System">Reentry from Criminal Justice System
   <input type = "checkbox" name = "funding_area" value = "Rural Populations">Rural Populations
   <input type = "checkbox" name = "funding_area" value = "Veterans">Veterans
-  <input type = "checkbox" name = "funding_area" value = "Youth/Young Adults">Youth/Young Adults
-<h3>Supported Strategies</h3>
+  <input type = "checkbox" name = "funding_area" value = "Youth/Young Adults">Youth/Young Adults-->
+<h4>Supported Strategies</h4>
 
   <select id="strategies-dropdown" multiple="multiple">
     <option name = "supported_strategies" value ="Affordable Housing">Affordable Housing</option>
@@ -80,7 +76,7 @@
 
   <br>
 
-  <input type = "checkbox" name = "supported_strategies" value ="Affordable Housing">Affordable Housing
+  <!--<input type = "checkbox" name = "supported_strategies" value ="Affordable Housing">Affordable Housing
   <input type = "checkbox" name = "supported_strategies" value ="Community Plan">Community Plan
   <input type = "checkbox" name = "supported_strategies" value = "Emergency Shelter">Emergency Shelter
   <input type = "checkbox" name = "supported_strategies" value = "Funding Advocacy">Funding Advocacy
@@ -92,9 +88,9 @@
   <input type = "checkbox" name = "supported_strategies" value = "Rapid Re-Housing">Rapid Re-Housing
   <input type = "checkbox" name = "supported_strategies" value = "Supportive Services">Supportive Services
   <input type = "checkbox" name = "supported_strategies" value = "Transitional Housing">Transitional Housing
-  <input type = "checkbox" name = "supported_strategies" value = "Workforce Development">Workforce Development
+  <input type = "checkbox" name = "supported_strategies" value = "Workforce Development">Workforce Development-->
 
-  <h3>Year:</h3>
+  <h4>Year:</h4>
   <select id="year">
       <option value="2014">2014</option>
     <option value="2013">2013</option>
@@ -115,7 +111,8 @@
     <option value="1998">1998</option>
     <option value="1997">1997</option>
   </select>
-
+</div>
+<div id = "top">
 <h3>View Funding towards different areas</h3>
 Populations: 
     <select id="populations">
@@ -150,11 +147,14 @@ Supported Strategies:
       <option value="Transitional Housing">Transitional Housing</option>
       <option value="Workforce Development">Workforce Development</option>
     </select>
+</div>
 
 
-    <div id="legend">Total Annual Grantmaking</div>
     <!--<div id="container"></div>-->
-    <div id="container" class="container-fluid"></div>
+    <div id = "map">
+
+    </div>
+                  <div id="legend">Total Annual Grantmaking</div>
          <div id="tooltip" class="hidden">
       <p><span id="text"></span></p>
      <button id="close">Close</button>

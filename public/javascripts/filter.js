@@ -1,8 +1,8 @@
 $(document).ready(function(){
   var data = {};
   var data_json;
-  var width = parseInt(d3.select('#container').style('width'));
-  var w = parseInt(d3.select('#container').style('width'));
+  var width = parseInt(d3.select('#map').style('width'));
+  var w = parseInt(d3.select('#map').style('width'));
   var h = w * 0.6;
   var centered;
 
@@ -21,14 +21,14 @@ var projection = d3.geo.albersUsa()
 var path = d3.geo.path()
     .projection(projection);
 
-var svg = d3.select("#container").append("svg")
+var svg = d3.select("#map").append("svg")
     .attr("width", w)
     .attr("height", h);
 
 var zoom = d3.behavior.zoom()
     .translate(projection.translate())
     .scale(projection.scale())
-.scaleExtent([w*0.5, 32 * w])
+.scaleExtent([w, 32 * w])
     .on("zoom", zoomed);
 
 
@@ -43,11 +43,16 @@ g.append("rect")
 
 
 function zoomed() {
-  projection.translate(d3.event.translate).scale(d3.event.scale);
+
+  var t = d3.event.translate,
+      s = d3.event.scale;
+
+t[0] *= w/width;
+t[1] *= w/width;
+
+  projection.translate(t).scale(s * w/width);
   g.selectAll("path").attr("d", path);
-
-  console.log(d3.event.translate[0])
-
+          d3.select("#tooltip").classed("hidden", true);
              node
                 .attr("cx", function(d) {
               return projection([d.longitude, d.latitude])[0];
@@ -62,7 +67,7 @@ function zoomed() {
 
 }
 $(window).on('resize', function(){
-    w = parseInt(d3.select('#container').style('width'));
+    w = parseInt(d3.select('#map').style('width'));
     h = w * 0.6;
 
    projection = d3.geo.albersUsa()
@@ -89,10 +94,10 @@ $(window).on('resize', function(){
     updateMap(data.content.message);
   });
 
-  $(document).mousemove(function(event) {
+  /*$(document).mousemove(function(event) {
     currentMousePos.x = event.pageX;
     currentMousePos.y = event.pageY;
-  });
+  });*/
 
             $('#population-dropdown').multiselect({
               includeSelectAllOption: true,
@@ -114,7 +119,8 @@ $(window).on('resize', function(){
                   });
                   data.populations = labels.join(',');
                   returnQuery(data);
-                  return labels.join(', ') + ' ▾';
+                  //return labels.join(', ') + ' ▾';
+                  return 'View Selected ▾';
                 }
               }
             });
@@ -140,7 +146,8 @@ $(window).on('resize', function(){
                   });
                   data.supported_strategies = labels.join(',');
                   returnQuery(data);
-                  return labels.join(', ') + ' ▾';
+                  //return labels.join(', ') + ' ▾';
+                  return 'View Selected ▾';
                 }
               }
             });
@@ -176,14 +183,17 @@ $(window).on('resize', function(){
         });
       }
     })
-
+  $("#year").change(function(){
+    data.year = this.value; 
+    returnQuery(data);
+    })
   $("#close").click(function(){
     d3.select("#tooltip").classed("hidden", true);
   })
 
 function updateMap(data){
 
-    w = parseInt(d3.select('#container').style('width'));
+    w = parseInt(d3.select('#map').style('width'));
     h = w * 0.6;
 
     var states = {}
@@ -292,7 +302,7 @@ d3.json("/files/us-states.json", function(error, json) {
             return "green";
           }
         })
-        .style("opacity", 1)
+        .style("opacity", 0.6)
         .attr("r", 0).transition().duration(750)
         .attr("r", function(d) {
           return scale(d.annual_grantmaking);
@@ -315,13 +325,13 @@ d3.json("/files/us-states.json", function(error, json) {
         node
           .on("mouseover", function(d) {
           //Get this bar's x/y values, then augment for the tooltip
-          var xPosition = parseFloat(d3.select(this).attr("cx")) + 80;
-          var yPosition = parseFloat(d3.select(this).attr("cy")) + h/2;
+          var xPosition = parseFloat(d3.select(this).attr("cx")) + w/2;
+          var yPosition = parseFloat(d3.select(this).attr("cy")) + h/4;
 
           //Update the tooltip position and value
           d3.select("#tooltip")
-            .style("left", currentMousePos.x + "px")
-            .style("top", currentMousePos.y + "px")           
+            .style("left", xPosition + "px")
+            .style("top", yPosition + "px")           
             .select("#text")
             .html("Organization: " + d.organization_name + 
               "<br>Asset size: $" + d.asset_size + 
