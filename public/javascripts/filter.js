@@ -1,10 +1,13 @@
 $(document).ready(function(){
   var data = {};
   var data_json;
+  var width = parseInt(d3.select('#container').style('width'));
   var w = parseInt(d3.select('#container').style('width'));
   var h = w * 0.6;
   var centered;
 
+var scale;
+  var node;
     var currentMousePos = { x: -1, y: -1 };
 
     var legend = d3.select('#legend')
@@ -22,17 +25,64 @@ var svg = d3.select("#container").append("svg")
     .attr("width", w)
     .attr("height", h);
 
+var zoom = d3.behavior.zoom()
+    .translate(projection.translate())
+    .scale(projection.scale())
+.scaleExtent([w*0.5, 32 * w])
+    .on("zoom", zoomed);
 
-svg.append("rect")
+
+var g = svg.append("g")
+.call(zoom);
+
+g.append("rect")
     .attr("class", "background")
     .attr("width", w)
     .attr("height", h)
-    .on("click", clicked);
 
-var g = svg.append("g");
 
+
+function zoomed() {
+  projection.translate(d3.event.translate).scale(d3.event.scale);
+  g.selectAll("path").attr("d", path);
+
+  console.log(d3.event.translate[0])
+
+             node
+                .attr("cx", function(d) {
+              return projection([d.longitude, d.latitude])[0];
+            })
+            .attr("cy", function(d) {
+              return projection([d.longitude, d.latitude])[1];
+            })
+          .attr("r", function(d) {
+          return scale(d.annual_grantmaking * d3.event.scale/2000);
+        })  
+
+
+}
 $(window).on('resize', function(){
-  updateMap(data_json);
+    w = parseInt(d3.select('#container').style('width'));
+    h = w * 0.6;
+
+   projection = d3.geo.albersUsa()
+    .scale(w)
+    .translate([w /2, h / 2]);
+
+    path = d3.geo.path()
+    .projection(projection);
+  g.selectAll("path").attr("d", path);
+
+               node
+                .attr("cx", function(d) {
+              return projection([d.longitude, d.latitude])[0];
+            })
+            .attr("cy", function(d) {
+              return projection([d.longitude, d.latitude])[1];
+            })
+          .attr("r", function(d) {
+          return scale(d.annual_grantmaking * w/(2*width));
+        })  
 })
   $.get('/organization/', function(data){
     data_json = data.content.message;
@@ -136,13 +186,6 @@ function updateMap(data){
     w = parseInt(d3.select('#container').style('width'));
     h = w * 0.6;
 
-   projection = d3.geo.albersUsa()
-    .scale(w)
-    .translate([w / 2, h / 2]);
-
-    path = d3.geo.path()
-    .projection(projection);
-
     var states = {}
     data.forEach(function(funder){
       if (!states[funder.state]){
@@ -195,7 +238,7 @@ d3.json("/files/us-states.json", function(error, json) {
       .data(json.features)
     .enter().append("path")
       .attr("d", path)
-      .on("click", clicked)
+      //.on("click", clicked)
               .style("stroke-width", 1)
         .style("stroke", 'black')
         .style("fill", function(d) {
@@ -230,7 +273,7 @@ d3.json("/files/us-states.json", function(error, json) {
       var nodes = data;
 
         // Create the node circles.
-        var node = g.selectAll(".node")
+        node = g.selectAll(".node")
                 .data(nodes, keyFn)
             node
               .enter().append("circle")
@@ -253,7 +296,8 @@ d3.json("/files/us-states.json", function(error, json) {
         .attr("r", 0).transition().duration(750)
         .attr("r", function(d) {
           return scale(d.annual_grantmaking);
-        })
+        })    
+        //.attr("transform", function(d) { return "translate(" + d + ")"; });
 
         node
            .attr("cx", function(d) {
@@ -293,7 +337,7 @@ d3.json("/files/us-states.json", function(error, json) {
 });
 }
 
-function clicked(d) {
+/*function clicked(d) {
       var x, y, k;
   if (d && centered !== d.id) {
     var centroid = path.centroid(d);
@@ -315,7 +359,23 @@ function clicked(d) {
       .duration(1000)
       .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
       .style("stroke-width", 1.5 / k + "px");
-}
+}*/
+
+/*function clicked(d) {
+  var centroid = path.centroid(d),
+      translate = projection.translate();
+
+  projection.translate([
+    translate[0] - centroid[0] + w / 2,
+    translate[1] - centroid[1] + h / 2
+  ]);
+
+  zoom.translate(projection.translate());
+
+  g.selectAll("path").transition()
+      .duration(700)
+      .attr("d", path);
+}*/
 
   function returnQuery(dataObj){
     var queryString = decodeURIComponent($.param(dataObj));
