@@ -10,32 +10,7 @@
 <script src="/javascripts/currency.js"></script>
 <script src="/javascripts/geocode.js"></script>
 <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
-<!-- <script src="js/bootstrap.min.js"></script> -->
-<!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-<script>
-/*$( document ).ready(function() {
-	// var checkboxes = $('input[type=checkbox]');
-	// for (var ii=0; ii<checkboxes.size(); ii++){
-	// 	$(checkboxes[ii]).addClass();
-	// }
-
-    // $('input[type=checkbox]').click(function(){
-    // 	if (this.checked){
-    // 		console.log(this.value);
-    // 		$(this).parent().append("<input type='text' name='"+ this.value + "'>");
-    // 	}
-    // });
-
-	$('div.slider').slider().linkedSliders();
-	$('div.slider:first').slider('value', 100);
-
-});*/
-
-</script>
-
 
 <style>
 body{
@@ -161,16 +136,16 @@ select{
 </div>
 
 <div class = "form-group">
-<label class="inputlabel control-label col-sm-2">Address:</label>
+<label class="inputlabel control-label col-sm-2">*Address:</label>
 <div class="col-sm-10">
-	<input class="form-control" id = "address" type="text" name="address">
+	<input class="form-control" id = "address" type="text" name="address" required>
 </div>
 </div>
 
 <div class = "form-group">
-<label class="inputlabel control-label col-sm-2">*Asset Size: $</label>
+<label class="inputlabel control-label col-sm-2">Asset Size: $</label>
 <div class="col-sm-10">
-	<input class="form-control" name="asset" onblur="this.value=CurrencyFormatted(this.value)" required>
+	<input class="form-control" name="asset" onblur="this.value=CurrencyFormatted(this.value)">
 </div>
 </div>
 

@@ -181,7 +181,7 @@ sliders.each(function() {
             // Update display to current value
              var total = 0;
              var slidersCount = 0;
-            	$(this).siblings('.value').text(ui.value);
+            	$(this).siblings('.value').text(ui.value.toFixed(2));
 
             // Get current total
 
@@ -198,7 +198,7 @@ sliders.each(function() {
             // Need to do this because apparently jQ UI
             // does not update value until this event completes
             total += ui.value;
-            $(this).siblings('input.amount').val(ui.value * totalDonation / 100);
+            $(this).siblings('input.amount').val(CurrencyFormatted(ui.value * totalDonation / 100));
 
             var delta = availableTotal - total;
 
@@ -220,9 +220,9 @@ sliders.each(function() {
                 if (new_value > 100) 
                     new_value = 100;
 
-                t.siblings('.value').text(new_value);
+                t.siblings('.value').text(new_value.toFixed(2));
                 t.slider('value', new_value);
-                $(this).siblings('input.amount').val(new_value * totalDonation / 100);
+                $(this).siblings('input.amount').val(CurrencyFormatted(new_value * totalDonation / 100));
             }
             });
         }
@@ -230,11 +230,10 @@ sliders.each(function() {
 });
 
 $(".amount").change(function(){
-	var totalDonation = $("#yearDonation").val() || 0;
-	var amount = $(this).val();
+	var totalDonation = parseFloat($("#yearDonation").val()) || 0;
+	var amount = parseFloat($(this).val());
 	var slider = $(this).siblings('.slider');
 
-	console.log(totalDonation)
 	if (amount > totalDonation){
 		$(this).val(totalDonation);
 		slider.slider("value", 100);
@@ -243,7 +242,7 @@ $(".amount").change(function(){
 	else {
 		percentage = amount / totalDonation;
 		slider.slider("value", percentage * 100);
-		$(this).siblings('.value').text(percentage * 100);
+		$(this).siblings('.value').text((percentage * 100).toFixed(2));
 	}
 })
 		

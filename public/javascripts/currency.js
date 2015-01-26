@@ -1,6 +1,7 @@
 //Credited to: http://css-tricks.com/snippets/javascript/format-currency/
 
 function CurrencyFormatted(amount) {
+    amount = amount.toString();
     if (amount == "") {
         return "";
     }
