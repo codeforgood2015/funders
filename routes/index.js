@@ -6,6 +6,14 @@ router.get('/', function(req, res) {
   res.render('map2', {title: 'Map'});
 });
 
+router.get('/dashboard', function(req, res){
+	res.render('dashboard');
+})
+
+router.get('/profile', function(req, res){
+	res.render('profile')
+})
+
 
 router.get('/map2', function(req, res){
   res.render('map2', {title: 'Map'});
