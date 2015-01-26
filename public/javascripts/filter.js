@@ -152,7 +152,7 @@ $(window).on('resize', function(){
               }
             });
 
-                        $('#funder-dropdown').multiselect({
+            $('#funder-dropdown').multiselect({
               includeSelectAllOption: true,
               numberDisplayed: 13,
               buttonText: function(options, select){
