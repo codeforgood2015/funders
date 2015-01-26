@@ -147,7 +147,7 @@ $(window).on('resize', function(){
                   data.supported_strategies = labels.join(',');
                   returnQuery(data);
                   //return labels.join(', ') + ' ▾';
-                  return 'ShowSelected ▾';
+                  return 'Show Selected ▾';
                 }
               }
             });
@@ -189,7 +189,7 @@ $(window).on('resize', function(){
       }
       else {
         document.getElementById("strategies").selectedIndex = 0;
-        $.get('/organization/population/' + this.value, function(data){
+        $.get('/organization/population/' + encodeURIComponent(this.value), function(data){
           data_json = data.content.message;
           updateMap(data.content.message);
         });
@@ -205,7 +205,7 @@ $(window).on('resize', function(){
       }
       else {
           document.getElementById("populations").selectedIndex = 0;
-        $.get('/organization/strategy/' + this.value, function(data){
+        $.get('/organization/strategy/' + encodeURIComponent(this.value), function(data){
           data_json = data.content.message;
           updateMap(data.content.message);
         });
