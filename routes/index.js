@@ -30,5 +30,9 @@ router.get('/form2', function(req, res) {
   res.render('form2', { title: 'Form2' });
 });
 
+/* GET overview page. */
+router.get('/overview', function(req, res){
+	res.render('overview', {title: 'Overview'});
+});
 
 module.exports = router;
