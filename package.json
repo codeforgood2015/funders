@@ -15,5 +15,10 @@
     "ejs": "~1.0.0",
     "mongodb": "*",
     "mongoose": "*"
-  }
+  },
+  "engines": {
+    "node": ">= 0.10.30",
+    "npm": ">= 1.0.0"
+  },
+  "main": "app.js"
 }

@@ -15,81 +15,41 @@
     <!-- Include the Bootstrap Multiselect plugin's CSS and JS: -->
     <script type="text/javascript" src="/javascripts/bootstrap-multiselect.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap-multiselect.css" type="text/css"/>
-    <!-- Initialize the plugin: -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#population-dropdown').multiselect({
-              includeSelectAllOption: true,
-              buttonText: function(options, select){
-                if (options.length === 0) {
-                    return 'None Selected ▾';
-                }
-                else{
-                  var labels = [];
-                  options.each(function() {
-                    if ($(this).attr('label') !== undefined) {
-                      labels.push($(this).attr('label'));
-                    }
-                    else {
-                      labels.push($(this).html());
-                    }
-                  });
-                  return labels.join(', ') + ' ▾';
-                }
-              }
-            });
-            $('#strategies-dropdown').multiselect({
-              includeSelectAllOption: true,
-              numberDisplayed: 13,
-              buttonText: function(options, select){
-                if (options.length === 0) {
-                    return 'None Selected ▾';
-                }
-                else{
-                  var labels = [];
-                  options.each(function() {
-                    if ($(this).attr('label') !== undefined) {
-                      labels.push($(this).attr('label'));
-                    }
-                    else {
-                      labels.push($(this).html());
-                    }
-                  });
-                  return labels.join(', ') + ' ▾';
-                }
-              }
-            });
-        });
-    </script>
-
     <style>
 
     </style>
 
   </head>
   <body>
-    <a href = "/form1">Go To Input Form</a>
+
+    <div id="container" class="container">
+
+<div id = "left">
+            <a href = "/form1">Go To Input Form</a>
+  <h3>Filter By:</h3>
+<h4>Populations</h4>
 
 
-<h3>Populations</h3>
-
-  <!-- testing stuff out -->
-<!--   <select id="population-dropdown" multiple="multiple">
+  <!-- <select id="population-dropdown" multiple="multiple">
+    <option name = "funding_area" value = "All people experiencing or at risk of homelessness">All people experiencing or at risk of homelessness</option>
     <option name = "funding_area" value ="Chronic Homelessness">Chronic Homelessness</option>
-    <option name = "funding_area" value ="Domestic Violence">Domestic Violence</option>
-    <option name = "funding_area" value = "Employment">Employment</option>
+    <option name = "funding_area" value ="Domestic Violence Survivors">Domestic Violence Survivors</option>
     <option name = "funding_area" value = "Families">Families</option>
-    <option name = "funding_area" value = "LGBT">LGBT</option>
-    <option name = "funding_area" value = "Mental/Physical Health">Mental/Physical Health</option>
+    <option name = "funding_area" value = "Immigrants">Immigrants</option>
+    <option name = "funding_area" value = "Military Veterans">Military Veterans</option>
+    <option name = "funding_area" value = "People who identify as lesbian, gay, bisexual and/or transgender">People who identify as lesbian, gay, bisexual and/or transgender</option>
+    <option name = "funding_area" value = "People re-entering the community from a mental health facility">People re-entering the community from a mental health facility</option>
+    <option name = "funding_area" value = "People re-entering the community from the criminal justice system">People re-entering the community from the criminal justice system</option>
+    <option name = "funding_area" value = "People with substance use disorder">People with substance use disorder</option>
     <option name = "funding_area" value = "Older Adults/Seniors">Older Adults/Seniors</option>
-    <option name = "funding_area" value = "Reentry from Criminal Justice System">Reentry from Criminal Justice System</option>
     <option name = "funding_area" value = "Rural Populations">Rural Populations</option>
-    <option name = "funding_area" value = "Veterans">Veterans</option>
+    <option name = "funding_area" value = "Women">Women</option>
     <option name = "funding_area" value = "Youth/Young Adults">Youth/Young Adults</option>
+    <option name = "funding_area" value = "Youth/young adults exiting foster care">Youth/young adults exiting foster care</option>
   </select> -->
-  <!-- end of testing stuff -->
 
-  <br>
+
+ <br>
 
   <fieldset>
     <div class="checkbox">
@@ -128,23 +88,27 @@
   </fieldset>
 <h3>Supported Strategies</h3>
 
-  <!-- testing stuff out -->
+
+<h4>Supported Strategies</h4>
+
 <!--   <select id="strategies-dropdown" multiple="multiple">
+    <option name = "supported_strategies" value = "Advocacy">Advocacy</option>
     <option name = "supported_strategies" value ="Affordable Housing">Affordable Housing</option>
-    <option name = "supported_strategies" value ="Community Plan">Community Plan</option>
     <option name = "supported_strategies" value = "Emergency Shelter">Emergency Shelter</option>
-    <option name = "supported_strategies" value = "Funding Advocacy">Funding Advocacy</option>
+    <option name = "supported_strategies" value = "Workforce Development">Employment/Workforce Development</option>
+    <option name = "supported_strategies" value = "Funding Advocacy">Homelessness Prevention</option>
     <option name = "supported_strategies" value = "Housing First">Housing First</option>
+    <option name = "supported_strategies" value = "Outreach to people experiencing homelessness">Outreach to people experiencing homelessness</option>
     <option name = "supported_strategies" value = "Permanent Supportive Housing">Permanent Supportive Housing</option>
-    <option name = "supported_strategies" value = "Prevention">Prevention</option>
     <option name = "supported_strategies" value = "Public Education">Public Education</option>
-    <option name = "supported_strategies" value = "Public Policy/Systems Change">Public Policy/Systems Change</option>
     <option name = "supported_strategies" value = "Rapid Re-Housing">Rapid Re-Housing</option>
+    <option name = "supported_strategies" value = "Research/Data">Research/Data</option>
     <option name = "supported_strategies" value = "Supportive Services">Supportive Services</option>
+    <option name = "supported_strategies" value = "Systems Change">Systems Change</option>
     <option name = "supported_strategies" value = "Transitional Housing">Transitional Housing</option>
     <option name = "supported_strategies" value = "Workforce Development">Workforce Development</option>
-  </select> -->
-  <!-- end of testing stuff out -->
+  </select> --> -->
+
 
   <br>
   <fieldset>
@@ -190,8 +154,30 @@
   </fieldset>
 
   <h3>Year:</h3>
+
+
+  </select>
+
+  <br>
+
+  <h4>Funder Type</h4>
+  <select id="funder-dropdown" multiple="multiple">
+    <option name = "funder_type" value ="Community Foundation">Community Foundation</option>
+    <option name = "funder_type" value ="Corporate Giving Program">Corporate Giving Program</option>
+    <option name = "funder_type" value = "Family Foundation">Family Foundation</option>
+    <option name = "funder_type" value = "Independent Foundation">Independent Foundation</option>
+    <option name = "funder_type" value = "Individual Philanthropist">Individual Philanthropist</option>
+    <option name = "funder_type" value = "Operating Foundation">Operating Foundation</option>
+    <option name = "funder_type" value = "Private Foundation">Private Foundation</option>
+    <option name = "funder_type" value = "Public Charity">Public Charity</option>
+    <option name = "funder_type" value = "United Way">United Way</option>
+  </select>
+
+  <br>
+
+  <h4>Year:</h4>
   <select id="year">
-      <option value="2014">2014</option>
+    <option value="2014">2014</option>
     <option value="2013">2013</option>
     <option value="2012">2012</option>
     <option value="2011">2011</option>
@@ -210,46 +196,56 @@
     <option value="1998">1998</option>
     <option value="1997">1997</option>
   </select>
-
+</div>
+<div id = "top">
 <h3>View Funding towards different areas</h3>
+
 Populations: 
     <select id="populations">
-      <option selected="selected" value="All">All</option>
-      <option value="Chronic Homelessness">Chronic Homelessness</option>
-      <option value="Domestic Violence">Domestic Violence</option>
-      <option value="Employment">Employment</option>
-      <option value="Families">Families</option>
-      <option value="LGBT">LGBT</option>
-      <option value="Mental/Physical Health">Mental/Physical Health</option>
-      <option value="Older Adults/Seniors">Older Adults/Seniors</option>
-      <option value="Reentry from Criminal Justice System">Reentry from Criminal Justice System</option>
-      <option value="Rural Populations">Rural Populations</option>
-      <option value="Veterans">Veterans</option>
-      <option value="Youth/Young Adults">Youth/Young Adults</option>
+    <option value = "All" selected>All</option>
+    <option value = "All people experiencing or at risk of homelessness">All people experiencing or at risk of homelessness</option>
+    <option value ="Chronic Homelessness">Chronic Homelessness</option>
+    <option value ="Domestic Violence Survivors">Domestic Violence Survivors</option>
+    <option value = "Families">Families</option>
+    <option value = "Immigrants">Immigrants</option>
+    <option value = "Military Veterans">Military Veterans</option>
+    <option value = "People who identify as lesbian, gay, bisexual and/or transgender">People who identify as lesbian, gay, bisexual and/or transgender</option>
+    <option value = "People re-entering the community from a mental health facility">People re-entering the community from a mental health facility</option>
+    <option value = "People re-entering the community from the criminal justice system">People re-entering the community from the criminal justice system</option>
+    <option value = "People with substance use disorder">People with substance use disorder</option>
+    <option value = "Older Adults/Seniors">Older Adults/Seniors</option>
+    <option value = "Rural Populations">Rural Populations</option>
+    <option value = "Women">Women</option>
+    <option value = "Youth/Young Adults">Youth/Young Adults</option>
+    <option value = "Youth/young adults exiting foster care">Youth/young adults exiting foster care</option>
     </select>
-
+<br />
 Supported Strategies: 
     <select id="strategies">
-      <option selected="selected" value="All">All</option>
-      <option value="Affordable Housing">Affordable Housing</option>
-      <option value="Community Plan">Community Plan</option>
-      <option value="Emergency Shelter">Emergency Shelter</option>
-      <option value="Funding Advocacy">Funding Advocacy</option>
-      <option value="Housing First">Housing First</option>
-      <option value="Permanent Supportive Housing">Permanent Supportive Housing</option>
-      <option value="Prevention">Prevention</option>
-      <option value="Public Education">Public Education</option>
-      <option value="Public Policy/Systems Change">Public Policy/Systems Change</option>
-      <option value="Rapid Re-Housing">Rapid Re-Housing</option>
-      <option value="Supportive Services">Supportive Services</option>
-      <option value="Transitional Housing">Transitional Housing</option>
-      <option value="Workforce Development">Workforce Development</option>
+    <option value = "All" selected>All</option>
+    <option value = "Advocacy">Advocacy</option>
+    <option value ="Affordable Housing">Affordable Housing</option>
+    <option value = "Emergency Shelter">Emergency Shelter</option>
+    <option value = "Workforce Development">Employment/Workforce Development</option>
+    <option value = "Funding Advocacy">Homelessness Prevention</option>
+    <option value = "Housing First">Housing First</option>
+    <option value = "Outreach to people experiencing homelessness">Outreach to people experiencing homelessness</option>
+    <option value = "Permanent Supportive Housing">Permanent Supportive Housing</option>
+    <option value = "Public Education">Public Education</option>
+    <option value = "Rapid Re-Housing">Rapid Re-Housing</option>
+    <option value = "Research/Data">Research/Data</option>
+    <option value = "Supportive Services">Supportive Services</option>
+    <option value = "Systems Change">Systems Change</option>
+    <option value = "Transitional Housing">Transitional Housing</option>
     </select>
+</div>
 
 
-    <div id="legend">Total Annual Grantmaking</div>
-    <div id="container"></div>
+    <!--<div id="container"></div>-->
+    <div id = "map">
 
+    </div>
+                  <div id="legend">Total Annual Grantmaking</div>
          <div id="tooltip" class="hidden">
       <p><span id="text"></span></p>
      <button id="close">Close</button>

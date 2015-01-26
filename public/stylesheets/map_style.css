@@ -26,6 +26,8 @@
 
 #legend {
     padding: 1.5em 0 0 1.5em;
+    float:right;
+    width: 80%;
 }
 
 li.key {
@@ -41,6 +43,7 @@ li.key {
   stroke: #000;
 }
 
+<<<<<<< HEAD
 
 
 
@@ -118,3 +121,30 @@ fieldset{
   background: #eee;
 }
 
+=======
+.background {
+  fill: none;
+  pointer-events: all;
+}
+
+#map {
+    float: right;
+    width: 80%;
+}
+
+svg{
+  border: 5px solid black;
+}
+
+#left {
+    position: relative;
+    float:left;
+    width: 20%;
+    top: 100px;
+}
+
+#top {
+    width: 100%;
+    margin-bottom: 20px;
+}
+>>>>>>> cf2025014c0cd1226910912836c6c6cdbe60ac72
