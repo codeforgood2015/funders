@@ -9,6 +9,13 @@ var mongoose = require('mongoose');
 
 var connection_string = 'localhost/funderstogether';
 
+if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
+  connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ':' +
+        process.env.OPENSHIFT_MONGODB_DB_PASSWORD + '@' +
+        process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+        process.env.OPENSHIFT_MONGODB_DB_PORT + '/funderstogether';
+}
+
 mongoose.connect("mongodb://" + connection_string);
 
 var routes = require('./routes/index');
@@ -68,5 +75,7 @@ app.use(function(err, req, res, next) {
     });
 });
 
+app.listen(process.env.OPENSHIFT_NODEJS_PORT || 8080,
+           process.env.OPENSHIFT_NODEJS_IP);
 
 module.exports = app;
