@@ -1,36 +1,70 @@
-        #container {
-            width: 1000px;
-            height: 700px;
-        }
-        
-
-.state:hover {
-	stroke:#f00;
-	stroke-width: 2px;
+#tooltip {
+        position: absolute;
+        width: 200px;
+        height: auto;
+        padding: 10px;
+        background-color: white;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        /*pointer-events: none;*/
 }
-        .SvgOverlay {
-        }
-        
-        .SvgOverlay, .SvgOverlay svg {
-            position: absolute;
-        top: -500px;
-        left: -500px;
-        padding: 1000px; 
-        }
-        
-        .SvgOverlay path {
-            stroke: Blue;
-            stroke-width: 2px;
-            fill: Blue;
-            fill-opacity: .3;
-        }   
-        div.tooltip {
-  color: #222; 
-  background: #fff; 
-  padding: .5em; 
-  text-shadow: #f5f5f5 0 1px 0;
-  border-radius: 2px; 
-  box-shadow: 0px 0px 2px 0px #a6a6a6; 
-  opacity: 0.9; 
-  position: absolute;      
+
+#tooltip.hidden {
+        display: none;
+}
+
+#tooltip p {
+        margin: 0;
+        font-family: sans-serif;
+        font-size: 16px;
+        line-height: 20px;
+}
+
+#legend {
+    padding: 1.5em 0 0 1.5em;
+    float:right;
+    width: 80%;
+}
+
+li.key {
+    border-top-width: 15px;
+    border-top-style: solid;
+    font-size: .75em;
+    width: 10%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.node {
+  stroke: #000;
+}
+
+.background {
+  fill: none;
+  pointer-events: all;
+}
+
+#map {
+    float: right;
+    width: 80%;
+}
+
+svg {
+  border: 5px solid black;
+}
+
+#left {
+    position: relative;
+    float:left;
+    width: 20%;
+    top: 100px;
+}
+
+#top {
+    width: 100%;
+    margin-bottom: 20px;
 }

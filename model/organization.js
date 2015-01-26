@@ -2,11 +2,13 @@
 var mongoose = require('mongoose');
 
 var schema = mongoose.Schema({
-    user: {type: String, required: true},
     year: {type: Number, required: true},
     organization_name: {type: String, required: true},
-    state: {type: String, required: true} , 
-    funder_type: {type: String, required: true}, 
+    state: {type: String, required: true}, 
+    address: {type: String},
+    latitude: {type: Number, required: true},
+    longitude: {type: Number, required: true},
+    funder_type: [{type: String}], 
     asset_size: Number,
     annual_grantmaking: {type: Number, required: true}, 
     annual_grantmaking_vulnerable_population: Number, 

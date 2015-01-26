@@ -21,32 +21,13 @@ var formatFundings = function(fundings){
 }
 
 //Format organization
-// var formatOrg = function(organization, haveFormattedFundings, populations, supportedStrategies){
 var formatOrg = function(organization){
-	// if (haveFormattedFundings){
-	// 	return{
-	// 		_id: organization._id, 
-	// 		organization_name: organization.organization_name,
-	//         user: organization.user,
-	//         year: organization.year, 
-	//         state: organization.state, 
-	//         funder_type: organization.funder_type, 
-	//         asset_size: organization.asset_size, 
-	//         annual_grantmaking: organization.annual_grantmaking, 
-	//         annual_grantmaking_homelessness: organization.annual_grantmaking_homelessness, 
-	//         annual_grantmaking_vulnerable_population: organization.annual_grantmaking_vulnerable_population,
-	//         populations: populations, 
-	//         supported_strategies: supportedStrategies, 
-	//         isNational: organization.isNational, 
-	//         isFundersMember: organization.isFundersMember
-	// 	}
-	// }
-	// else{
 		return {
 		_id: organization._id, 
 			organization_name: organization.organization_name,
-	        user: organization.user, 
 	        year: organization.year, 
+	        longitude: organization.longitude,
+	        latitude: organization.latitude,
 	        state: organization.state, 
 	        funder_type: organization.funder_type, 
 	        asset_size: organization.asset_size, 
@@ -59,6 +40,59 @@ var formatOrg = function(organization){
 	        isFundersMember: organization.isFundersMember
 	    }
 	// }
+}
+
+var formatOrgPopulation = function(organization, population){
+		var amount = 0;
+		organization.populations.forEach(function(pop){
+			if (pop.area == population){
+				amount = parseFloat(pop.amount)
+			}
+		})
+		return {
+		_id: organization._id, 
+			organization_name: organization.organization_name,
+	        year: organization.year, 
+	        longitude: organization.longitude,
+	        latitude: organization.latitude,
+	        state: organization.state, 
+	        funder_type: organization.funder_type, 
+	        asset_size: organization.asset_size, 
+	        annual_grantmaking: amount, 
+	        annual_grantmaking_homelessness: organization.annual_grantmaking_homelessness, 
+	        annual_grantmaking_vulnerable_population: organization.annual_grantmaking_vulnerable_population,
+	        populations: organization.populations, 
+	        supported_strategies: organization.supported_strategies, 
+	       	isNational: organization.isNational, 
+	        isFundersMember: organization.isFundersMember
+	    }
+}
+
+var formatOrgStrategy = function(organization, strategy){
+		var amount = 0;
+		organization.supported_strategies.forEach(function(str){
+			if (str.area == strategy){
+				amount = parseFloat(str.amount)
+			}
+		})
+
+		return {
+		_id: organization._id, 
+			organization_name: organization.organization_name,
+	        year: organization.year, 
+	        longitude: organization.longitude,
+	        latitude: organization.latitude,
+	        state: organization.state, 
+	        funder_type: organization.funder_type, 
+	        asset_size: organization.asset_size, 
+	        annual_grantmaking: amount, 
+	        annual_grantmaking_homelessness: organization.annual_grantmaking_homelessness, 
+	        annual_grantmaking_vulnerable_population: organization.annual_grantmaking_vulnerable_population,
+	        populations: organization.populations, 
+	        supported_strategies: organization.supported_strategies, 
+	       	isNational: organization.isNational, 
+	        isFundersMember: organization.isFundersMember
+	    }
 }
 
 /*
@@ -98,7 +132,6 @@ router.get('/', function(req, res){
 			})
 		}
 		if (req.query.national){
-			// req.query.national must be true or false
 			queryString.push({isNational: req.query.national});
 		}
 		if (req.query.funders_member){
@@ -112,7 +145,6 @@ router.get('/', function(req, res){
 			}
 			else{
 				organizations = docs.map(formatOrg);
-				console.log(organizations);
 				utils.sendSuccessResponse(res, {message: organizations});
 			}	
 		})
@@ -122,26 +154,62 @@ router.get('/', function(req, res){
 			if (err){
 				console.log(err)
 				utils.sendErrResponse(res, 500, 'Could not find data');
-			//res.send(500).json({error: 'Could not find / populated all data', success: false});
 			}
 			else{
 				organizations = docs.map(formatOrg);
-				console.log(organizations);
 				utils.sendSuccessResponse(res, {message: organizations});
-				//res.json({success: true, message: organizations});
 			}	
 	})
 	}
 }); 
 
+router.get('/:org_id', function(req, res){
+	//console.log(req.params.org_id);
+	Organization.findOne({_id: req.params.org_id}).exec(function(err, docs){
+		if (err){
+			console.log(err)
+			utils.sendErrResponse(res, 500, 'Could not find data');
+		}
+		else{
+			utils.sendSuccessResponse(res, docs);
+		}	
+	})	
+})
+
+router.get('/population/:population', function(req, res){
+		Organization.find({"populations.area": req.params.population}).sort({name: 1}).exec(function(err, docs){
+			if (err){
+				console.log(err)
+				utils.sendErrResponse(res, 500, 'Could not find data');
+			}
+			else{
+				organizations = docs.map(function(d){
+					return formatOrgPopulation(d, req.params.population);
+				})
+				utils.sendSuccessResponse(res, {message: organizations});
+			}	
+	})	
+})
+
+router.get('/strategy/:strategy', function(req, res){
+		Organization.find({"supported_strategies.area": req.params.strategy}).sort({name: 1}).exec(function(err, docs){
+			if (err){
+				console.log(err)
+				utils.sendErrResponse(res, 500, 'Could not find data');
+			}
+			else{
+				organizations = docs.map(function(d){
+					return formatOrgStrategy(d, req.params.strategy);
+				})
+				utils.sendSuccessResponse(res, {message: organizations});
+			}	
+	})	
+})
 
 router.get('/testing', function(req, res){
 	console.log(req.query.q);
 	console.log(req.query.length);
 })
-
-
-
 
 /*
 	POST '/organization'
@@ -151,78 +219,56 @@ router.get('/testing', function(req, res){
 		-error: on failure, an error message 
 */
 router.post('/', function(req, res){
-	console.log(req.body);
     // get parameters from form
-   //  var user = req.body.user;
-   //  var year = req.body.year;
-   //  var organization = req.body.organization;
-   //  var location = req.body.location;
-   //  var funder_type = req.body.funder_type;
-   //  var asset_size = req.body.asset_size;
-   //  var annual_grantmaking = req.body.annual_grantmaking;
-   //  var annual_grantmaking_vulnerable = req.body.annual_grantmaking_vulnerable_population;
-   //  var annual_grantmaking_homelessness = req.body.annual_grantmaking_homelessness;
-   //  var state = req.body.state;
-   //  var populations = req.body.populations; // array
-   //  var supported_strategies = req.body.supported_strategies; // array*/
-   //  var isNational = req.body.isNational; 
-   //  var isFundersMember = req.body.isFundersMember;
+    var user = req.body.user;
+    var year = req.body.year;
+    var organization = req.body.organization;
+    var address = req.body.address;
+    var latitude = req.body.latitude;
+    var longitude = req.body.longitude;
+    var funder_type = req.body.funder_type;
+    var asset_size = req.body.asset_size;
+    var annual_grantmaking = req.body.yearDonation;
+    var annual_grantmaking_vulnerable = req.body.annual_grantmaking_vulnerable_population || "";
+    var annual_grantmaking_homelessness = req.body.annual_grantmaking_homelessness || "";
+    var state = req.body.state;
+    var populations = req.body.populations; // array
+    var supported_strategies = req.body.supported_strategies; // array*/
+    var isNational = req.body.isNational; 
+    var isFundersMember = req.body.isFundersMember;
 
-   //  //var org = new Organization({user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state, populations: populations_list,supported_strategies:strategies_list});
-   //  var org = new Organization({isNational: isNational, isFundersMember: isFundersMember, user:user, year:year, organization_name: organization, location:location, funder_type: funder_type,asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
+    var org = new Organization({latitude: latitude, longitude: longitude, isNational: isNational, isFundersMember: isFundersMember, year:year, organization_name: organization, address:address, asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
 
-   //  populations_list = [];
-   //  populations.forEach(function(population){
-   //  	//pop = new Population({area: population.fund_area, amount: population.percentage, organization: org._id});
-   //  	pop = {area: population.fund_area, amount: population.percentage};
-   //  	console.log(pop);
-   //  	populations_list.push(pop);
-   //  	/*pop.save(function(err){
-   //  		if (err){
-   //  			console.log(err);
-   //  		}
-   //  	})*/
-   //  })
+    funder_type_list = [];
+    funder_type.forEach(function(funder){
+    	funder_type_list.push(funder);
+    })
 
-   //  strategies_list = [];
-   //  supported_strategies.forEach(function(strategy){
-   //  	//console.log(strategy)
-   //  	//str = new Supported_Strategies({area: strategy.strategy, amount: strategy.percentage, organization: org._id});
-   //  	str = {area: strategy.strategy, amount: strategy.percentage};
-   //  	strategies_list.push(str);
-   //  	/*(str.save(function(err){
-   //  		if(err){
-   //  			console.log(err);
-   //  		}
-   //  	})*/
-   //  })
+    populations_list = [];
+    populations.forEach(function(population){
+    	pop = {area: population.area, amount: population.amount};
+    	populations_list.push(pop);
+    })
 
-   //  org.populations = populations_list;
-   //  org.supported_strategies = strategies_list;
-   //  console.log(org);
-   //  org.save(function(err){
-   //  	if (err){
-			// utils.sendErrResponse(res, 500, 'Could not find / populated all data');
-   //  	}
-   //  	else {
-			// res.json({success: true, message: "added organization"});
-   //  	}
-   //  })
-   //  /*var user = req.session.user;
-   //  if (user == undefined){
-   //    utils.sendErrResponse(res, 403, 'Error: You must be logged in to use this feature');
-   //    return;
-   //  }
+    strategies_list = [];
+    supported_strategies.forEach(function(strategy){
+    	str = {area: strategy.area, amount: strategy.amount};
+    	strategies_list.push(str);
+    })
 
-   //  var listing = new schemas.Listing({"title": title, "description": description, "image": image, "category": category, "seller": user});
-   //  listing.save(function(err){
-   //    if (err){
-   //      utils.sendErrResponse(res, 500, 'Error: could not add listing');
-   //    }
-   //    else {
-   //      utils.sendSuccessResponse(res, listing);
-   //    }
-   //  });*/
+    org.funder_type = funder_type_list;
+    org.populations = populations_list;
+    org.supported_strategies = strategies_list;
+
+    console.log(org);
+    org.save(function(err){
+    	if (err){
+			utils.sendErrResponse(res, 500, 'Could not find / populated all data');
+    	}
+    	else {
+			res.json({success: true, message: "added organization"});
+    	}
+    })
 });
 
 module.exports = router;

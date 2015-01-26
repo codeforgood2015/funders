@@ -3,8 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-	res.render('maptest');
-  // res.render('index', { title: 'Express' });
+  res.render('map2', {title: 'Map'});
 });
 
 
