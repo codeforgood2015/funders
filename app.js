@@ -29,8 +29,6 @@ var populations = require('./routes/populations');
 
 
 var app = express();
-mongoose.connect("mongodb://" + connection_string);
-
 var db = mongoose.connection;
 
 db.on('error', function() {

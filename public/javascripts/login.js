@@ -17,9 +17,7 @@ var loadPage = function(page, data){
 }
 
 $(document).on('submit', '#signin_form', function(evt){
-
 	evt.preventDefault();
-	console.log('INSIDE THE FORM');
 	$.post(
 		'/login', 
 		helpers.getFormData(this)
