@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="//d2c5utp5fpfikz.cloudfront.net/3_1_1/css/bootstrap-theme.css.map" rel="stylesheet">
+    <link href="//d2c5utp5fpfikz.cloudfront.net/3_1_1/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="//d2c5utp5fpfikz.cloudfront.net/3_1_1/css/bootstrap.css.map" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src='javascripts/handlebars.runtime.js'></script>
+    <script src='javascripts/templates.js'></script>
+    <script src='javascripts/login.js'></script>
+
+  </head>
+  <body>
+    <div id="main_container">
+      <div class = "row" id = "main_title">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-8 centered">
+          <h1>WELCOME TO EMAIL HUNTER</h1>
+        </div>
+      </div>
+
+      <div class = "row"> 
+        <div class="col-sm-1"></div>
+          {{#if error}}
+              <div id="error" class='col-sm-10 alert alert-danger ' role='alert'>
+                {{message}}
+              </div>
+          {{/if}}
+
+          {{#if success}}
+            <div id="successfullyChanged" class='alert alert-success col-sm-10' role='alert'>
+              {{message}}
+            </div>
+          {{/if}}
+        <div class="col-sm-1"></div>
+      </div>
+
+      <div class = "row" class = "main">
+        
+        <div class="col-sm-1"></div>
+        <!--side panels-->
+        <div class="col-sm-5"> 
+          <div id="decription">
+            <p>Welcome! If you are a new user, note that your password must:
+              <br> &nbsp - be only alphanumeric
+              <br> &nbsp - be of length between 8 and 20 
+              <br> &nbsp - contain at least one uppercase letter
+              <br> &nbsp - contain at least one lowercase letter
+              <br> &nbsp - contain at least one number 
+              <br><br>
+              <br> Only alphanumeric usernames are allowed
+            </p>
+
+            <form id= 'forgot_password'>
+              <h4 class ="form-signin-heading">Cannot remember your password?</h3>
+              <input type='email' id='emailReset' name='email' placeholder='MIT email address' class="form-control" required >
+              <br>
+              <input type ='submit' id='forgotPassword' class="btn btn-info btn-block" value='I forgot my password, help me!'>
+            </form>
+          </div>
+        </div>
+
+        <!--main view-->
+        <!-- cite: http://getbootstrap.com/examples/signin/ -->
+        <div class="col-sm-1"></div>
+        <div class="col-sm-4"> 
+          <div id = "user_forms">
+            <div id ="login_form">
+              <!-- login forms here -->
+              <form id="signin_form">  
+                <h3 class ="form-signin-heading">Please sign in</h3>
+                <input type="text" name="username" placeholder="Username" class="form-control" required >
+                <input type="password" name="password" placeholder="Password" class="form-control" required >
+                <input type="submit" value="Login" class="btn btn-lg btn-primary btn-block">
+              </form>
+            </div>
+              <!-- registration forms here -->
+              <form id="registration_form">
+                <h3 class ="form-signin-heading">Registration</h3>
+                <input type="text" name="username" placeholder="Username" class="form-control" required > 
+                <input type="password" name="password" placeholder="Password" class="form-control" required >
+                <input type="email" name="email" placeholder="MIT email address" class="form-control" required >
+                <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

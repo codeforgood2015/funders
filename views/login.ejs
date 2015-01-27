@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="//d2c5utp5fpfikz.cloudfront.net/3_1_1/css/bootstrap-theme.css.map" rel="stylesheet">
+    <link href="//d2c5utp5fpfikz.cloudfront.net/3_1_1/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="//d2c5utp5fpfikz.cloudfront.net/3_1_1/css/bootstrap.css.map" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src='javascripts/handlebars.runtime.js'></script>
+    <script src='javascripts/templates.js'></script>
+    <script src='javascripts/login.js'></script>
+
+  </head>
+  <body>
+    <div id="main_container">
+        <!-- top bar -->
+        <div class="row" id="main_title">
+          <div class="col-sm-3"></div>
+          <div class="col-sm-8 centered">
+              <h1>WELCOME TO FUNDERS TOGETHER</h1>
+          </div>
+        </div>
+        <% if (error) {%>
+            <div class="row">
+              <div class="col-sm-2"></div>
+              <div class='alert alert-danger col-sm-8' role='alert'>
+                <%=message %> 
+              </div>
+            </div>
+          <% } %>
+
+        <!-- main section -->
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-5">
+              <div id="decription">
+                <br />
+                <h4>
+                  <p>Welcome! If you don't have an invitation code, please <a href="/request"> request an invitation</a>. <br />If you are a new user, note that your password must:
+                    <br /> &nbsp - be only alphanumeric
+                    <br /> &nbsp - be of length between 8 and 20 
+                    <br /> &nbsp - contain at least one uppercase letter
+                    <br /> &nbsp - contain at least one lowercase letter
+                    <br /> &nbsp - contain at least one number 
+                    <br /><br />
+                  </p>
+                </h4>
+
+                <form id= 'forgot_password' action='/reset' method="POST">
+                  <h2 class ="form-signin-heading">Reset Password</h3>
+                  <input type='email' id='emailReset' name='email' placeholder='email address' class="form-control" required >
+                  <br>
+                  <input type ='submit' id='forgotPassword' class="btn btn-info btn-block" value='Reset Password'>
+                </form>
+              </div>
+            </div>
+            <div class="col-sm-5" id='login_form' >
+              <form id="signin_form">
+                <h2 class = "form-signin-heading">Please sign in</h2>
+                <input type="email" name="username" placeholder="Email" class="form-control" required>
+                <br />
+                <input type="password" name="password" placeholder="Password" class="form-control" required>
+                <br />
+                <input type="submit" value="Login" id='signin_btn' class="btn btn-lg btn-primary btn-block">
+              </form>
+
+              <!-- url POST to /users/ -->
+              <form id="registration_form" action='/users' method="POST">
+                <h2 class = "form-registration-heading">Registration</h2>
+                <input type='text' name="organizationName" placeholder="Organization Name" class="form-control" required>
+                <br />
+                <input type="email" name="username" placeholder="Email" class="form-control" required>
+                <br />
+                <input type="password" name="password" placeholder="Password" class="form-control" required>
+                <br />
+                <!-- TODO: second confirm password -->
+                <input type='text' name="inviteCode" placeholder="Invitation Code" class="form-control" required>
+                <br />
+                <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
+              </form>
+
+            <a href ='/login/request'><h3>Request an Invitation to Create an Account?</h3></a>
+            </div>
+            <div class='col-sm-1'></div>
+        </div>
+    </div>
+  </body>
+</html>
