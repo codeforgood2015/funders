@@ -149,6 +149,7 @@ passport.deserializeUser(function(id, next) {
     next(null, id);
 });
 
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////// routes //////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,10 +160,18 @@ passport.deserializeUser(function(id, next) {
 //   res.render('map2', {title: 'Map'});
 // });
 
+router.get('/dashboard', isAuthenticated, function(req, res){
+	res.render('dashboard');
+});
 
-router.get('/map2', function(req, res){
-  res.render('map2', {title: 'Map'});
-})
+router.get('/profile', isAuthenticated, function(req, res){
+	res.render('profile');
+});
+
+
+// router.get('/map2', function(req, res){
+//   res.render('map2', {title: 'Map'});
+// })
 
 /* GET input form 1 page. */
 router.get('/form1', function(req, res) {
@@ -344,5 +353,9 @@ router.post('/users', function(req, res, next){
 
 
 
+/* GET overview page. */
+router.get('/overview', isAuthenticated, function(req, res){
+	res.render('overview', {title: 'Overview'});
+});
 
 module.exports = router;

@@ -120,7 +120,7 @@ $(window).on('resize', function(){
                   data.populations = labels.join(',');
                   returnQuery(data);
                   //return labels.join(', ') + ' ▾';
-                  return 'View Selected ▾';
+                  return 'Show Selected ▾';
                 }
               }
             });
@@ -147,7 +147,35 @@ $(window).on('resize', function(){
                   data.supported_strategies = labels.join(',');
                   returnQuery(data);
                   //return labels.join(', ') + ' ▾';
-                  return 'View Selected ▾';
+                  return 'Show Selected ▾';
+                }
+              }
+            });
+
+            $('#funder-dropdown').multiselect({
+              includeSelectAllOption: true,
+              numberDisplayed: 13,
+              buttonText: function(options, select){
+                if (options.length === 0) {
+                  delete data.funder_type;
+                  returnQuery(data);
+
+                    return 'None Selected ▾';
+                }
+                else{
+                  var labels = [];
+                  options.each(function() {
+                    if ($(this).attr('label') !== undefined) {
+                      labels.push($(this).attr('label'));
+                    }
+                    else {
+                      labels.push($(this).html());
+                    }
+                  });
+                  data.funder_type = labels.join(',');
+                  returnQuery(data);
+                  //return labels.join(', ') + ' ▾';
+                  return 'Show Selected ▾';
                 }
               }
             });
@@ -161,7 +189,7 @@ $(window).on('resize', function(){
       }
       else {
         document.getElementById("strategies").selectedIndex = 0;
-        $.get('/organization/population/' + this.value, function(data){
+        $.get('/organization/population/' + encodeURIComponent(this.value), function(data){
           data_json = data.content.message;
           updateMap(data.content.message);
         });
@@ -177,7 +205,7 @@ $(window).on('resize', function(){
       }
       else {
           document.getElementById("populations").selectedIndex = 0;
-        $.get('/organization/strategy/' + this.value, function(data){
+        $.get('/organization/strategy/' + encodeURIComponent(this.value), function(data){
           data_json = data.content.message;
           updateMap(data.content.message);
         });
@@ -333,9 +361,8 @@ d3.json("/files/us-states.json", function(error, json) {
             .style("left", xPosition + "px")
             .style("top", yPosition + "px")           
             .select("#text")
-            .html("Organization: " + d.organization_name + 
-              "<br>Asset size: $" + d.asset_size + 
-              "<br>Annual grantmaking: $" + d.annual_grantmaking +
+            .html("Annual grantmaking: $" + d.annual_grantmaking +
+              "<br>Funder Type: " + d.funder_type + 
               "<br><a href=/organization/" + d._id + ">More Info</a>")
             //Show the tooltip
           d3.select("#tooltip").classed("hidden", false);

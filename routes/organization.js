@@ -117,7 +117,7 @@ router.get('/', function(req, res){
 			console.log(req.query.state);
 			queryString.push({funder_type: req.query.funder_type})
 		}
-		if (req.query.populations){
+		/*if (req.query.populations){
 			var query = req.query.populations;
 			var populations = query.split(",");
 			populations.forEach(function(pop){
@@ -130,7 +130,20 @@ router.get('/', function(req, res){
 			strategies.forEach(function(str){
 				queryString.push({"supported_strategies.area": str})
 			})
+		}*/
+
+		if (req.query.populations){
+			var query = req.query.populations;
+			var populations = query.split(",");
+			queryString.push({"populations.area": {$in: populations}})
 		}
+
+		if (req.query.supported_strategies){
+			var query = req.query.supported_strategies;
+			var strategies = query.split(",");
+			queryString.push({"supported_strategies.area": {$in: strategies}})
+		}
+
 		if (req.query.national){
 			queryString.push({isNational: req.query.national});
 		}

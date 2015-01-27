@@ -10,32 +10,7 @@
 <script src="/javascripts/currency.js"></script>
 <script src="/javascripts/geocode.js"></script>
 <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
-<!-- <script src="js/bootstrap.min.js"></script> -->
-<!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-<script>
-/*$( document ).ready(function() {
-	// var checkboxes = $('input[type=checkbox]');
-	// for (var ii=0; ii<checkboxes.size(); ii++){
-	// 	$(checkboxes[ii]).addClass();
-	// }
-
-    // $('input[type=checkbox]').click(function(){
-    // 	if (this.checked){
-    // 		console.log(this.value);
-    // 		$(this).parent().append("<input type='text' name='"+ this.value + "'>");
-    // 	}
-    // });
-
-	$('div.slider').slider().linkedSliders();
-	$('div.slider:first').slider('value', 100);
-
-});*/
-
-</script>
-
 
 <style>
 body{
@@ -161,16 +136,16 @@ select{
 </div>
 
 <div class = "form-group">
-<label class="inputlabel control-label col-sm-2">Address:</label>
+<label class="inputlabel control-label col-sm-2">*Address:</label>
 <div class="col-sm-10">
-	<input class="form-control" id = "address" type="text" name="address">
+	<input class="form-control" id = "address" type="text" name="address" required>
 </div>
 </div>
 
 <div class = "form-group">
-<label class="inputlabel control-label col-sm-2">*Asset Size: $</label>
+<label class="inputlabel control-label col-sm-2">Asset Size: $</label>
 <div class="col-sm-10">
-	<input class="form-control" name="asset" onblur="this.value=CurrencyFormatted(this.value)" required>
+	<input class="form-control" name="asset" onblur="this.value=CurrencyFormatted(this.value)">
 </div>
 </div>
 
@@ -214,6 +189,15 @@ select{
 <div class="form-group">
 <label class="inputlabel control-label col-sm-2">Populations: </label>
 <div class = "col-sm-10">
+
+
+	<input type="checkbox" name="fund_area" id = "all_homelessness" value="All people experiencing or at risk of homelessness">All people experiencing or at risk of homelessness<br>
+		<fieldset id="all_homelessness_amount">
+			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" name="all_homelessness" onblur="this.value=CurrencyFormatted(this.value)" required>
+						<div class="slider" id = "chornic_homelessness_slider">0</div>
+						        <span class="value">0</span>%
+		</fieldset>
+
 	<input type="checkbox" name="fund_area" id = "chronic_homelessness" value="Chronic Homelessness">Chronic Homelessness<br>
 		<fieldset id="chronic_homelessness_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" name="chronic_homelessness" onblur="this.value=CurrencyFormatted(this.value)" required>
@@ -221,58 +205,74 @@ select{
 						        <span class="value">0</span>%
 		</fieldset>
 
-	<input type="checkbox" name="fund_area" id = "domestic_violence" value="Domestic Violence">Domestic Violence <br>
+	<input type="checkbox" name="fund_area" id = "domestic_violence" value="Domestic Violence Survivors">Domestic Violence Survivors<br>
 		<fieldset id="domestic_violence_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
 			<div class="slider" id = "domestic_violence_slider">0</div>
 			        <span class="value">0</span>%
 		</fieldset>
-	<input type="checkbox" name="fund_area" id = "employment" value="Employment">Employment <br>
-		<fieldset id="employment_amount">
-			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount"  onblur="this.value=CurrencyFormatted(this.value)" required>
-			<div class="slider" id = "employment_slider">0</div>
-						        <span class="value">0</span>%
-		</fieldset>
-	<input type="checkbox" name="fund_area" id = "families" value="Families">Families <br>
+	<input type="checkbox" name="fund_area" id = "families" value="Families">Families<br>
 		<fieldset id="families_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
 			<div class="slider" id = "families_slider">0</div>
 						        <span class="value">0</span>%
 		</fieldset>
-	<input type="checkbox" name="fund_area" id = "lgbt" value = "LGBT">LGBT <br>
+	<input type="checkbox" name="fund_area" id = "immigrants" value="Immigrants">Immigrants<br>
+		<fieldset id="immigrants_amount">
+			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount"  onblur="this.value=CurrencyFormatted(this.value)" required>
+			<div class="slider" id = "immigrants_slider">0</div>
+						        <span class="value">0</span>%
+		</fieldset>
+	<input type="checkbox" name="fund_area" id="veterans" value="Military Veterans">Military Veterans<br>
+		<fieldset id="veterans_amount">
+			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
+			<div class="slider" id = "veterans_slider">0</div>
+									        <span class="value">0</span>%
+		</fieldset>
+	<input type="checkbox" name="fund_area" id = "lgbt" value = "People who identify as lesbian, gay, bisexual and/or transgender">People who identify as lesbian, gay, bisexual and/or transgender<br>
 		<fieldset id="lgbt_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount"  onblur="this.value=CurrencyFormatted(this.value)" required>
 			<div class="slider" id = "lgbt_slider">0</div>
 						        <span class="value">0</span>%
 		</fieldset>
-	<input type="checkbox" name="fund_area" id = "mental_physical" value="Mental/Physical Health">Mental/Physical Health<br>
+	<input type="checkbox" name="fund_area" id = "mental_physical" value="People re-entering the community from a mental health facility">People re-entering the community from a mental health facility<br>
 		<fieldset id="mental_physical_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount"  onblur="this.value=CurrencyFormatted(this.value)" required>
 			<div class="slider" id = "mental_physical_slider">0</div>
 						        <span class="value">0</span>%
 		</fieldset>
+
+	<input type="checkbox" name="fund_area" id = "reentry_criminal" value="People re-entering the community from the criminal justice system">People re-entering the community from the criminal justice system<br>
+		<fieldset id="reentry_criminal_amount">
+			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
+			<div class="slider" id="reentry_criminal_slider">0</div>
+									        <span class="value">0</span>%
+		</fieldset>
+
+			<input type="checkbox" name="fund_area" id = "substance" value="People with substance use disorder">People with substance use disorder<br>
+		<fieldset id="substance_amount">
+			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
+			<div class="slider" id="substance_slider">0</div>
+									        <span class="value">0</span>%
+		</fieldset>
+
 	<input type="checkbox" name="fund_area" id = "older_adults" value="Older Adults/Seniors">Older Adults/Seniors <br>
 		<fieldset id="older_adults_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount"  onblur="this.value=CurrencyFormatted(this.value)" required>
 			<div class="slider" id = "older_adults_slider">0</div>
 						        <span class="value">0</span>%
 		</fieldset>
-	<input type="checkbox" name="fund_area" id = "reentry_criminal" value="Reentry from Criminal Justice System">Reentry from Criminal Justice System <br>
-		<fieldset id="reentry_criminal_amount">
-			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
-			<div class="slider" id="reentry_criminal">0</div>
-									        <span class="value">0</span>%
-		</fieldset>
+
 	<input type="checkbox" name="fund_area" id="rural_population" value="Rural Population">Rural Population <br>
 		<fieldset id="rural_population_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
 			<div class="slider" id = "rural_population_slider">0</div>
 									        <span class="value">0</span>%
 		</fieldset>
-	<input type="checkbox" name="fund_area" id="veterans" value="Veterans">Veterans<br>
-		<fieldset id="veterans_amount">
+	<input type="checkbox" name="fund_area" id="women" value="Women">Women <br>
+		<fieldset id="women_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
-			<div class="slider" id = "veterans_slider">0</div>
+			<div class="slider" id = "women_slider">0</div>
 									        <span class="value">0</span>%
 		</fieldset>
 	<input type="checkbox" name="fund_area" id="youth" value="Youth/Young Adults">Youth/Young Adults<br>
@@ -281,22 +281,29 @@ select{
 			<div class="slider" id = "youth_slider">0</div>
 									        <span class="value">0</span>%
 		</fieldset>
+	<input type="checkbox" name="fund_area" id="youth_foster" value="Youth/young adults exiting foster care">Youth/young adults exiting foster care<br>
+		<fieldset id="youth_foster_amount">
+			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
+			<div class="slider" id = "youth_foster_slider">0</div>
+									        <span class="value">0</span>%
+		</fieldset>
 </div>
 </div>
   
 <div class="form-group"> 
 <label class="inputlabel control-label col-sm-2">Supported Strategies: </label>
 <div class="col-sm-10">
+
+		<input type="checkbox" name="strategies" id = "funding_advocacy" value="Advocacy">Advocacy <br>
+		<fieldset id="funding_advocacy_amount">
+			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
+			<div class = "slider" id = "funding_advocacy_slider">0</div>
+									        <span class="value">0</span>%
+		</fieldset>
 	<input type="checkbox" name="strategies" id = "affordable_housing" value="Affordable Housing">Affordable Housing <br>
 		<fieldset id="affordable_housing_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
 			<div class="slider" id = "affordable_housing_slider">0</div>
-									        <span class="value">0</span>%
-		</fieldset>
-	<input type="checkbox" name="strategies" id = "community_plan" value="Community Plan">Community Plan <br>
-		<fieldset id="community_plan_amount">
-			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
-			<div class="slider" id = "community_plan_slider">0</div>
 									        <span class="value">0</span>%
 		</fieldset>
 	<input type="checkbox" name="strategies" id = "emergency_shelter" value="Emergency Shelter">Emergency Shelter <br>
@@ -305,10 +312,16 @@ select{
 			<div class="slider" id = "emergency_shelter_slider">0</div>
 									        <span class="value">0</span>%
 		</fieldset>
-	<input type="checkbox" name="strategies" id = "funding_advocacy" value="Funding Advocacy">Funding Advocacy <br>
-		<fieldset id="funding_advocacy_amount">
+			<input type="checkbox" name="strategies" id = "workforce" value="EmploymentWorkforce Development">Employment/Workforce Development <br>
+			<fieldset id="workforce_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
-			<div class = "slider" id = "funding_advocacy_slider">0</div>
+			<div class="slider" id = "workforce_slider">0</div>
+									        <span class="value">0</span>%
+		</fieldset>
+			<input type="checkbox" name="strategies" id = "prevention" value="Homelessness Prevention">Homelessness Prevention <br>
+		<fieldset id="prevention_amount">
+			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
+			<div class = "slider" id = "prevention_slider">0</div>
 									        <span class="value">0</span>%
 		</fieldset>
 	<input type="checkbox" name="strategies" id = "housing_first" value="Housing First">Housing First <br>
@@ -317,16 +330,16 @@ select{
 			<div class = "slider" id = "housing_first_slider">0</div>
 									        <span class="value">0</span>%
 		</fieldset>
+			<input type="checkbox" name="strategies" id = "outreach" value="Outreach to people experiencing homelessness">Outreach to people experiencing homelessness <br>
+		<fieldset id="outreach_amount">
+			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
+			<div class = "slider" id = "outreach_slider">0</div>
+									        <span class="value">0</span>%
+		</fieldset>
 	<input type="checkbox" name="strategies" id = "permanent_supportive" value="Permanent Supportive Housing">Permanent Supportive Housing <br>
 		<fieldset id="permanent_supportive_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
 			<div class = "slider" id = "permanent_supportive_slider">0</div>
-									        <span class="value">0</span>%
-		</fieldset>
-	<input type="checkbox" name="strategies" id = "prevention" value="Prevention">Prevention <br>
-		<fieldset id="prevention_amount">
-			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
-			<div class = "slider" id = "prevention_slider">0</div>
 									        <span class="value">0</span>%
 		</fieldset>
 	<input type="checkbox" name="strategies" id = "public_education" value="Public Education">Public Education <br>
@@ -335,34 +348,35 @@ select{
 			<div class = "slider" id = "public_education_slider">0</div>
 									        <span class="value">0</span>%
 		</fieldset>
-	<input type="checkbox" name="strategies" id = "public_policy" value="Public Poicy/System Change">Public Poicy/System Change <br>
-		<fieldset id="public_policy_amount">
-			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
-			<div class = "slider" id = "public_policy_slider">0</div>
-									        <span class="value">0</span>%
-		</fieldset>
 	<input type="checkbox" name="strategies" id = "rapid_re_housing" value="Rapid Re-Housing">Rapid Re-Housing <br>
 		<fieldset id="rapid_re_housing_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
 			<div class = "slider" id = "rapid_re_housing_slider">0</div>
 									        <span class="value">0</span>%
 		</fieldset>
-	<input type="checkbox" name="strategies" id = "supportive_services" value="Supportive Services">Supportive Services <br>
+		<input type="checkbox" name="strategies" id = "supportive_services" value="Supportive Services">Supportive Services <br>
 		<fieldset id="supportive_services_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
 			<div class="slider" id = "supportive_services_slider">0</div>
+									        <span class="value">0</span>%
+		</fieldset>
+	<input type="checkbox" name="strategies" id = "research" value="Research/Data">Research/Data <br>
+		<fieldset id="research_amount">
+			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
+			<div class="slider" id = "research_slider">0</div>
+									        <span class="value">0</span>%
+		</fieldset>
+
+	<input type="checkbox" name="strategies" id = "systems" value="Systems Change">Systems Change <br>
+		<fieldset id="systems_amount">
+			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
+			<div class="slider" id = "systems_slider">0</div>
 									        <span class="value">0</span>%
 		</fieldset>
 	<input type="checkbox" name="strategies" id = "transitional_housing" value="Transitional Housing">Transitional Housing <br>
 		<fieldset id="transitional_housing_amount">
 			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
 			<div class="slider" id = "transitional_housing_slider">0</div>
-									        <span class="value">0</span>%
-		</fieldset>
-	<input type="checkbox" name="strategies" id = "workforce" value="Workforce Development">Workforce Development <br>
-			<fieldset id="workforce_amount">
-			&nbsp;&nbsp;&nbsp;*Amount Donated: $<input type="text" class="amount" onblur="this.value=CurrencyFormatted(this.value)" required>
-			<div class="slider" id = "workforce_slider">0</div>
 									        <span class="value">0</span>%
 		</fieldset>
 </div>
