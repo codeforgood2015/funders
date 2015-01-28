@@ -1,5 +1,5 @@
 //Schema for Users
-
+//TODO: add the entry: {type: id referring to the organization database}
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types;
 var password_hash = require('password-hash');

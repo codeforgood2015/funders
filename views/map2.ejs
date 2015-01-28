@@ -26,6 +26,10 @@
 
 <div id = "left">
             <a href = "/form1">Go To Input Form</a>
+            <% if (loggedin) {%>
+              <br />
+              <a href = '/logout'>Logout</a>
+            <% } %>
   <h3>Filter By:</h3>
 <h4>Populations</h4>
 

@@ -195,7 +195,11 @@ otherwise redirects to map2
 GET /
 */
 router.get('/', function(req, res){
-	res.render('map2', {title: 'Map'});
+	signedin = false
+	if (req.user){
+		signedin = true;
+	}
+	res.render('map2', {title: 'Map', loggedin: signedin});
 });
 
 /*
@@ -351,7 +355,14 @@ router.post('/users', function(req, res, next){
 	}
 });
 
+/* GET logout */
+router.get('/logout', function(req, res){
+	if (req.user){
+		req.logout();
+	}
 
+	res.redirect('/');
+})
 
 /* GET overview page. */
 router.get('/overview', isAuthenticated, function(req, res){
