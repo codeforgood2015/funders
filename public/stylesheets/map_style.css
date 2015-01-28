@@ -30,6 +30,12 @@
     width: 80%;
 }
 
+#legend2 {
+    padding: 1.5em 0 0 1.5em;
+    float:right;
+    width: 80%;
+}
+
 li.key {
     border-top-width: 15px;
     border-top-style: solid;
@@ -43,11 +49,28 @@ li.key {
   stroke: #000;
 }
 
-<<<<<<< HEAD
+
+
+.filtering{
+  margin-top:2px;
+  margin-right:2px;
+  padding-left:2px;
+  background-color:#dddddd;
+  border-radius: 4px;
+}
+
+.legend2 {
+    border-top-width: 15px;
+    border-top-style: solid;
+    font-size: .75em;
+    width: 10%;
+    padding-left: 0;
+    padding-right: 0;
+}
 
 
 
-fieldset{
+/*fieldset{
   display: inline-block;
   vertical-align: top;
   margin: 0 1em 0 0;
@@ -120,8 +143,11 @@ fieldset{
 .checkbox input:focus ~ label:before{
   background: #eee;
 }
+*/
 
-=======
+
+
+
 .background {
   fill: none;
   pointer-events: all;
@@ -147,4 +173,4 @@ svg{
     width: 100%;
     margin-bottom: 20px;
 }
->>>>>>> cf2025014c0cd1226910912836c6c6cdbe60ac72
+

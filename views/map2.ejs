@@ -46,8 +46,7 @@
     <option name = "funding_area" value = "Youth/Young Adults">Youth/Young Adults</option>
     <option name = "funding_area" value = "Youth/young adults exiting foster care">Youth/young adults exiting foster care</option>
   </select>
-
- <br>
+  <div id="funding-list"></div>
 
 <h4>Supported Strategies</h4>
 
@@ -66,10 +65,9 @@
     <option name = "supported_strategies" value = "Supportive Services">Supportive Services</option>
     <option name = "supported_strategies" value = "Systems Change">Systems Change</option>
     <option name = "supported_strategies" value = "Transitional Housing">Transitional Housing</option>
-
   </select>
+  <div id="strategies-list"></div>
 
-  <br>
 
   <h4>Funder Type</h4>
   <select id="funder-dropdown" multiple="multiple">
@@ -83,6 +81,7 @@
     <option name = "funder_type" value = "Public Charity">Public Charity</option>
     <option name = "funder_type" value = "United Way">United Way</option>
   </select>
+  <div id="funder-list"></div>
 
   <br>
 
@@ -156,8 +155,15 @@ Supported Strategies:
     <div id = "map">
 
     </div>
-                  <div id="legend">Total Annual Grantmaking</div>
-         <div id="tooltip" class="hidden">
+      <div id="legend">Total Annual Grantmaking</div>
+      <div id="legend2">
+        National 
+        <div class="legend2" style="border-top-color: red;"></div>
+        Regional
+        <div class="legend2" style="border-top-color: green;"></div>
+      </div>
+
+      <div id="tooltip" class="hidden">
       <p><span id="text"></span></p>
      <button id="close">Close</button>
     </div>
