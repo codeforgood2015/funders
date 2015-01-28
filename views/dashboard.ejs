@@ -7,7 +7,11 @@
 </head>
 <body>
 	<h2>Dashboard</h2>
-	<a href = "#">Update Profile</a>
-	<a href = "#">Edit</a>
+
+	<% organizations.forEach(function(o){ %>
+		<a href = "/organization/<%= o %>"><%= o %></a>
+		<a href = "/organization/edit/<%= o %>">Edit</a>
+	<% }) %>
+	<br /> <a href = "#">Update Profile</a>
 </body>
 </html>

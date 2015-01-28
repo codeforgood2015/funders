@@ -287,6 +287,11 @@ router.post('/', function(req, res){
     })
 });
 
+router.get('/edit/:org_id', function(req, res){
+	Organization.findOne({_id: req.params.org_id}).exec(function(err, docs){
+		res.render('edit_form', {docs: JSON.stringify(docs)});
+	})
+})
 router.put('/:org_id', function(req, res){
 	Organization.findOne({_id: req.params.org_id}).exec(function(err, docs){
 		if (err){
