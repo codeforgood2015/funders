@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 
 var schema = mongoose.Schema({
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     year: {type: Number, required: true},
     organization_name: {type: String, required: true},
     state: {type: String, required: true}, 

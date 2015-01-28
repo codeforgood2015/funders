@@ -6,6 +6,7 @@ var express = require('express');
 var router = express.Router();
 var Organization = require('../model/organization');
 var Population = require('../model/populations');
+var User = require('../model/user');
 var Supported_Strategies = require('../model/supported_strategies');
 var utils = require('../utils.js');
 
@@ -234,7 +235,7 @@ router.get('/testing', function(req, res){
 */
 router.post('/', function(req, res){
     // get parameters from form
-    var user = req.body.user;
+    var user = req.user;
     var year = req.body.year;
     var organization = req.body.organization;
     var address = req.body.address;
@@ -251,7 +252,7 @@ router.post('/', function(req, res){
     var isNational = req.body.isNational; 
     var isFundersMember = req.body.isFundersMember;
 
-    var org = new Organization({latitude: latitude, longitude: longitude, isNational: isNational, isFundersMember: isFundersMember, year:year, organization_name: organization, address:address, asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
+    var org = new Organization({user: user, latitude: latitude, longitude: longitude, isNational: isNational, isFundersMember: isFundersMember, year:year, organization_name: organization, address:address, asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
 
     funder_type_list = [];
     funder_type.forEach(function(funder){
@@ -274,16 +275,30 @@ router.post('/', function(req, res){
     org.populations = populations_list;
     org.supported_strategies = strategies_list;
 
-    console.log(org);
-    org.save(function(err){
+    org.save(function(err, docs){
     	if (err){
 			utils.sendErrResponse(res, 500, 'Could not find / populated all data');
     	}
     	else {
-			res.json({success: true, message: "added organization"});
+    		User.update({_id: user}, {$push:{organizations: docs._id}}).exec(function(err, docs){
+    			res.json({success: true, message: "added organization"});
+    		})
     	}
     })
 });
+
+router.put('/:org_id', function(req, res){
+	Organization.findOne({_id: req.params.org_id}).exec(function(err, docs){
+		if (err){
+			console.log(err)
+			utils.sendErrResponse(res, 500, 'Could not find data');
+		}
+		else{
+			//utils.sendSuccessResponse(res, docs);
+			//res.render('organization', {docs: JSON.stringify(docs)});
+		}	
+	})	
+})
 
 module.exports = router;
 
