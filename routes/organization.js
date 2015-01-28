@@ -252,7 +252,7 @@ router.post('/', function(req, res){
     var isNational = req.body.isNational; 
     var isFundersMember = req.body.isFundersMember;
 
-    var org = new Organization({latitude: latitude, longitude: longitude, isNational: isNational, isFundersMember: isFundersMember, year:year, organization_name: organization, address:address, asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
+    var org = new Organization({user: user, latitude: latitude, longitude: longitude, isNational: isNational, isFundersMember: isFundersMember, year:year, organization_name: organization, address:address, asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state});
 
     funder_type_list = [];
     funder_type.forEach(function(funder){
@@ -275,17 +275,14 @@ router.post('/', function(req, res){
     org.populations = populations_list;
     org.supported_strategies = strategies_list;
 
-    console.log(org);
-    org.save(function(err){
+    org.save(function(err, docs){
     	if (err){
 			utils.sendErrResponse(res, 500, 'Could not find / populated all data');
     	}
     	else {
-
-    		User.findOne({_id: user}, function(err, docs){
-    			console.log(docs);
+    		User.update({_id: user}, {$push:{organizations: docs._id}}).exec(function(err, docs){
+    			res.json({success: true, message: "added organization"});
     		})
-			res.json({success: true, message: "added organization"});
     	}
     })
 });
