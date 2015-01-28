@@ -9,6 +9,7 @@ var userSchema = mongoose.Schema({
 	password: {type: String, required: true}, 
 	organizationName: {type: String, required: true},
 	group:{type: String, default: "member"},
+	organizations: [{type: mongoose.Schema.Types.ObjectId, ref: 'Organization'}]
 
 	//for resetting password 
 	// resetPasswordToken: {type: String}, 

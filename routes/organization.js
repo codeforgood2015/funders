@@ -6,6 +6,7 @@ var express = require('express');
 var router = express.Router();
 var Organization = require('../model/organization');
 var Population = require('../model/populations');
+var User = require('../model/user');
 var Supported_Strategies = require('../model/supported_strategies');
 var utils = require('../utils.js');
 
@@ -234,7 +235,7 @@ router.get('/testing', function(req, res){
 */
 router.post('/', function(req, res){
     // get parameters from form
-    var user = req.body.user;
+    var user = req.user;
     var year = req.body.year;
     var organization = req.body.organization;
     var address = req.body.address;
@@ -280,10 +281,27 @@ router.post('/', function(req, res){
 			utils.sendErrResponse(res, 500, 'Could not find / populated all data');
     	}
     	else {
+
+    		User.findOne({_id: user}, function(err, docs){
+    			console.log(docs);
+    		})
 			res.json({success: true, message: "added organization"});
     	}
     })
 });
+
+router.put('/:org_id', function(req, res){
+	Organization.findOne({_id: req.params.org_id}).exec(function(err, docs){
+		if (err){
+			console.log(err)
+			utils.sendErrResponse(res, 500, 'Could not find data');
+		}
+		else{
+			//utils.sendSuccessResponse(res, docs);
+			//res.render('organization', {docs: JSON.stringify(docs)});
+		}	
+	})	
+})
 
 module.exports = router;
 
