@@ -184,7 +184,8 @@ router.get('/:org_id', function(req, res){
 			utils.sendErrResponse(res, 500, 'Could not find data');
 		}
 		else{
-			utils.sendSuccessResponse(res, docs);
+			//utils.sendSuccessResponse(res, docs);
+			res.render('organization', {docs: JSON.stringify(docs)});
 		}	
 	})	
 })
