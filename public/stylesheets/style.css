@@ -1,8 +1,51 @@
-body {
+.main-container {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+.masthead {
+	padding: 3rem 5rem 4rem;
+	position: relative;
+	font-weight: 300;
+	/*text-align: center;*/
+	text-shadow: 0 1px 0 rgba(0,0,0,.1);
+	background: #004990;
+	height: 150px;
+}
+
+#first{
+	float: left;
+	text-align: left;
+	padding: 0 0 20px 0;
+	margin-left: 0;
+}
+
+#second_header{
+	width: 100%;
+	float: left;
+	margin-top: -24px;
+}
+
+#tagline{
+	color: #9abddf;
+	font-style: italic;
+	font-size: 15px;
+	margin: 8px 0px 0px 63px;
+	display: block;
+	float: left;
+	width: 62%;
+}
+
+#soc_icons{
+	float: right;
+	margin: 0px 0px 0px 0px;
+	width: 152px;
+}
+
+.fa{
+	color:white;
 }
