@@ -84,7 +84,6 @@ passport.use('signup', new LocalStrategy({
 			return done(null, req.user);
 		}
 		else{
-			console.log('ASDFASDFASDF');
 			async.waterfall(
 				[
 					//check if username is already registered
@@ -176,7 +175,11 @@ router.get('/profile', isAuthenticated, function(req, res){
 /* GET input form 1 page. */
 router.get('/form1', function(req, res) {
 	if(req.user){
-  		res.render('form1', { title: 'Form' });
+		var organization;
+		User.findOne({ _id:req.user }, function(err, user){
+			organization = user.organizationName;
+		})
+  		res.render('form1', { title: 'Form', organizationName: organization });
   	}
   	else{
   		res.render('login', {error: req.query.e, message: req.query.msg});
@@ -190,9 +193,21 @@ router.get('/form2', function(req, res) {
 });
 
 /*
-gets the login page if not logged in
-otherwise redirects to map2
-GET /
+	gets the 'Request an invitation code page'
+	GET /request
+*/
+router.get('/request', function(req, res){
+	if (req.user){
+		res.redirect('/form1');
+	}
+	res.render('request');
+});
+
+
+/*
+	gets the login page if not logged in
+	otherwise redirects to map2
+	GET /
 */
 router.get('/', function(req, res){
 	signedin = false
@@ -203,8 +218,8 @@ router.get('/', function(req, res){
 });
 
 /*
-logging in user
-POST /login
+	logging in user
+	POST /login
 */
 router.post('/login', function(req, res, next){
 	console.log(req.body);
