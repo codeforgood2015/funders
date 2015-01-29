@@ -19,6 +19,7 @@
     <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 
+
   </head>
   <body>
 
@@ -49,7 +50,9 @@
 
   <div id="container" class="container">
 
-<div id = "left">
+<div id = "left" class="col-md-3">
+
+  <div id="sidebar">
             <a href = "/form1" class="btn btn-info btn-block">Go To Input Form</a>
             <% if (loggedin) {%>
               <br />
@@ -59,7 +62,7 @@
   <h3>Filter By:</h3>
 <h4>Populations</h4>
 
-  <select id="population-dropdown" multiple="multiple">
+  <select class="multi-dropdown" id="population-dropdown" multiple="multiple">
     <option name = "funding_area" value = "All people experiencing or at risk of homelessness">All people experiencing or at risk of homelessness</option>
     <option name = "funding_area" value ="Chronic Homelessness">Chronic Homelessness</option>
     <option name = "funding_area" value ="Domestic Violence Survivors">Domestic Violence Survivors</option>
@@ -80,7 +83,7 @@
 
 <h4>Supported Strategies</h4>
 
-  <select id="strategies-dropdown" multiple="multiple">
+  <select class="multi-dropdown" id="strategies-dropdown" multiple="multiple">
     <option name = "supported_strategies" value = "Advocacy">Advocacy</option>
     <option name = "supported_strategies" value ="Affordable Housing">Affordable Housing</option>
     <option name = "supported_strategies" value = "Emergency Shelter">Emergency Shelter</option>
@@ -100,7 +103,7 @@
 
 
   <h4>Funder Type</h4>
-  <select id="funder-dropdown" multiple="multiple">
+  <select class="multi-dropdown" id="funder-dropdown" multiple="multiple">
     <option name = "funder_type" value ="Community Foundation">Community Foundation</option>
     <option name = "funder_type" value ="Corporate Giving Program">Corporate Giving Program</option>
     <option name = "funder_type" value = "Family Foundation">Family Foundation</option>
@@ -116,7 +119,7 @@
   <br>
 
   <h4>Year:</h4>
-  <select id="year">
+  <select id="year" class="form-control">
       <option value="2014">2014</option>
     <option value="2013">2013</option>
     <option value="2012">2012</option>
@@ -136,50 +139,54 @@
     <option value="1998">1998</option>
     <option value="1997">1997</option>
   </select>
+</div> <!-- sidebar -->
+
 </div>
 
 
-  <div id="right">
+  <div id="right" class="col-md-9">
     <div id = "top">
     <h3>View Funding towards different areas</h3>
 
-    Populations: 
-        <select id="populations">
-        <option value = "All" selected>All</option>
-        <option value = "All people experiencing or at risk of homelessness">All people experiencing or at risk of homelessness</option>
-        <option value ="Chronic Homelessness">Chronic Homelessness</option>
-        <option value ="Domestic Violence Survivors">Domestic Violence Survivors</option>
-        <option value = "Families">Families</option>
-        <option value = "Immigrants">Immigrants</option>
-        <option value = "Military Veterans">Military Veterans</option>
-        <option value = "People who identify as lesbian, gay, bisexual and/or transgender">People who identify as lesbian, gay, bisexual and/or transgender</option>
-        <option value = "People re-entering the community from a mental health facility">People re-entering the community from a mental health facility</option>
-        <option value = "People re-entering the community from the criminal justice system">People re-entering the community from the criminal justice system</option>
-        <option value = "People with substance use disorder">People with substance use disorder</option>
-        <option value = "Older Adults/Seniors">Older Adults/Seniors</option>
-        <option value = "Rural Populations">Rural Populations</option>
-        <option value = "Women">Women</option>
-        <option value = "Youth/Young Adults">Youth/Young Adults</option>
-        <option value = "Youth/young adults exiting foster care">Youth/young adults exiting foster care</option>
+    <div>
+    <label class="control-label"> Populations:</label>
+        <select id="populations" class="form-control">
+          <option value = "All" selected>All</option>
+          <option value = "All people experiencing or at risk of homelessness">All people experiencing or at risk of homelessness</option>
+          <option value ="Chronic Homelessness">Chronic Homelessness</option>
+          <option value ="Domestic Violence Survivors">Domestic Violence Survivors</option>
+          <option value = "Families">Families</option>
+          <option value = "Immigrants">Immigrants</option>
+          <option value = "Military Veterans">Military Veterans</option>
+          <option value = "People who identify as lesbian, gay, bisexual and/or transgender">People who identify as lesbian, gay, bisexual and/or transgender</option>
+          <option value = "People re-entering the community from a mental health facility">People re-entering the community from a mental health facility</option>
+          <option value = "People re-entering the community from the criminal justice system">People re-entering the community from the criminal justice system</option>
+          <option value = "People with substance use disorder">People with substance use disorder</option>
+          <option value = "Older Adults/Seniors">Older Adults/Seniors</option>
+          <option value = "Rural Populations">Rural Populations</option>
+          <option value = "Women">Women</option>
+          <option value = "Youth/Young Adults">Youth/Young Adults</option>
+          <option value = "Youth/young adults exiting foster care">Youth/young adults exiting foster care</option>
         </select>
+    </div>
     <br />
-    Supported Strategies: 
-        <select id="strategies">
-        <option value = "All" selected>All</option>
-        <option value = "Advocacy">Advocacy</option>
-        <option value ="Affordable Housing">Affordable Housing</option>
-        <option value = "Emergency Shelter">Emergency Shelter</option>
-        <option value = "Workforce Development">Employment/Workforce Development</option>
-        <option value = "Funding Advocacy">Homelessness Prevention</option>
-        <option value = "Housing First">Housing First</option>
-        <option value = "Outreach to people experiencing homelessness">Outreach to people experiencing homelessness</option>
-        <option value = "Permanent Supportive Housing">Permanent Supportive Housing</option>
-        <option value = "Public Education">Public Education</option>
-        <option value = "Rapid Re-Housing">Rapid Re-Housing</option>
-        <option value = "Research/Data">Research/Data</option>
-        <option value = "Supportive Services">Supportive Services</option>
-        <option value = "Systems Change">Systems Change</option>
-        <option value = "Transitional Housing">Transitional Housing</option>
+    <label class="control-label"> Supported Strategies: </label>
+        <select id="strategies" class="form-control">
+          <option value = "All" selected>All</option>
+          <option value = "Advocacy">Advocacy</option>
+          <option value ="Affordable Housing">Affordable Housing</option>
+          <option value = "Emergency Shelter">Emergency Shelter</option>
+          <option value = "Workforce Development">Employment/Workforce Development</option>
+          <option value = "Funding Advocacy">Homelessness Prevention</option>
+          <option value = "Housing First">Housing First</option>
+          <option value = "Outreach to people experiencing homelessness">Outreach to people experiencing homelessness</option>
+          <option value = "Permanent Supportive Housing">Permanent Supportive Housing</option>
+          <option value = "Public Education">Public Education</option>
+          <option value = "Rapid Re-Housing">Rapid Re-Housing</option>
+          <option value = "Research/Data">Research/Data</option>
+          <option value = "Supportive Services">Supportive Services</option>
+          <option value = "Systems Change">Systems Change</option>
+          <option value = "Transitional Housing">Transitional Housing</option>
         </select>
     </div>
 
