@@ -28,12 +28,14 @@ $(document).on('submit', '#signin_form', function(evt){
 			error = true;
 			message = response.error;
 			data ='e='+error+'&msg='+message;
+			loadPage('login', data);
 		}
 		else if (response.success){
 			currentUser = response.user;
-			data = 'e=false';
+			// data = 'e=false';
+			loadPage('dashboard', data);
 		}
-		loadPage('dashboard', data);
+		
 	})
 });
 
