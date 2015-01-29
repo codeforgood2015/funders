@@ -84,7 +84,6 @@ passport.use('signup', new LocalStrategy({
 			return done(null, req.user);
 		}
 		else{
-			console.log('ASDFASDFASDF');
 			async.waterfall(
 				[
 					//check if username is already registered
@@ -184,7 +183,11 @@ router.get("/login", function(req, res){
 /* GET input form 1 page. */
 router.get('/form1', function(req, res) {
 	if(req.user){
-  		res.render('form1', { title: 'Form' });
+		var organization;
+		User.findOne({ _id:req.user }, function(err, dbUser){
+			res.render('form1', { title: 'Form', organizationName: dbUser.organizationName });
+		});
+  		
   	}
   	else{
   		res.render('login', {error: req.query.e, message: req.query.msg});
@@ -198,9 +201,21 @@ router.get('/form2', function(req, res) {
 });
 
 /*
-gets the login page if not logged in
-otherwise redirects to map2
-GET /
+	gets the 'Request an invitation code page'
+	GET /request
+*/
+router.get('/request', function(req, res){
+	if (req.user){
+		res.redirect('/form1');
+	}
+	res.render('request');
+});
+
+
+/*
+	gets the login page if not logged in
+	otherwise redirects to map2
+	GET /
 */
 router.get('/', function(req, res){
 	signedin = false
@@ -211,11 +226,10 @@ router.get('/', function(req, res){
 });
 
 /*
-logging in user
-POST /login
+	logging in user
+	POST /login
 */
 router.post('/login', function(req, res, next){
-	console.log(req.body);
 	if(req.user){
 		res.json({user: req.user, success: true});
 	}
@@ -287,7 +301,6 @@ router.post('/users', function(req, res, next){
 					var checkpassword = validator.isAlphanumeric(req.body.password);
 					var checkusername = validator.isEmail(req.body.username);
 					var validpassword = isGoodPassword(req.body.password);
-					console.log('checking password validity', validpassword);
 					// if (!checkOrganizationName){
 					// 	res.json({success: false, error: 'Organization name is not alphanumeric'});
 					// }
@@ -335,7 +348,6 @@ router.post('/users', function(req, res, next){
 					req.body.organizationName = req.body.organizationName;
 					req.body.password = req.body.password;
 					passport.authenticate('signup', function(err, newUser, docs){
-						console.log(err, newUser, docs);
 						if(err){
 							res.status(500).json({error: "There was an error"});
 						}

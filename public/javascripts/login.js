@@ -22,7 +22,6 @@ $(document).on('submit', '#signin_form', function(evt){
 		'/login', 
 		helpers.getFormData(this)
 	).done(function(response){
-		console.log(response);
 		success = response.success;
 		data ='';
 		if (response.error){
