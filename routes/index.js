@@ -162,7 +162,7 @@ passport.deserializeUser(function(id, next) {
 
 router.get('/dashboard', isAuthenticated, function(req, res){
 	var user = req.user;
-	User.findOne({_id:user}, function(err, docs){
+	User.findOne({_id:user}).populate("organizations").exec(function(err, docs){
 		res.render('dashboard', {organizations: docs.organizations})
 	})
 });
