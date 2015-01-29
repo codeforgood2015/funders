@@ -13,6 +13,8 @@
     <script src="/javascripts/jquery.validate.min.js"></script>
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'
 
   </head>
 
@@ -47,7 +49,7 @@
         <div class="row" id="main_title">
           <div class="col-sm-3"></div>
           <div class="col-sm-8 centered">
-              <h1>WELCOME TO FUNDERS TOGETHER</h1>
+              <!-- <h1>WELCOME TO FUNDERS TOGETHER</h1> -->
           </div>
         </div>
         <% if (error) {%>
@@ -66,7 +68,7 @@
               <div id="decription">
                 <br />
                 <h4>
-                  <p>Welcome! If you don't have an invitation code, please <a href="/request"> request an invitation</a>. <br />If you are a new user, note that your password must:
+                  <p id="new-user-info"><span id="welcome-word">Welcome!</span> If you don't have an invitation code, please <a href="/request"> request an invitation</a>. <br />If you are a new user, note that your password must:
                     <br /> &nbsp - be only alphanumeric
                     <br /> &nbsp - be of length between 8 and 20 
                     <br /> &nbsp - contain at least one uppercase letter
@@ -114,5 +116,25 @@
             <div class='col-sm-1'></div>
         </div>
     </div>
+
+    <div id="container-footer">
+      <div class="container">
+        <ul>
+          <li><a href="http://www.funderstogether.org/contact_us">CONTACT</a></li>
+          <li><a href="http://www.funderstogether.org/press">PRESS</a></li>
+          <li><a href="http://www.funderstogether.org/careers">CAREERS</a></li>
+        </ul>
+
+        <div id="topContent" class="container">
+          <div class="center cleared-floats">
+            <p>Funders Together to End Homelessness<br>89 South Street, 8th Floor |&nbsp;Boston, MA 02111 |&nbsp;617.245.0314 |&nbsp;info@funderstogether.org
+              <br>
+              <br>Copyright 2013 Funders Together to End Homelessness
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>

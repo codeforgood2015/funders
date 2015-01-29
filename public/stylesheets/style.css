@@ -1,10 +1,11 @@
-.main-container {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+
 
 a {
   color: #00B7FF;
+}
+
+input{
+	font-family: "Source Sans Pro",sans-serif;
 }
 
 .masthead {
@@ -49,3 +50,62 @@ a {
 .fa{
 	color:white;
 }
+
+
+#main_container {
+  padding-top:50px;
+  padding-bottom: 50px;
+  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
+  font-family: 'Oswald', sans-serif;
+}
+
+#decription{
+	color: #666666;
+	background: #edebe3;
+	padding: 20px;
+	font-weight:200;
+}
+
+#new-user-info{
+	font-family: "Source Sans Pro",sans-serif;
+}
+
+#welcome-word{
+	font-family: 'Oswald', sans-serif;
+}
+
+#login_form{
+	color: #666666;
+	background: #dbe4bd;
+	padding: 20px;
+}
+
+
+
+
+#container-footer {
+	/*margin-top: 50px;*/
+	color: #fff;
+	font-size: 12px;
+	background-color: #004990;
+	text-align: center;
+	padding: 25px;
+}
+
+#container-footer .container ul {
+	margin: 0 auto;
+	display: inline-block;
+	overflow: auto;
+}
+
+#container-footer .container ul li:first-child {
+	border: none;
+}
+
+#container-footer .container ul li {
+	float: left;
+	list-style-type: none;
+	border-left: 1px solid #ccc;
+	padding: 0 25px;
+}
+
