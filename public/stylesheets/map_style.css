@@ -70,6 +70,41 @@ li.key {
 
 
 
+.background {
+  fill: none;
+  pointer-events: all;
+}
+
+#map {
+    float: right;
+    width: 80%;
+}
+
+svg{
+  border: 5px solid black;
+}
+
+#left {
+    position: relative;
+    float:left;
+    width: 20%;
+    top: 100px;
+}
+
+#top {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+
+
 /*fieldset{
   display: inline-block;
   vertical-align: top;
@@ -145,32 +180,4 @@ li.key {
 }
 */
 
-
-
-
-.background {
-  fill: none;
-  pointer-events: all;
-}
-
-#map {
-    float: right;
-    width: 80%;
-}
-
-svg{
-  border: 5px solid black;
-}
-
-#left {
-    position: relative;
-    float:left;
-    width: 20%;
-    top: 100px;
-}
-
-#top {
-    width: 100%;
-    margin-bottom: 20px;
-}
 
