@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="//d2c5utp5fpfikz.cloudfront.net/3_1_1/css/bootstrap-theme.css.map" rel="stylesheet">
     <link href="//d2c5utp5fpfikz.cloudfront.net/3_1_1/css/bootstrap-theme.min.css" rel="stylesheet">
@@ -8,6 +8,22 @@
     <link href="//d2c5utp5fpfikz.cloudfront.net/3_1_1/css/bootstrap.css.map" rel="stylesheet">
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src='javascripts/handlebars.runtime.js'></script>
-    <script src='javascripts/templates.js'></script>
-    <script src="/javascripts/helpers.js"></script>
-    <script src='javascripts/login.js'></script>
+</head>
+<body>
+    <div class = "row">
+        <div class = 'col-sm-3'></div>
+        <div class = 'col-sm-6 centered'>
+            <!-- <h1> Request an Invitation Code </h1> -->
+            <form id='request_form'>
+                <h2 class="form-signin-heading"> Request an Invitation Code </h2>
+                <input type="text" class="form-control input-lg" name="organizationName" placeholder="What is your organization name?" required>
+                <input type="text" class="form-control input-lg" name="Name" placeholder="What is your name?" required>
+                <input type="email" class="form-control input-lg" name="email" placeholder="What is your email?" required>
+                <!-- <input type="text" class ="form-control input-lg" name="message" placeholder="Any message?"> -->
+                <textarea rows="15" name="content" class="form-control input-lg" placeholder="Any message?" required=""></textarea>
+                <input type="submit" value="Request a Code" class="btn btn-lg btn-primary btn-block">
+            </form>
+        </div>
+    </div> 
+</body>
+</html>

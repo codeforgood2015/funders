@@ -17,6 +17,16 @@
   fill:white;
   stroke:black;
   opacity:0.8;}
+
+  #pop_chart {
+  	position: relative;
+  	margin-bottom: 25px;
+  }
+
+  #str_chart {
+  	position: relative;
+  	margin-bottom: 25px;
+  }
   </style>
 <script>
 $(document).ready(function(){
@@ -28,8 +38,10 @@ $(document).ready(function(){
 
 	var org = <%- docs %>;
 
-	$("#org_info").html("Annual Grantmaking: $" + org.annual_grantmaking + "<br/>"
-						+ "Funder Type: " + org.funder_type)
+	$("#org_info").html("State: " + org.state + "<br />" +
+						"Annual Grantmaking: $" + org.annual_grantmaking + "<br/>"
+						+ "Funder Type: " + org.funder_type + "<br/><br/>" +
+						"<a class='btn btn-info' href = '/'>Return to Map</a>")
 
 				//Width and height
 			var w = 800;
@@ -68,7 +80,7 @@ $(document).ready(function(){
 
 
 			if (pop_dataset.length == 0){
-				$("#pop_chart").html("No data available")
+				$("#pop_chart").html("<h3>Populations</h3>No data available")
 			}
 			else {
 						var svg = d3.select("#pop_chart")
@@ -108,7 +120,7 @@ $(document).ready(function(){
 			}
 
 			if (str_dataset.length == 0){
-				$("#str_chart").html("No data available")
+				$("#str_chart").html("<h3>Supported Strategies</h3>No data available")
 			}
 			//Create SVG element
 			else {
@@ -184,18 +196,18 @@ $(document).ready(function(){
       </div>
     </div>
 
-	<div class="main_container">
+	<div class = "container-fluid">
 <h2>Organization Info</h2>
 <div id = "org_info">
 </div>
 
-<h3>Populations</h3>
-<div id="pop_chart">
+<div id="pop_chart" class = "col-md-6">
+	<h3>Populations</h3>
 </div>
-<h3>Supported Strategies</h3>
-<div id="str_chart">
+
+<div id="str_chart" class = "col-md-5">
+	<h3>Supported Strategies</h3>
 </div>
-<a href = "/">Back to Map</a>
 </div>
 
  <div id="container-footer">

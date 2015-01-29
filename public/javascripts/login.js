@@ -22,19 +22,20 @@ $(document).on('submit', '#signin_form', function(evt){
 		'/login', 
 		helpers.getFormData(this)
 	).done(function(response){
-		console.log(response);
 		success = response.success;
 		data ='';
 		if (response.error){
 			error = true;
 			message = response.error;
 			data ='e='+error+'&msg='+message;
+			loadPage('login', data);
 		}
 		else if (response.success){
 			currentUser = response.user;
-			data = 'e=false';
+			// data = 'e=false';
+			loadPage('dashboard', data);
 		}
-		loadPage('dashboard', data);
+		
 	})
 });
 
