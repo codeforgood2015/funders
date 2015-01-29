@@ -72,16 +72,17 @@ li.key {
   padding-left:2px;
   background-color:#edebe3;
   border-radius: 4px;
+  font-family: "Source Sans Pro",sans-serif;
 }
 
-/*.legend2 {
+.legend2 {
     border-top-width: 15px;
     border-top-style: solid;
     font-size: .75em;
     width: 10%;
     padding-left: 0;
     padding-right: 0;
-}*/
+}
 
 
 .background {
@@ -154,7 +155,11 @@ svg{
 #left {
     padding-left:2%;
     padding-right:1%;
+    padding-top:1%;
+    padding-bottom: 1%;
     position: relative;
+    color: #666666;
+    background: #dbe4bd;
     /*float:left;*/
     /*width: 25%;*/
 }
@@ -164,20 +169,23 @@ svg{
   padding-left:1%;
   padding-right:2%;
   position: relative;
+  color: #666666;
+
   /*float:left;*/
   /*width:75%;*/
 }
 
-/*#top {
-    width: 100%;
-    margin-bottom: 20px;
-}*/
+#top {
+    background-color:#edebe3;
+    padding:1%;
+}
 
 #container{
   padding-top:50px;
   padding-bottom:50px;
   width: 100%;
 }
+
 
 
 

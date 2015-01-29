@@ -101,6 +101,7 @@ $(window).on('resize', function(){
 
             $('#population-dropdown').multiselect({
               includeSelectAllOption: true,
+              buttonWidth: '100%',
               buttonText: function(options, select){
                 if (options.length === 0) {
                     delete data.populations;
@@ -131,7 +132,7 @@ $(window).on('resize', function(){
             });
             $('#strategies-dropdown').multiselect({
               includeSelectAllOption: true,
-              numberDisplayed: 13,
+              buttonWidth: '100%',
               buttonText: function(options, select){
                 if (options.length === 0) {
                   delete data.supported_strategies;
@@ -164,7 +165,7 @@ $(window).on('resize', function(){
 
             $('#funder-dropdown').multiselect({
               includeSelectAllOption: true,
-              numberDisplayed: 13,
+              buttonWidth: '100%',
               buttonText: function(options, select){
                 if (options.length === 0) {
                   delete data.funder_type;
