@@ -228,6 +228,10 @@ svg{
     color:white;
   }
 
+  #container-footer a:hover{
+    color: #d6ef87;
+  }
+
   #container-footer .containerf ul li:first-child {
     border: none;
   }
