@@ -30,6 +30,12 @@
     width: 80%;
 }
 
+#legend2 {
+    padding: 1.5em 0 0 1.5em;
+    float:right;
+    width: 80%;
+}
+
 li.key {
     border-top-width: 15px;
     border-top-style: solid;
@@ -43,108 +49,175 @@ li.key {
   stroke: #000;
 }
 
-<<<<<<< HEAD
+.container{
+  font-family: 'Oswald', sans-serif;
+}
 
+.btn{
+  font-family: "Source Sans Pro",sans-serif;
+}
 
-
-fieldset{
-  display: inline-block;
-  vertical-align: top;
-  margin: 0 1em 0 0;
-  background: #fffffff;
-  padding: .5em;
-  border-radius: 3px;
+.form-control{
+  font-family: "Source Sans Pro",sans-serif;
 }
 
 .checkbox{
-  display: block;
-  position: relative;
-  cursor: pointer;
-  margin-bottom: 8px;
+  font-family: "Source Sans Pro",sans-serif;
 }
 
-.checkbox input[type="checkbox"]{
-  position: absolute;
-  display: block;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  cursor: pointer;
-  margin: 0;
-  opacity: 0;
-  z-index: 1;
+
+.filtering{
+  margin-top:2px;
+  margin-right:2px;
+  padding-left:2px;
+  background-color:#edebe3;
+  border-radius: 4px;
+  font-family: "Source Sans Pro",sans-serif;
 }
 
-.checkbox label{
-  display: inline-block;
-  vertical-align: top;
-  text-align: left;
-  padding-left: 1.5em;
+.legend2 {
+    border-top-width: 15px;
+    border-top-style: solid;
+    font-size: .75em;
+    width: 10%;
+    padding-left: 0;
+    padding-right: 0;
 }
 
-.checkbox label:before,
-.checkbox label:after{
-  content: '';
-  display: block;
-  position: absolute;
-}
 
-.checkbox label:before{
-  left: 0;
-  top: 0;
-  width: 18px;
-  height: 18px;
-  margin-right: 10px;
-  background: #ddd;
-  border-radius: 3px;
-}
-
-.checkbox label:after{
-  content: '';
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
-  background: #68b8c4;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.checkbox input:checked ~ label:after{
-  opacity: 1;
-}
-
-.checkbox input:focus ~ label:before{
-  background: #eee;
-}
-
-=======
 .background {
   fill: none;
   pointer-events: all;
 }
 
-#map {
+svg{
+  margin-top: 20px;
+  border: 1px solid #d6ef87;
+}
+
+
+/*#map {
     float: right;
     width: 80%;
+}*/
+
+/*header*/
+
+.masthead {
+  padding: 3rem 5rem 4rem;
+  position: relative;
+  font-weight: 300;
+  /*text-align: center;*/
+  text-shadow: 0 1px 0 rgba(0,0,0,.1);
+  background: #004990;
+  height: 150px;
 }
 
-svg{
-  border: 5px solid black;
+#first{
+  float: left;
+  text-align: left;
+  padding: 0 0 20px 0;
+  margin-left: 0;
 }
+
+#second_header{
+  width: 100%;
+  float: left;
+  margin-top: -24px;
+}
+
+#tagline{
+  color: #9abddf;
+  font-style: italic;
+  font-size: 15px;
+  margin: 8px 0px 0px 63px;
+  display: block;
+  float: left;
+  width: 62%;
+}
+
+#soc_icons{
+  float: right;
+  margin: 0px 0px 0px 0px;
+  width: 152px;
+}
+
+.fa{
+  color:white;
+}
+
+
+
+
+
+
 
 #left {
+    padding-left:2%;
+    padding-right:1%;
+    padding-top:1%;
+    padding-bottom: 1%;
     position: relative;
-    float:left;
-    width: 20%;
-    top: 100px;
+    color: #666666;
+    background: #dbe4bd;
+    /*float:left;*/
+    /*width: 25%;*/
+}
+
+
+#right{
+  padding-left:1%;
+  padding-right:2%;
+  position: relative;
+  color: #666666;
+
+  /*float:left;*/
+  /*width:75%;*/
 }
 
 #top {
-    width: 100%;
-    margin-bottom: 20px;
+    background-color:#edebe3;
+    padding:1%;
 }
->>>>>>> cf2025014c0cd1226910912836c6c6cdbe60ac72
+
+#container{
+  padding-top:50px;
+  padding-bottom:50px;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+/*footer*/
+
+  #container-footer {
+    /*margin-top: 50px;*/
+    color: #fff;
+    font-size: 12px;
+    background-color: #004990;
+    text-align: center;
+    padding: 25px;
+  }
+
+  #container-footer .containerf ul {
+    margin: 0 auto;
+    display: inline-block;
+    overflow: auto;
+  }
+
+  #container-footer .containerf ul li:first-child {
+    border: none;
+  }
+
+  #container-footer .containerf ul li{
+    float: left;
+    list-style-type: none;
+    border-left: 1px solid #ccc;
+    padding: 0 25px;
+  }
+

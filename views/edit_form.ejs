@@ -8,7 +8,6 @@
 <script src="/javascripts/jquery.validate.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="/javascripts/currency.js"></script>
-<script src="/javascripts/geocode.js"></script>
 <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
@@ -100,14 +99,6 @@
 	input[type=checkbox]{
 		margin:1%;
 	}
-	button{
-		background-color: #bfdb67;
-		border-color: #bfdb67;
-		min-width:200px;
-	}
-	form{
-		margin-top:20px;
-	}
 
 
 
@@ -141,9 +132,89 @@
 
 
 </style>
-    
-<body>
 
+ <script>
+ $(document).ready(function(){
+var org = <%-docs %>;
+//Get select object
+var orgVal = document.getElementById("organization");
+var stateVal = document.getElementById("state");
+var yearVal = document.getElementById("year");
+var addressVal = document.getElementById("address");
+var yearDonation = document.getElementById("yearDonation")
+var assetSize = document.getElementById("asset");
+
+//Set selected
+orgVal.value = org.organization_name;
+setSelectedValue(stateVal, org.state);
+setSelectedValue(yearVal, org.year);
+addressVal.value = org.address;
+yearDonation.value = org.annual_grantmaking;
+
+if (org.asset_size){
+	assetSize.value = org.asset_size;
+}
+
+if (org.isNational){
+	$("#national_true").prop("checked", true);
+}
+else{
+	$("#national_false").prop("checked", true);	
+}
+
+if (org.isFundersMember){
+	$("#member_true").prop("checked", true);
+}
+else{
+	$("#member_false").prop("checked", true);	
+}
+
+org.funder_type.forEach(function(f){
+	var val = f;
+	$("input[name='funder_type']").each(function(){
+		if ($(this).val() == val){
+			$(this).prop("checked", true);
+		}
+	});
+})
+
+org.populations.forEach(function(f){
+	var val = f.area;
+	var amount = f.amount;
+	$("input[name='fund_area']").each(function(){
+		if ($(this).val() == val){
+			$(this).prop("checked", true);
+			document.getElementById(this.id + "_amount").children[0].value = amount;
+
+		}
+	});
+})
+
+org.supported_strategies.forEach(function(f){
+	var val = f.area;
+	var amount = f.amount;
+	$("input[name='strategies']").each(function(){
+		if ($(this).val() == val){
+			$(this).prop("checked", true);
+			document.getElementById(this.id + "_amount").children[0].value = amount;
+		}
+	});
+})
+
+
+function setSelectedValue(selectObj, valueToSet) {
+    for (var i = 0; i < selectObj.options.length; i++) {
+        if (selectObj.options[i].text== valueToSet) {
+            selectObj.options[i].selected = true;
+            return;
+        }
+    }
+}
+})
+</script>  
+
+<body>
+<script src="/javascripts/geocode_edit.js"></script>
 	<div class="masthead">
       <div id="first">
         <a href="http://www.funderstogether.org/">
@@ -170,10 +241,6 @@
 
 	<div class="container">
 
-		<div>
-			<button class = "btn" a href='/'> Return to Map </button>
-		</div>
-
 		<form class="form-horizontal" id="input_form">
 			<div class="form-group">
 		<label class="inputlabel control-label col-sm-2">*Organization:</label>
@@ -184,7 +251,7 @@
 
 		<div class="form-group">
 		<label class="inputlabel control-label col-sm-2">*Year:</label>   <div class = "col-sm-10">
-			<select name="year" class = "form-control" required>
+			<select name="year" id="year" class = "form-control" required>
 			    <option value="2014">2014</option>
 				<option value="2013">2013</option>
 				<option value="2012">2012</option>
@@ -210,7 +277,7 @@
 		<div class="form-group">
 		<label class="inputlabel control-label col-sm-2">*State:</label>   
 		<div class="col-sm-10">
-			<select name="state" class="form-control" required>
+			<select name="state" id = "state" class="form-control" required>
 				<option disabled='disabled'>State</option>
 			    <option value="Alabama">Alabama</option>
 				<option value="Alaska">Alaska</option>
@@ -277,30 +344,30 @@
 		<div class = "form-group">
 		<label class="inputlabel control-label col-sm-2">Asset Size: $</label>
 		<div class="col-sm-10">
-			<input class="form-control" name="asset" onblur="this.value=CurrencyFormatted(this.value)">
+			<input class="form-control" id = "asset" name="asset" onblur="this.value=CurrencyFormatted(this.value)">
 		</div>
 		</div>
 
 		<div class = "form-group">
 		<label class="inputlabel control-label col-sm-2">*Yearly Donation: $</label>
 		<div class="col-sm-10">
-			<input class = "form-control" name="yearDonation" id = "yearDonation" onblur="this.value=CurrencyFormatted(this.value)"required>
+			<input class = "form-control" id = "yearDonation" name="yearDonation" id = "yearDonation" onblur="this.value=CurrencyFormatted(this.value)"required>
 		</div>
 		</div>
 
 		<div class="form-group">
 		<label class="inputlabel control-label col-sm-2">*National Funding?</label>
 		<div class="col-sm-10">
-			Yes <input type="radio" name="national" value="true" required>
-			No <input type="radio" name="national" value="false" required>
+			Yes <input type="radio" id = "national_true" name="national" value="true" required>
+			No <input type="radio" id = "national_false" name="national" value="false" required>
 		</div>
 		</div>
 
 		<div class="form-group">
 		<label class="inputlabel control-label col-sm-2">*Member of Funders Together?</label>
 		<div class="col-sm-10">
-			Yes <input type="radio" name="isMember" value="true" required>
-			No <input type="radio" name="isMember" value="false" required></div>
+			Yes <input type="radio" id = "member_true" name="isMember" value="true" required>
+			No <input type="radio" id = "member_false" name="isMember" value="false" required></div>
 		</div>
 
 		<div class="form-group">
@@ -513,11 +580,9 @@
 				</fieldset>
 		</div>
 		</div>
-
-		
-
+		<p> *These fields are required</p>
 		<button type="submit" class="btn" id = "nextbutton">Submit</button>
-		<!-- <button class = "btn"><a href='/'> Return to Map </button> -->
+		<button class = "btn"><a href='/'> Return to Map </button>
 			</form>
 
 	</div>

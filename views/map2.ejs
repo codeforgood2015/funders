@@ -3,7 +3,7 @@
   <head>
     <title><%= title %></title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
     <link rel='stylesheet' href='/stylesheets/map_style.css' />
     <link rel='stylesheet' href='/stylesheets/colorbrewer.css' />
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
@@ -15,25 +15,54 @@
     <!-- Include the Bootstrap Multiselect plugin's CSS and JS: -->
     <script type="text/javascript" src="/javascripts/bootstrap-multiselect.js"></script>
     <link rel="stylesheet" href="/stylesheets/bootstrap-multiselect.css" type="text/css"/>
-    <style>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 
-    </style>
 
   </head>
   <body>
 
-    <div id="container" class="container">
+    <div class="masthead">
+      <div id="first">
+        <a href="http://www.funderstogether.org/">
+          <img id="funder_logo" src="http://d3n8a8pro7vhmx.cloudfront.net/funderstogether/sites/1/meta_images/original/funderstogether-logo.png?1389484084">
+        </a>
+      </div>
+      <div id="second_header">
+        <p id="tagline">
+          A national network of funders supporting strategic, innovative, and effective solutions to homelessness
+        </p>
+        <ul id="soc_icons">
+          <a href="https://www.facebook.com/funderstogether">
+            <li class="fa fa-facebook-square fa-2x"></li>
+          </a>
+          <a href="https://twitter.com/funderstogether">
+            <li class="fa fa-twitter-square fa-2x"></li>
+          </a>
+          <a href="http://www.linkedin.com/groups/Funders-Together-End-Homelessness-742397">
+            <li class="fa fa-linkedin-square fa-2x"></li>
+          </a>
+        </ul>
+      </div>
+    </div>
 
-<div id = "left">
-            <a href = "/form1">Go To Input Form</a>
+
+  <div id="container" class="container">
+
+<div id = "left" class="col-md-3">
+
+  <div id="sidebar">
+            <a href = "/form1" class="btn btn-info btn-block">Go To Input Form</a>
             <% if (loggedin) {%>
               <br />
+               <a href = "/dashboard">Dashboard</a><br/>
               <a href = '/logout'>Logout</a>
             <% } %>
   <h3>Filter By:</h3>
 <h4>Populations</h4>
 
-  <select id="population-dropdown" multiple="multiple">
+  <select class="multi-dropdown" id="population-dropdown" multiple="multiple">
     <option name = "funding_area" value = "All people experiencing or at risk of homelessness">All people experiencing or at risk of homelessness</option>
     <option name = "funding_area" value ="Chronic Homelessness">Chronic Homelessness</option>
     <option name = "funding_area" value ="Domestic Violence Survivors">Domestic Violence Survivors</option>
@@ -50,12 +79,11 @@
     <option name = "funding_area" value = "Youth/Young Adults">Youth/Young Adults</option>
     <option name = "funding_area" value = "Youth/young adults exiting foster care">Youth/young adults exiting foster care</option>
   </select>
-
- <br>
+  <div id="funding-list"></div>
 
 <h4>Supported Strategies</h4>
 
-  <select id="strategies-dropdown" multiple="multiple">
+  <select class="multi-dropdown" id="strategies-dropdown" multiple="multiple">
     <option name = "supported_strategies" value = "Advocacy">Advocacy</option>
     <option name = "supported_strategies" value ="Affordable Housing">Affordable Housing</option>
     <option name = "supported_strategies" value = "Emergency Shelter">Emergency Shelter</option>
@@ -70,13 +98,12 @@
     <option name = "supported_strategies" value = "Supportive Services">Supportive Services</option>
     <option name = "supported_strategies" value = "Systems Change">Systems Change</option>
     <option name = "supported_strategies" value = "Transitional Housing">Transitional Housing</option>
-
   </select>
+  <div id="strategies-list"></div>
 
-  <br>
 
   <h4>Funder Type</h4>
-  <select id="funder-dropdown" multiple="multiple">
+  <select class="multi-dropdown" id="funder-dropdown" multiple="multiple">
     <option name = "funder_type" value ="Community Foundation">Community Foundation</option>
     <option name = "funder_type" value ="Corporate Giving Program">Corporate Giving Program</option>
     <option name = "funder_type" value = "Family Foundation">Family Foundation</option>
@@ -87,11 +114,12 @@
     <option name = "funder_type" value = "Public Charity">Public Charity</option>
     <option name = "funder_type" value = "United Way">United Way</option>
   </select>
+  <div id="funder-list"></div>
 
   <br>
 
   <h4>Year:</h4>
-  <select id="year">
+  <select id="year" class="form-control">
       <option value="2014">2014</option>
     <option value="2013">2013</option>
     <option value="2012">2012</option>
@@ -111,65 +139,102 @@
     <option value="1998">1998</option>
     <option value="1997">1997</option>
   </select>
-</div>
-<div id = "top">
-<h3>View Funding towards different areas</h3>
+</div> <!-- sidebar -->
 
-Populations: 
-    <select id="populations">
-    <option value = "All" selected>All</option>
-    <option value = "All people experiencing or at risk of homelessness">All people experiencing or at risk of homelessness</option>
-    <option value ="Chronic Homelessness">Chronic Homelessness</option>
-    <option value ="Domestic Violence Survivors">Domestic Violence Survivors</option>
-    <option value = "Families">Families</option>
-    <option value = "Immigrants">Immigrants</option>
-    <option value = "Military Veterans">Military Veterans</option>
-    <option value = "People who identify as lesbian, gay, bisexual and/or transgender">People who identify as lesbian, gay, bisexual and/or transgender</option>
-    <option value = "People re-entering the community from a mental health facility">People re-entering the community from a mental health facility</option>
-    <option value = "People re-entering the community from the criminal justice system">People re-entering the community from the criminal justice system</option>
-    <option value = "People with substance use disorder">People with substance use disorder</option>
-    <option value = "Older Adults/Seniors">Older Adults/Seniors</option>
-    <option value = "Rural Populations">Rural Populations</option>
-    <option value = "Women">Women</option>
-    <option value = "Youth/Young Adults">Youth/Young Adults</option>
-    <option value = "Youth/young adults exiting foster care">Youth/young adults exiting foster care</option>
-    </select>
-<br />
-Supported Strategies: 
-    <select id="strategies">
-    <option value = "All" selected>All</option>
-    <option value = "Advocacy">Advocacy</option>
-    <option value ="Affordable Housing">Affordable Housing</option>
-    <option value = "Emergency Shelter">Emergency Shelter</option>
-    <option value = "Workforce Development">Employment/Workforce Development</option>
-    <option value = "Funding Advocacy">Homelessness Prevention</option>
-    <option value = "Housing First">Housing First</option>
-    <option value = "Outreach to people experiencing homelessness">Outreach to people experiencing homelessness</option>
-    <option value = "Permanent Supportive Housing">Permanent Supportive Housing</option>
-    <option value = "Public Education">Public Education</option>
-    <option value = "Rapid Re-Housing">Rapid Re-Housing</option>
-    <option value = "Research/Data">Research/Data</option>
-    <option value = "Supportive Services">Supportive Services</option>
-    <option value = "Systems Change">Systems Change</option>
-    <option value = "Transitional Housing">Transitional Housing</option>
-    </select>
 </div>
+
+
+  <div id="right" class="col-md-9">
+    <div id = "top">
+    <h3>View Funding towards different areas</h3>
+
+    <div>
+    <label class="control-label"> Populations:</label>
+        <select id="populations" class="form-control">
+          <option value = "All" selected>All</option>
+          <option value = "All people experiencing or at risk of homelessness">All people experiencing or at risk of homelessness</option>
+          <option value ="Chronic Homelessness">Chronic Homelessness</option>
+          <option value ="Domestic Violence Survivors">Domestic Violence Survivors</option>
+          <option value = "Families">Families</option>
+          <option value = "Immigrants">Immigrants</option>
+          <option value = "Military Veterans">Military Veterans</option>
+          <option value = "People who identify as lesbian, gay, bisexual and/or transgender">People who identify as lesbian, gay, bisexual and/or transgender</option>
+          <option value = "People re-entering the community from a mental health facility">People re-entering the community from a mental health facility</option>
+          <option value = "People re-entering the community from the criminal justice system">People re-entering the community from the criminal justice system</option>
+          <option value = "People with substance use disorder">People with substance use disorder</option>
+          <option value = "Older Adults/Seniors">Older Adults/Seniors</option>
+          <option value = "Rural Populations">Rural Populations</option>
+          <option value = "Women">Women</option>
+          <option value = "Youth/Young Adults">Youth/Young Adults</option>
+          <option value = "Youth/young adults exiting foster care">Youth/young adults exiting foster care</option>
+        </select>
+    </div>
+    <br />
+    <label class="control-label"> Supported Strategies: </label>
+        <select id="strategies" class="form-control">
+          <option value = "All" selected>All</option>
+          <option value = "Advocacy">Advocacy</option>
+          <option value ="Affordable Housing">Affordable Housing</option>
+          <option value = "Emergency Shelter">Emergency Shelter</option>
+          <option value = "Workforce Development">Employment/Workforce Development</option>
+          <option value = "Funding Advocacy">Homelessness Prevention</option>
+          <option value = "Housing First">Housing First</option>
+          <option value = "Outreach to people experiencing homelessness">Outreach to people experiencing homelessness</option>
+          <option value = "Permanent Supportive Housing">Permanent Supportive Housing</option>
+          <option value = "Public Education">Public Education</option>
+          <option value = "Rapid Re-Housing">Rapid Re-Housing</option>
+          <option value = "Research/Data">Research/Data</option>
+          <option value = "Supportive Services">Supportive Services</option>
+          <option value = "Systems Change">Systems Change</option>
+          <option value = "Transitional Housing">Transitional Housing</option>
+        </select>
+    </div>
 
 
     <!--<div id="container"></div>-->
     <div id = "map">
 
     </div>
-                  <div id="legend">Total Annual Grantmaking</div>
-         <div id="tooltip" class="hidden">
+      <div id="legend">Total Annual Grantmaking</div>
+      <div id="legend2">
+        National 
+        <div class="legend2" style="border-top-color: red;"></div>
+        Regional
+        <div class="legend2" style="border-top-color: green;"></div>
+      </div>
+
+      <div id="tooltip" class="hidden">
       <p><span id="text"></span></p>
      <button id="close">Close</button>
     </div>
+  </div>
+</div>
 
+<div id="container-footer">
+    <div class="containerf">
+      <ul>
+        <li><a href="http://www.funderstogether.org/contact_us">CONTACT</a></li>
+        <li><a href="http://www.funderstogether.org/press">PRESS</a></li>
+        <li><a href="http://www.funderstogether.org/careers">CAREERS</a></li>
+      </ul>
 
+      <div id="topContent" class="containerf">
+        <div class="center cleared-floats">
+          <p>Funders Together to End Homelessness<br>89 South Street, 8th Floor |&nbsp;Boston, MA 02111 |&nbsp;617.245.0314 |&nbsp;info@funderstogether.org
+            <br>
+            <br>Copyright 2013 Funders Together to End Homelessness
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   </body>
+
+
+
+
 </html>
 
 

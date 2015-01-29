@@ -1,5 +1,6 @@
 	$(document).ready(function(){
 		data = {};
+
 		$("#input_form").validate({
 			submitHandler: function(form){
 				data.organization = form.organization.value;
@@ -63,7 +64,7 @@
 
 								$.ajax({
 									url: "/organization/",
-									type: "put",
+									type: "post",
 									data:  JSON.stringify(data),
 									contentType : 'application/json',
 									dataType: "json",
@@ -91,9 +92,12 @@
 							data.latitude = latitude;
 							data.longitude = longitude;	
 
+							var url_parts = document.URL.split("/")
+							var org_id = url_parts[url_parts.length - 1];
+
 							$.ajax({
-								url: "/organization/",
-								type: "post",
+								url: "/organization/" + org_id,
+								type: "put",
 								data:  JSON.stringify(data),
 								contentType : 'application/json',
 								dataType: "json",
@@ -166,12 +170,23 @@ sliders.each(function() {
     var init_value = parseInt($(this).text());
 
     $(this).siblings('.value').text(init_value);
-    $(this).siblings('input.amount').val(0);
-    //var amount = $(this).siblings('input.amount').val() || 0;
+    //$(this).siblings('input.amount').val(0);
+    var amount = $(this).siblings('input.amount').val() || 0;
 
-	//var totalDonation = parseFloat($("#yearDonation").val()) || 0;
+	var totalDonation = parseFloat($("#yearDonation").val()) || 0;
 	//var amount = parseFloat($(this).val());
-	//var slider = $(this).siblings('.slider');
+	var slider = $(this).siblings('.slider');
+
+	if (amount > totalDonation){
+		$(this).val(totalDonation);
+		slider.slider("value", 100);
+		$(this).siblings('.value').text(100);
+	}
+	else {
+		percentage = amount / totalDonation;
+		slider.slider("value", percentage * 100);
+		$(this).siblings('.value').text((percentage * 100).toFixed(2));
+	}
 
     $(this).empty().slider({
         value: init_value,

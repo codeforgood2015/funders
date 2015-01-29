@@ -4,8 +4,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <link href="//d2c5utp5fpfikz.cloudfront.net/3_1_1/css/bootstrap-theme.css.map" rel="stylesheet">
+    <link href="//d2c5utp5fpfikz.cloudfront.net/3_1_1/css/bootstrap-theme.min.css" rel="stylesheet">
 <script src="/javascripts/d3.legend.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
 <style>
 .legend rect {
   fill:white;
@@ -22,11 +28,11 @@ $(document).ready(function(){
 
 	var org = <%- docs %>;
 
-	$("#org_info").html("Annual Grantmaking: " + org.annual_grantmaking + "<br/>"
+	$("#org_info").html("Annual Grantmaking: $" + org.annual_grantmaking + "<br/>"
 						+ "Funder Type: " + org.funder_type)
 
 				//Width and height
-			var w = 600;
+			var w = 800;
 			var h = 300;
 
 			//var dataset = [ 5, 10, 20, 45, 6, 25 ];
@@ -153,6 +159,32 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+
+	    <div class="masthead">
+      <div id="first">
+        <a href="http://www.funderstogether.org/">
+          <img id="funder_logo" src="http://d3n8a8pro7vhmx.cloudfront.net/funderstogether/sites/1/meta_images/original/funderstogether-logo.png?1389484084">
+        </a>
+      </div>
+      <div id="second_header">
+        <p id="tagline">
+          A national network of funders supporting strategic, innovative, and effective solutions to homelessness
+        </p>
+        <ul id="soc_icons">
+          <a href="https://www.facebook.com/funderstogether">
+            <li class="fa fa-facebook-square fa-2x"></li>
+          </a>
+          <a href="https://twitter.com/funderstogether">
+            <li class="fa fa-twitter-square fa-2x"></li>
+          </a>
+          <a href="http://www.linkedin.com/groups/Funders-Together-End-Homelessness-742397">
+            <li class="fa fa-linkedin-square fa-2x"></li>
+          </a>
+        </ul>
+      </div>
+    </div>
+
+	<div class="main_container">
 <h2>Organization Info</h2>
 <div id = "org_info">
 </div>
@@ -164,5 +196,25 @@ $(document).ready(function(){
 <div id="str_chart">
 </div>
 <a href = "/">Back to Map</a>
+</div>
+
+ <div id="container-footer">
+      <div class="container">
+        <ul>
+          <li><a href="http://www.funderstogether.org/contact_us">CONTACT</a></li>
+          <li><a href="http://www.funderstogether.org/press">PRESS</a></li>
+          <li><a href="http://www.funderstogether.org/careers">CAREERS</a></li>
+        </ul>
+
+        <div id="topContent" class="container">
+          <div class="center cleared-floats">
+            <p>Funders Together to End Homelessness<br>89 South Street, 8th Floor |&nbsp;Boston, MA 02111 |&nbsp;617.245.0314 |&nbsp;info@funderstogether.org
+              <br>
+              <br>Copyright 2013 Funders Together to End Homelessness
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html>

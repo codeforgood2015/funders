@@ -160,7 +160,10 @@ passport.deserializeUser(function(id, next) {
 // });
 
 router.get('/dashboard', isAuthenticated, function(req, res){
-	res.render('dashboard');
+	var user = req.user;
+	User.findOne({_id:user}).populate("organizations").exec(function(err, docs){
+		res.render('dashboard', {organizations: docs.organizations})
+	})
 });
 
 router.get('/profile', isAuthenticated, function(req, res){

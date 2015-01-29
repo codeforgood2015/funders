@@ -101,10 +101,12 @@ $(window).on('resize', function(){
 
             $('#population-dropdown').multiselect({
               includeSelectAllOption: true,
+              buttonWidth: '100%',
               buttonText: function(options, select){
                 if (options.length === 0) {
                     delete data.populations;
                   returnQuery(data);
+                  $('#funding-list').html("");
                     return 'None Selected ▾';
                 }
                 else{
@@ -117,20 +119,25 @@ $(window).on('resize', function(){
                       labels.push($(this).html());
                     }
                   });
+                  $('#funding-list').html("");
+                  for (var ii=0; ii<options.length;ii++){
+                    $('#funding-list').append("<div class='filtering'>" + labels[ii]+"</div>");
+                  }
                   data.populations = labels.join(',');
                   returnQuery(data);
                   //return labels.join(', ') + ' ▾';
-                  return 'Show Selected ▾';
+                  return options.length + ' Selected ▾';
                 }
               }
             });
             $('#strategies-dropdown').multiselect({
               includeSelectAllOption: true,
-              numberDisplayed: 13,
+              buttonWidth: '100%',
               buttonText: function(options, select){
                 if (options.length === 0) {
                   delete data.supported_strategies;
                   returnQuery(data);
+                  $('#strategies-list').html("");
 
                     return 'None Selected ▾';
                 }
@@ -144,21 +151,26 @@ $(window).on('resize', function(){
                       labels.push($(this).html());
                     }
                   });
+                  $('#strategies-list').html("");
+                  for (var ii=0; ii<options.length;ii++){
+                    $('#strategies-list').append("<div class='filtering'>" + labels[ii]+"</div>");
+                  }
                   data.supported_strategies = labels.join(',');
                   returnQuery(data);
                   //return labels.join(', ') + ' ▾';
-                  return 'Show Selected ▾';
+                  return options.length + ' Selected ▾';
                 }
               }
             });
 
             $('#funder-dropdown').multiselect({
               includeSelectAllOption: true,
-              numberDisplayed: 13,
+              buttonWidth: '100%',
               buttonText: function(options, select){
                 if (options.length === 0) {
                   delete data.funder_type;
                   returnQuery(data);
+                  $('#funder-list').html("");
 
                     return 'None Selected ▾';
                 }
@@ -174,8 +186,12 @@ $(window).on('resize', function(){
                   });
                   data.funder_type = labels.join(',');
                   returnQuery(data);
+                  $('#funder-list').html("");
+                  for (var ii=0; ii<labels.length;ii++){
+                    $('#funder-list').append("<div class='filtering'>" + labels[ii]+"</div>");
+                  }
                   //return labels.join(', ') + ' ▾';
-                  return 'Show Selected ▾';
+                  return options.length + ' Selected ▾';
                 }
               }
             });

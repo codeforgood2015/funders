@@ -12,14 +12,44 @@
     <script src='javascripts/login.js'></script>
     <script src="/javascripts/jquery.validate.min.js"></script>
 
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+
   </head>
+
   <body>
+
+    <div class="masthead">
+      <div id="first">
+        <a href="http://www.funderstogether.org/">
+          <img id="funder_logo" src="http://d3n8a8pro7vhmx.cloudfront.net/funderstogether/sites/1/meta_images/original/funderstogether-logo.png?1389484084">
+        </a>
+      </div>
+      <div id="second_header">
+        <p id="tagline">
+          A national network of funders supporting strategic, innovative, and effective solutions to homelessness
+        </p>
+        <ul id="soc_icons">
+          <a href="https://www.facebook.com/funderstogether">
+            <li class="fa fa-facebook-square fa-2x"></li>
+          </a>
+          <a href="https://twitter.com/funderstogether">
+            <li class="fa fa-twitter-square fa-2x"></li>
+          </a>
+          <a href="http://www.linkedin.com/groups/Funders-Together-End-Homelessness-742397">
+            <li class="fa fa-linkedin-square fa-2x"></li>
+          </a>
+        </ul>
+      </div>
+    </div>
+
     <div id="main_container">
         <!-- top bar -->
         <div class="row" id="main_title">
           <div class="col-sm-3"></div>
           <div class="col-sm-8 centered">
-              <h1>WELCOME TO FUNDERS TOGETHER</h1>
+              <!-- <h1>WELCOME TO FUNDERS TOGETHER</h1> -->
           </div>
         </div>
         <% if (error) {%>
@@ -35,10 +65,16 @@
         <div class="row">
             <div class="col-sm-1"></div>
             <div class="col-sm-5">
+
+              <div id="request">
+                <a class="btn btn-info btn-block" id="request-button" href ='/login/request'><h3>REQUEST AN INVITATION</h3></a>
+                <p id="request-info">To create an account, you must request an invitation code.</p>
+              </div>
+
               <div id="decription">
                 <br />
                 <h4>
-                  <p>Welcome! If you don't have an invitation code, please <a href="/request"> request an invitation</a>. <br />If you are a new user, note that your password must:
+                  <p id="new-user-info"><span id="welcome-word">Welcome!</span> If you don't have an invitation code, please <a href="/request"> request an invitation</a>. <br />If you are a new user, note that your password must:
                     <br /> &nbsp - be only alphanumeric
                     <br /> &nbsp - be of length between 8 and 20 
                     <br /> &nbsp - contain at least one uppercase letter
@@ -80,11 +116,29 @@
                 <br />
                 <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
               </form>
-
-            <a href ='/login/request'><h3>Request an Invitation to Create an Account?</h3></a>
             </div>
             <div class='col-sm-1'></div>
         </div>
     </div>
+
+    <div id="container-footer">
+      <div class="container">
+        <ul>
+          <li><a href="http://www.funderstogether.org/contact_us">CONTACT</a></li>
+          <li><a href="http://www.funderstogether.org/press">PRESS</a></li>
+          <li><a href="http://www.funderstogether.org/careers">CAREERS</a></li>
+        </ul>
+
+        <div id="topContent" class="container">
+          <div class="center cleared-floats">
+            <p>Funders Together to End Homelessness<br>89 South Street, 8th Floor |&nbsp;Boston, MA 02111 |&nbsp;617.245.0314 |&nbsp;info@funderstogether.org
+              <br>
+              <br>Copyright 2013 Funders Together to End Homelessness
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>
