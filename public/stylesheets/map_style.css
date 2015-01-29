@@ -59,7 +59,7 @@ li.key {
   border-radius: 4px;
 }
 
-.legend2 {
+/*.legend2 {
     border-top-width: 15px;
     border-top-style: solid;
     font-size: .75em;
@@ -75,28 +75,42 @@ li.key {
   pointer-events: all;
 }
 
-#map {
-    float: right;
-    width: 80%;
-}
-
 svg{
   border: 5px solid black;
 }
 
+
+#map {
+    float: right;
+    width: 80%;
+}*/
+
 #left {
+    padding-left:2%;
+    padding-right:2%;
     position: relative;
     float:left;
-    width: 20%;
-    top: 100px;
+    width: 25%;
 }
 
-#top {
+#right{
+  padding-left:2%;
+  padding-right:2%;
+  position: relative;
+  float:left;
+  width:75%;
+}
+
+/*#top {
     width: 100%;
     margin-bottom: 20px;
+}*/
+
+#container{
+  padding-top:50px;
+  padding-bottom:50px;
+  width: 100%;
 }
-
-
 
 
 
