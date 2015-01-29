@@ -1,5 +1,6 @@
 	$(document).ready(function(){
 		data = {};
+
 		$("#input_form").validate({
 			submitHandler: function(form){
 				data.organization = form.organization.value;
@@ -63,7 +64,7 @@
 
 								$.ajax({
 									url: "/organization/",
-									type: "put",
+									type: "post",
 									data:  JSON.stringify(data),
 									contentType : 'application/json',
 									dataType: "json",
@@ -91,9 +92,12 @@
 							data.latitude = latitude;
 							data.longitude = longitude;	
 
+							var url_parts = document.URL.split("/")
+							var org_id = url_parts[url_parts.length - 1];
+
 							$.ajax({
-								url: "/organization/",
-								type: "post",
+								url: "/organization/" + org_id,
+								type: "put",
 								data:  JSON.stringify(data),
 								contentType : 'application/json',
 								dataType: "json",

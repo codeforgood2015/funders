@@ -34,7 +34,7 @@ $(document).on('submit', '#signin_form', function(evt){
 			currentUser = response.user;
 			data = 'e=false';
 		}
-		loadPage('form1', data);
+		loadPage('dashboard', data);
 	})
 });
 
