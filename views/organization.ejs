@@ -80,7 +80,7 @@ $(document).ready(function(){
 
 
 			if (pop_dataset.length == 0){
-				$("#pop_chart").html("No data available")
+				$("#pop_chart").html("<h3>Populations</h3>No data available")
 			}
 			else {
 						var svg = d3.select("#pop_chart")
@@ -120,7 +120,7 @@ $(document).ready(function(){
 			}
 
 			if (str_dataset.length == 0){
-				$("#str_chart").html("No data available")
+				$("#str_chart").html("<h3>Supported Strategies</h3>No data available")
 			}
 			//Create SVG element
 			else {
