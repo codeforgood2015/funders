@@ -293,13 +293,56 @@ router.get('/edit/:org_id', function(req, res){
 	})
 })
 router.put('/:org_id', function(req, res){
-	Organization.findOne({_id: req.params.org_id}).exec(function(err, docs){
+
+	var user = req.user;
+    var year = req.body.year;
+    var organization = req.body.organization;
+    var address = req.body.address;
+    var latitude = req.body.latitude;
+    var longitude = req.body.longitude;
+    var funder_type = req.body.funder_type;
+    var asset_size = req.body.asset_size;
+    var annual_grantmaking = req.body.yearDonation;
+    var annual_grantmaking_vulnerable = req.body.annual_grantmaking_vulnerable_population || "";
+    var annual_grantmaking_homelessness = req.body.annual_grantmaking_homelessness || "";
+    var state = req.body.state;
+    var populations = req.body.populations; // array
+    var supported_strategies = req.body.supported_strategies; // array*/
+    var isNational = req.body.isNational; 
+    var isFundersMember = req.body.isFundersMember;
+
+    var org = {user: user, latitude: latitude, longitude: longitude, isNational: isNational, isFundersMember: isFundersMember, year:year, organization_name: organization, address:address, asset_size: asset_size, annual_grantmaking: annual_grantmaking, annual_grantmaking_vulnerable_population: annual_grantmaking_vulnerable,annual_grantmaking_homelessness: annual_grantmaking_homelessness, state: state};
+
+    funder_type_list = [];
+    funder_type.forEach(function(funder){
+    	funder_type_list.push(funder);
+    })
+
+    populations_list = [];
+    populations.forEach(function(population){
+    	pop = {area: population.area, amount: population.amount};
+    	populations_list.push(pop);
+    })
+
+    strategies_list = [];
+    supported_strategies.forEach(function(strategy){
+    	str = {area: strategy.area, amount: strategy.amount};
+    	strategies_list.push(str);
+    })
+
+    org.funder_type = funder_type_list;
+    org.populations = populations_list;
+    org.supported_strategies = strategies_list;
+
+    console.log(org);
+	Organization.findOneAndUpdate({_id: req.params.org_id}, {$set: org}).exec(function(err, docs){
 		if (err){
 			console.log(err)
 			utils.sendErrResponse(res, 500, 'Could not find data');
 		}
 		else{
-			//utils.sendSuccessResponse(res, docs);
+			console.log(docs)
+			utils.sendSuccessResponse(res, docs);
 			//res.render('organization', {docs: JSON.stringify(docs)});
 		}	
 	})	
