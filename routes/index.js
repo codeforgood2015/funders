@@ -175,7 +175,12 @@ router.get('/profile', isAuthenticated, function(req, res){
 // router.get('/map2', function(req, res){
 //   res.render('map2', {title: 'Map'});
 // })
-
+router.get("/login", function(req, res){
+	if(req.user){
+		res.redirect("/dashboard");
+	}
+	res.render('login', {error: req.query.e, message: req.query.msg})
+})
 /* GET input form 1 page. */
 router.get('/form1', function(req, res) {
 	if(req.user){

@@ -370,7 +370,7 @@ d3.json("/files/us-states.json", function(error, json) {
           .on("mouseover", function(d) {
           //Get this bar's x/y values, then augment for the tooltip
           var xPosition = parseFloat(d3.select(this).attr("cx")) + w/50;
-          var yPosition = parseFloat(d3.select(this).attr("cy")) + h/6;
+          var yPosition = parseFloat(d3.select(this).attr("cy")) + h/20;
 
           //Update the tooltip position and value
           d3.select("#tooltip")

@@ -160,16 +160,23 @@ svg{
     position: relative;
     color: #666666;
     background: #dbe4bd;
-    /*float:left;*/
+    float:left;
+    clear:left;
+   /* top: 350px;8?
     /*width: 25%;*/
 }
 
+#status{
+  float:right;
+}
 
 #right{
   padding-left:1%;
   padding-right:2%;
   position: relative;
   color: #666666;
+  float:left;
+  top:-339px;
 
   /*float:left;*/
   /*width:75%;*/
@@ -177,8 +184,15 @@ svg{
 
 #top {
     background-color:#edebe3;
-    padding:1%;
+    padding-left:2%;
+    padding-top:1%;
+    padding-bottom: 1%;
+    padding-right: 1%;
+    position:relative;
+    float:left;
+    margin-bottom: 15px;
 }
+
 
 #container{
   padding-top:50px;

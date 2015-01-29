@@ -49,16 +49,60 @@
 
 
   <div id="container" class="container">
+<div id = "side">
+            <div id = "top" class = "col-md-3">
 
+                          <a href = "/form1" class="btn btn-info btn-block">Go To Input Form</a>
+    <h3>View Funding towards different areas</h3>
+
+    <div>
+    <label class="control-label"> Populations:</label>
+        <select id="populations" class="form-control">
+          <option value = "All" selected>All</option>
+          <option value = "All people experiencing or at risk of homelessness">All people experiencing or at risk of homelessness</option>
+          <option value ="Chronic Homelessness">Chronic Homelessness</option>
+          <option value ="Domestic Violence Survivors">Domestic Violence Survivors</option>
+          <option value = "Families">Families</option>
+          <option value = "Immigrants">Immigrants</option>
+          <option value = "Military Veterans">Military Veterans</option>
+          <option value = "People who identify as lesbian, gay, bisexual and/or transgender">People who identify as lesbian, gay, bisexual and/or transgender</option>
+          <option value = "People re-entering the community from a mental health facility">People re-entering the community from a mental health facility</option>
+          <option value = "People re-entering the community from the criminal justice system">People re-entering the community from the criminal justice system</option>
+          <option value = "People with substance use disorder">People with substance use disorder</option>
+          <option value = "Older Adults/Seniors">Older Adults/Seniors</option>
+          <option value = "Rural Populations">Rural Populations</option>
+          <option value = "Women">Women</option>
+          <option value = "Youth/Young Adults">Youth/Young Adults</option>
+          <option value = "Youth/young adults exiting foster care">Youth/young adults exiting foster care</option>
+        </select>
+    </div>
+    <br />
+    <label class="control-label"> Supported Strategies: </label>
+        <select id="strategies" class="form-control">
+          <option value = "All" selected>All</option>
+          <option value = "Advocacy">Advocacy</option>
+          <option value ="Affordable Housing">Affordable Housing</option>
+          <option value = "Emergency Shelter">Emergency Shelter</option>
+          <option value = "Workforce Development">Employment/Workforce Development</option>
+          <option value = "Funding Advocacy">Homelessness Prevention</option>
+          <option value = "Housing First">Housing First</option>
+          <option value = "Outreach to people experiencing homelessness">Outreach to people experiencing homelessness</option>
+          <option value = "Permanent Supportive Housing">Permanent Supportive Housing</option>
+          <option value = "Public Education">Public Education</option>
+          <option value = "Rapid Re-Housing">Rapid Re-Housing</option>
+          <option value = "Research/Data">Research/Data</option>
+          <option value = "Supportive Services">Supportive Services</option>
+          <option value = "Systems Change">Systems Change</option>
+          <option value = "Transitional Housing">Transitional Housing</option>
+        </select>
+    </div>
 <div id = "left" class="col-md-3">
 
+
+   
+
   <div id="sidebar">
-            <a href = "/form1" class="btn btn-info btn-block">Go To Input Form</a>
-            <% if (loggedin) {%>
-              <br />
-               <a href = "/dashboard">Dashboard</a><br/>
-              <a href = '/logout'>Logout</a>
-            <% } %>
+
   <h3>Filter By:</h3>
 <h4>Populations</h4>
 
@@ -116,8 +160,6 @@
   </select>
   <div id="funder-list"></div>
 
-  <br>
-
   <h4>Year:</h4>
   <select id="year" class="form-control">
       <option value="2014">2014</option>
@@ -142,55 +184,18 @@
 </div> <!-- sidebar -->
 
 </div>
-
+</div>
 
   <div id="right" class="col-md-9">
-    <div id = "top">
-    <h3>View Funding towards different areas</h3>
-
-    <div>
-    <label class="control-label"> Populations:</label>
-        <select id="populations" class="form-control">
-          <option value = "All" selected>All</option>
-          <option value = "All people experiencing or at risk of homelessness">All people experiencing or at risk of homelessness</option>
-          <option value ="Chronic Homelessness">Chronic Homelessness</option>
-          <option value ="Domestic Violence Survivors">Domestic Violence Survivors</option>
-          <option value = "Families">Families</option>
-          <option value = "Immigrants">Immigrants</option>
-          <option value = "Military Veterans">Military Veterans</option>
-          <option value = "People who identify as lesbian, gay, bisexual and/or transgender">People who identify as lesbian, gay, bisexual and/or transgender</option>
-          <option value = "People re-entering the community from a mental health facility">People re-entering the community from a mental health facility</option>
-          <option value = "People re-entering the community from the criminal justice system">People re-entering the community from the criminal justice system</option>
-          <option value = "People with substance use disorder">People with substance use disorder</option>
-          <option value = "Older Adults/Seniors">Older Adults/Seniors</option>
-          <option value = "Rural Populations">Rural Populations</option>
-          <option value = "Women">Women</option>
-          <option value = "Youth/Young Adults">Youth/Young Adults</option>
-          <option value = "Youth/young adults exiting foster care">Youth/young adults exiting foster care</option>
-        </select>
-    </div>
-    <br />
-    <label class="control-label"> Supported Strategies: </label>
-        <select id="strategies" class="form-control">
-          <option value = "All" selected>All</option>
-          <option value = "Advocacy">Advocacy</option>
-          <option value ="Affordable Housing">Affordable Housing</option>
-          <option value = "Emergency Shelter">Emergency Shelter</option>
-          <option value = "Workforce Development">Employment/Workforce Development</option>
-          <option value = "Funding Advocacy">Homelessness Prevention</option>
-          <option value = "Housing First">Housing First</option>
-          <option value = "Outreach to people experiencing homelessness">Outreach to people experiencing homelessness</option>
-          <option value = "Permanent Supportive Housing">Permanent Supportive Housing</option>
-          <option value = "Public Education">Public Education</option>
-          <option value = "Rapid Re-Housing">Rapid Re-Housing</option>
-          <option value = "Research/Data">Research/Data</option>
-          <option value = "Supportive Services">Supportive Services</option>
-          <option value = "Systems Change">Systems Change</option>
-          <option value = "Transitional Housing">Transitional Housing</option>
-        </select>
-    </div>
-
-
+ 
+<div id = "status">
+            <% if (loggedin) {%>
+               <a href = "/dashboard">Dashboard</a> &nbsp; | &nbsp; 
+              <a href = '/logout'>Logout</a>
+            <% } else {%>
+              <a href = "/login">Login</a><br/>
+            <% } %>
+          </div>
     <!--<div id="container"></div>-->
     <div id = "map">
 
