@@ -166,23 +166,12 @@ sliders.each(function() {
     var init_value = parseInt($(this).text());
 
     $(this).siblings('.value').text(init_value);
-    //$(this).siblings('input.amount').val(0);
-    var amount = $(this).siblings('input.amount').val() || 0;
+    $(this).siblings('input.amount').val(0);
+    //var amount = $(this).siblings('input.amount').val() || 0;
 
-	var totalDonation = parseFloat($("#yearDonation").val()) || 0;
+	//var totalDonation = parseFloat($("#yearDonation").val()) || 0;
 	//var amount = parseFloat($(this).val());
-	var slider = $(this).siblings('.slider');
-
-	if (amount > totalDonation){
-		$(this).val(totalDonation);
-		slider.slider("value", 100);
-		$(this).siblings('.value').text(100);
-	}
-	else {
-		percentage = amount / totalDonation;
-		slider.slider("value", percentage * 100);
-		$(this).siblings('.value').text((percentage * 100).toFixed(2));
-	}
+	//var slider = $(this).siblings('.slider');
 
     $(this).empty().slider({
         value: init_value,
