@@ -8,9 +8,9 @@
   <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src='/javascripts/admin_requests.js'></script>
   <style>
     #container-footer{
-      position: absolute;
       right: 0;
       bottom: 0;
       left: 0;
@@ -20,12 +20,30 @@
       height:100%;
     }
 
+    .accept{
+      padding: 0;
+      border: none;
+      background: none;
+      color: green;
+    }
+
+    .reject{
+      padding: 0;
+      border: none;
+      background: none;
+      color: red;
+    }
+
+    .wordwrap{
+      word-wrap: break-word;
+    }
+
   </style>
 </head>
 <body>
 
   <div id="ran-wrapper">
-		    <div class="masthead">
+		<div class="masthead">
       <div id="first">
         <a href="http://www.funderstogether.org/">
           <img id="funder_logo" src="http://d3n8a8pro7vhmx.cloudfront.net/funderstogether/sites/1/meta_images/original/funderstogether-logo.png?1389484084">
@@ -50,17 +68,12 @@
     </div>
 
     <div id="main_container" class="container-fluid">
-	<h2>Dashboard</h2>
-
-	<% organizations.forEach(function(o){ %>
-		<a href = "/organization/<%= o._id %>"><%= o.year %></a> &nbsp | &nbsp;
-		<a href = "/organization/edit/<%= o._id %>">Edit</a>
-		<br />
-	<% }) %>
-		<br /> <a class="btn btn-info" href = "/form1">Add another year</a> &nbsp;&nbsp;
-		<a class="btn btn-info" href = "/">Return to Map</a>
-</div>
-	<!--<br /> <a href = "#">Update Profile</a>-->
+    	<h2> Admin Dashboard </h2>
+      <h4> <a href = "/admin/requests"> Invitation Requests (<%=codeReqs %> current Requests)</a> </h4>
+      <h4> <a href = "/admin/users"> Current Users (<%=users %> users) </a> </h4>
+    <br /> 
+    		<a class="btn btn-info" href = "/">Return to Map</a>
+    </div>
 </div>
 
 	    <div id="container-footer">

@@ -10,8 +10,10 @@ var passport = require('passport');
 // var usernameNotifier = require('./../model/helper');
 var LocalStrategy = require('passport-local').Strategy;
 var validator = require('validator');
+var emailNotifier = require('./../model/helper');
 
 var User = require('./../model/user');
+var Code = require('./../model/unverifiedCode');
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////// Helper functions and middleware//////////////////////////////////////
@@ -109,10 +111,9 @@ passport.use('signup', new LocalStrategy({
 							}
 						});
 					}, 
-					// TODO: need to check the random code generator
 					//create new user
 					function(done){
-						User.create(req.body.username, req.body.password, req.body.organizationName, function(err, newUser){
+						User.create(req.body.username, req.body.password, req.body.organizationName, req.body.name, function(err, newUser){
 							if (newUser===null){
 								return done(null, false, {error: 'Could not create a new user, please try again', success: false});
 							}
@@ -153,12 +154,6 @@ passport.deserializeUser(function(id, next) {
 ////////////////////////////////// routes //////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-
-// /* GET home page. */
-// router.get('/', function(req, res) {
-//   res.render('map2', {title: 'Map'});
-// });
-
 router.get('/dashboard', isAuthenticated, function(req, res){
 	var user = req.user;
 	User.findOne({_id:user}).populate("organizations").exec(function(err, docs){
@@ -170,27 +165,23 @@ router.get('/profile', isAuthenticated, function(req, res){
 	res.render('profile');
 });
 
-
-// router.get('/map2', function(req, res){
-//   res.render('map2', {title: 'Map'});
-// })
 router.get("/login", function(req, res){
 	if(req.user){
 		res.redirect("/dashboard");
 	}
-	res.render('login', {error: req.query.e, message: req.query.msg})
+	res.render('login', {error: req.query.e, message: req.query.msg, error: req.query.e, message: req.query.msg, success: req.query.s})
 })
+
 /* GET input form 1 page. */
 router.get('/form1', function(req, res) {
 	if(req.user){
-		var organization;
 		User.findOne({ _id:req.user }, function(err, dbUser){
-			res.render('form1', { title: 'Form', organizationName: dbUser.organizationName });
+			res.render('form1', { title: 'Form', organizationName: dbUser.organizationName});
 		});
   		
   	}
   	else{
-  		res.render('login', {error: req.query.e, message: req.query.msg});
+  		res.render('login', {error: req.query.e, message: req.query.msg, error: req.query.e, message: req.query.msg, success: req.query.s});
   	}
 });
 
@@ -208,9 +199,95 @@ router.get('/request', function(req, res){
 	if (req.user){
 		res.redirect('/form1');
 	}
-	res.render('request');
+	res.render('request', {error: req.query.e, message: req.query.msg, success: req.query.s});
 });
 
+/*
+	creates a new Request
+*/
+router.post('/request', function(req, res){
+	if (req.user){
+		res.json({success: false, error:'User is already logged in'});
+	}
+	else{
+		async.waterfall([
+			//check that inputs are valid
+			function(done){
+				req.body.organizationName = validator.toString(req.body.organizationName);
+				req.body.message = validator.toString(req.body.message);
+				req.body.message = validator.escape(req.body.message);
+				req.body.name = validator.toString(req.body.name); 
+				req.body.name = validator.escape(req.body.name);
+				var checkemail = validator.isEmail(req.body.email);
+				if(!checkemail){
+					res.json({success: false, error: 'Email is not a valid form'});
+				}
+				else{
+					done(null);
+				}
+			}, 
+			//checking for duplicate organization 
+			function(done){
+				User.findOne({'organizationName': req.body.organizationName}).exec(function(err, currUser){
+					if (currUser){
+						res.json({success: false, error: 'This organization is already registered'});
+					}
+					else{
+						done(null);
+					}
+				})
+			}, 
+
+			//checking for duplicate email
+			function(done){
+				User.findOne({'email': req.body.email}).exec(function(err, currUser){
+					if (currUser){
+						res.json({success: false, error: 'This email is already registered'});
+					}
+					else{
+						done(null);
+					}
+				})
+			},
+
+			//insert into database
+			function(done){
+				Code.create(req.body.name, req.body.organizationName, req.body.email, req.body.message, function(err, newCode){
+					if (newCode===null){
+						return done(null, false, {error: 'Could not request invitation code, please try again'});
+					}
+					else if (err){
+						done(err);
+					}
+					else{
+						done(err, newCode);
+					}
+				});
+			}, 
+			//send an email to both parties that it has been created
+			function(newCode){
+				//send to admins
+				User.find({group: "admin"}, function(err, admins){
+					admins.forEach(function (admin){
+						emailNotifier.sendNotificationtoAdmin(admin.email, newCode.name, req.headers.host, admin.name);
+					});
+				});
+				//send to user who just requested Invitation Code
+				emailNotifier.sendNotificationtoNewUser(newCode.email, newCode.name, req.headers.host);
+				res.json({success: true, message: "Thank you for requesting a code"});
+			}
+		], 
+		function(err){
+			if(err){
+				res.status(500).json({error: "There was an error!", success: false});
+			}
+			else{
+				res.json({success: true, message: "Thank you for requesting a code"});
+			}
+		}
+		)
+	}
+});
 
 /*
 	gets the login page if not logged in
@@ -218,11 +295,20 @@ router.get('/request', function(req, res){
 	GET /
 */
 router.get('/', function(req, res){
-	signedin = false
+	signedin = false;
+	admin = false;
 	if (req.user){
 		signedin = true;
+		User.findOne({_id: req.user}).exec(function(err, foundUser){
+			if(foundUser.group=='admin'){
+				admin =true;
+			} 
+			res.render('map2', {title: 'Map', loggedin: signedin, admin: admin});
+		});
+	} else{
+		res.render('map2', {title: 'Map', loggedin: signedin, admin: admin});
 	}
-	res.render('map2', {title: 'Map', loggedin: signedin});
+	
 });
 
 /*
@@ -275,105 +361,8 @@ router.post('/login', function(req, res, next){
 	}
 });
 
-/*
-for registering a new user
-	POST /users/
-	Request parameters:
-		- organization name
-		- username
-		- password
-		- invitation code (TODO)
-	Response:
-		-success: true if new user is created successfully, otherwise false
-		-message: on success, contains success message
-		-error: on failure, contains error message
-*/
-router.post('/users', function(req, res, next){
-	if(req.user){
-		res.redirect('/');
-	}
-	else{
-		async.waterfall(
-			[
-				//check that all inputs are valid
-				function(done){
-					req.body.organizationName= validator.toString(req.body.organizationName);
-					var checkpassword = validator.isAlphanumeric(req.body.password);
-					var checkusername = validator.isEmail(req.body.username);
-					var validpassword = isGoodPassword(req.body.password);
-					// if (!checkOrganizationName){
-					// 	res.json({success: false, error: 'Organization name is not alphanumeric'});
-					// }
-					if (!checkpassword){
-						res.json({success: false, error: 'Password is not alphanumeric'});
-					}
-					else if (!checkusername){
-						res.json({success: false, error: 'Email is not of a valid form'});
-					}
-					else if (!validpassword){
-						res.json({success: false, error: 'Password does not meet the password requirements'});
-					}
-					else{
-						done(null);
-					}
-				}, 
 
-				//check to see if username is already used
-				function(done){
-					User.findOne({'username': req.body.username}, function(err, olduser){
-						if(olduser){
-							res.json({success: false, error: 'Username already exists'});
-						}
-						else{
-							done(err);
-						}
-					});
-				}, 
 
-				//check if organization name has already been user
-				function(done){
-					User.findOne({'organizationName': req.body.organizationName}, function(err, duplicateUser){
-						if(duplicateUser){
-							res.json({success: false, error: 'This organization name already been registered.'});
-						}
-						else{
-							done(err);
-						}
-					})
-				}, 
-
-				//create the new user
-				function(done){
-					req.body.username = req.body.username;
-					req.body.organizationName = req.body.organizationName;
-					req.body.password = req.body.password;
-					passport.authenticate('signup', function(err, newUser, docs){
-						if(err){
-							res.status(500).json({error: "There was an error"});
-						}
-						done(err, newUser);
-					})(req, res, next);
-				}, 
-
-				function(newUser, done){
-					req.logIn(newUser, function(err){
-						if(err){
-							done(err, 'done');
-						}
-						else{
-							res.redirect('/');
-						}
-					});
-				}
-			], 
-
-			function(err){
-				// TODO: fix it
-				res.redirect('/')
-			}
-		)
-	}
-});
 
 /* GET logout */
 router.get('/logout', function(req, res){

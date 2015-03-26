@@ -120,11 +120,22 @@ input{
 	overflow: auto;
 }
 
+#container-footer a{
+    color:white;
+}
+
+#container-footer a:hover{
+color: #d6ef87;
+}
+
 #container-footer .container ul li:first-child {
 	border: none;
 }
 
 #container-footer .container ul li {
+	font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
 	float: left;
 	list-style-type: none;
 	border-left: 1px solid #ccc;

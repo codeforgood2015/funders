@@ -8,9 +8,11 @@
   <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src='/javascripts/login.js'></script>
+  <script src='/javascripts/admin_requests.js'></script>
   <style>
     #container-footer{
-      position: absolute;
+      /*position: absolute;*/
       right: 0;
       bottom: 0;
       left: 0;
@@ -20,12 +22,26 @@
       height:100%;
     }
 
+    .remove{
+      padding: 0;
+      border: none;
+      background: none;
+      color: red;
+    }
+
+    .admin{
+      color: green;
+    }
+
+    .member{
+      color: red;
+    }
   </style>
 </head>
 <body>
 
   <div id="ran-wrapper">
-		    <div class="masthead">
+        <div class="masthead">
       <div id="first">
         <a href="http://www.funderstogether.org/">
           <img id="funder_logo" src="http://d3n8a8pro7vhmx.cloudfront.net/funderstogether/sites/1/meta_images/original/funderstogether-logo.png?1389484084">
@@ -49,21 +65,58 @@
       </div>
     </div>
 
-    <div id="main_container" class="container-fluid">
-	<h2>Dashboard</h2>
+  <div id="main_container" class="container-fluid">
 
-	<% organizations.forEach(function(o){ %>
-		<a href = "/organization/<%= o._id %>"><%= o.year %></a> &nbsp | &nbsp;
-		<a href = "/organization/edit/<%= o._id %>">Edit</a>
-		<br />
-	<% }) %>
-		<br /> <a class="btn btn-info" href = "/form1">Add another year</a> &nbsp;&nbsp;
-		<a class="btn btn-info" href = "/">Return to Map</a>
-</div>
-	<!--<br /> <a href = "#">Update Profile</a>-->
+      <!-- Flash message -->
+    <% if (error) {%>
+      <br />
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class='alert alert-danger col-sm-10' role='alert'>
+          <%=message %> 
+        </div>
+      </div>
+    <% } %>
+    <% if (success) {%>
+      <br />
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class='alert alert-success col-sm-10' role='alert'>
+          <%=message %> 
+        </div>
+      </div>
+    <% } %>
+
+    <h2> Admin Dashboard - Users </h2>
+    <h3> Name &nbsp | &nbsp Organization Name &nbsp | &nbsp Email  &nbsp | &nbsp Group </h3>
+    <% users.forEach(function(user){ %>
+      <h4>
+      <form id ="<%=user._id%>" method="post">
+        
+        <button type="button" id="remove" class="remove glyphicon glyphicon-remove inline"></button>
+        <input type="hidden" id="email" value =<%=user.email%>></input>
+        &nbsp &nbsp
+        <%= user.name %> &nbsp | &nbsp;
+        <%= user.organizationName%> &nbsp | &nbsp;
+        <a href="mailto:<%=user.email%>?Subject=Funders%20Together%20Invitation%20Code" target="_top"><%= user.email%> </a> &nbsp | &nbsp;
+        <%= user.group %>
+        &nbsp | &nbsp;
+        <% if (user.group == 'admin') { %>
+          <a href="#" id="member" class="member"> Change to Member</a>
+        <% } else { %> 
+          <a href="#" id="admin" class="admin"> Change to Admin</a>
+        <% } %>
+        </h4>
+        
+      </form>
+    <% }) %>
+      <br /> 
+      <a class="btn btn-info" href = "/admin">Return to Main Dashboard</a>
+      <a class="btn btn-info" href = "/">Return to Map</a>
+  </div>
 </div>
 
-	    <div id="container-footer">
+      <div id="container-footer">
       <div class="container">
         <ul>
           <li><a href="http://www.funderstogether.org/contact_us">CONTACT</a></li>

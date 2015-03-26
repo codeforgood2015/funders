@@ -32,14 +32,10 @@ $(document).on('submit', '#signin_form', function(evt){
 		}
 		else if (response.success){
 			currentUser = response.user;
-			// data = 'e=false';
 			loadPage('dashboard', data);
 		}
-		
 	})
 });
-
-
 
 $(document).on('submit', '#registration_form', function(evt){
 	evt.preventDefault();
@@ -55,9 +51,65 @@ $(document).on('submit', '#registration_form', function(evt){
 			data ='e='+error+'&msg='+message;
 		}
 		else if (response.success){
-			currentUser = responser.user;
+			currentUser = response.user;
 			data = 'e=false'; 
 		}
 		loadPage('form1', data);
-	})
-})
+	});
+});
+
+$(document).on('submit', '#forgot_password', function(evt){
+	evt.preventDefault();
+	$.post(
+		'/users/forgot', 
+		helpers.getFormData(this)
+	).done(function(response){
+		data = '';
+		success = response.success;
+		if (response.error){
+			error = true;
+			message = response.error;
+			data ='e='+error+'&msg='+message;
+		}
+		else if (response.success){
+			data = 's=true&msg='+response.message; 
+		}
+		loadPage('form1', data);
+	});
+});
+
+$(document).on('submit', '#password_reset_form', function(evt){
+	evt.preventDefault();
+	var item = $(this).parent();
+	var password1 = $('#password1').val();
+	var password2 = $('#password2').val();
+	var token = $('#token').val();
+	if (!(password1 === password2)){
+		message = 'Passwords do not match';
+		error = true;
+		data='e='+error+'&msg='+message;
+		loadPage('users/reset/'+token, data);
+	}
+	else{
+		$.post(
+			'/users/reset/'+token, 
+			{
+				password: password1
+			}
+		).done(function(response){
+			data = '';
+			success = response.success;
+			
+			if (response.success){
+	  			window.location.href = "http://"+host +"/";
+	  		}
+	  		else {
+				error = true;
+				message = response.error;
+				data ='e='+error+'&msg='+message;
+				loadPage('users/reset/'+token, data);
+			}
+			
+		});
+	}
+});

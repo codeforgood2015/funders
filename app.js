@@ -25,7 +25,7 @@ var users = require('./routes/users');
 var tests = require('./routes/tests');
 var organization = require('./routes/organization');
 var populations = require('./routes/populations');
-// var login = require('./routes/login');
+var admins = require('./routes/admin');
 
 
 var app = express();
@@ -62,7 +62,7 @@ app.use('/users', users);
 app.use('/tests', tests);
 app.use('/organization', organization);
 app.use('/populations', populations);
-// app.use('/login', login);
+app.use('/admin', admins);
 
 app.use(function(req,res,next){
     req.db = db;

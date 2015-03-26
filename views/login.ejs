@@ -7,11 +7,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link href="//d2c5utp5fpfikz.cloudfront.net/3_1_1/css/bootstrap.css.map" rel="stylesheet">
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script src='javascripts/handlebars.runtime.js'></script>
-    <script src='javascripts/templates.js'></script>
-    <script src='javascripts/login.js'></script>
+    <script src='/javascripts/login.js'></script>
     <script src="/javascripts/jquery.validate.min.js"></script>
-
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
@@ -52,14 +49,25 @@
               <!-- <h1>WELCOME TO FUNDERS TOGETHER</h1> -->
           </div>
         </div>
-        <% if (error) {%>
-            <div class="row">
-              <div class="col-sm-1"></div>
-              <div class='alert alert-danger col-sm-10' role='alert'>
-                <%=message %> 
-              </div>
-            </div>
-          <% } %>
+        <!-- Flash message -->
+    <% if (error) {%>
+      <br />
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class='alert alert-danger col-sm-10' role='alert'>
+          <%=message %> 
+        </div>
+      </div>
+    <% } %>
+    <% if (success) {%>
+      <br />
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class='alert alert-success col-sm-10' role='alert'>
+          <%=message %> 
+        </div>
+      </div>
+    <% } %>
 
         <!-- main section -->
         <div class="row">
@@ -84,7 +92,7 @@
                   </p>
                 </h4>
 
-                <form id= 'forgot_password' action='/reset' method="POST">
+                <form id= 'forgot_password' action='/users/forgot' method="POST">
                   <h2 class ="form-signin-heading">Reset Password</h3>
                   <input type='email' id='emailReset' name='email' placeholder='email address' class="form-control" required >
                   <br>
@@ -103,16 +111,17 @@
               </form>
 
               <!-- url POST to /users/ -->
-              <form id="registration_form" action='/users' method="POST">
+              <form id="registration_form" action='/users/' method="POST">
                 <h2 class = "form-registration-heading">Registration</h2>
-                <input type='text' name="organizationName" placeholder="Organization Name" class="form-control" required>
+                <!-- <input type='text' name="organizationName" placeholder="Organization Name" class="form-control" required>
                 <br />
                 <input type="email" name="username" placeholder="Email" class="form-control" required>
+                <br /> -->
+                <input type='text' name="inviteCode" placeholder="Invitation Code" class="form-control" required>
                 <br />
                 <input type="password" name="password" placeholder="Password" class="form-control" required>
                 <br />
-                <!-- TODO: second confirm password -->
-                <input type='text' name="inviteCode" placeholder="Invitation Code" class="form-control" required>
+                <input type="password" name="password2" placeholder="Re-type your Password" class="form-control" required>
                 <br />
                 <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
               </form>

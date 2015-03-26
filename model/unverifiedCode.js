@@ -8,7 +8,9 @@ var unverifiedCodeSchema = mongoose.Schema({
 	organizationName: {type: String, required: true},
 	email: {type: String, required: true}, 
 	message: {type: String}, 
-	createdOn: {type: Date, expires: 86400, default: Date.now()}
+	createdOn: {type: Date, default: Date.now()}, 
+	approved: {type: Boolean, default: false}
+	// may not need to expire, admins can approve or reject request
 });
 
 unverifiedCodeSchema.statics.create = function (name, organizationName, email, message, callback){

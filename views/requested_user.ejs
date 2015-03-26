@@ -8,9 +8,9 @@
   <link href='http://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src='/javascripts/admin_requests.js'></script>
   <style>
     #container-footer{
-      position: absolute;
       right: 0;
       bottom: 0;
       left: 0;
@@ -20,12 +20,30 @@
       height:100%;
     }
 
+    .accept{
+      padding: 0;
+      border: none;
+      background: none;
+      color: green;
+    }
+
+    .reject{
+      padding: 0;
+      border: none;
+      background: none;
+      color: red;
+    }
+
+    .wordwrap{
+      word-wrap: break-word;
+    }
+
   </style>
 </head>
 <body>
 
   <div id="ran-wrapper">
-		    <div class="masthead">
+		<div class="masthead">
       <div id="first">
         <a href="http://www.funderstogether.org/">
           <img id="funder_logo" src="http://d3n8a8pro7vhmx.cloudfront.net/funderstogether/sites/1/meta_images/original/funderstogether-logo.png?1389484084">
@@ -50,17 +68,22 @@
     </div>
 
     <div id="main_container" class="container-fluid">
-	<h2>Dashboard</h2>
+    	<h2> Admin Dashboard - User <%= user.name %> </h2>
+      <h4> Name &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp: <%= user.name %> </h4>
+      <h4> Organization &nbsp &nbsp &nbsp: <%= user.organizationName %></h4>
+      <h4> Code &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp: <%= user._id %></h4>
+      <h4> Email &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp: 
+        <a href="mailto:<%=user.email%>?Subject=Funders%20Together%20Invitation%20Code" target="_top"><%= user.email %></a>
+      </h4>
+      <h4 class="wordwrap"> Message &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp: <%= user.message %></h4> 
+        <h2><a type="button" name="accept" class="accept glyphicon glyphicon-ok inline" href="/admin/requests/accept/<%=user._id%>" ></a> 
+        <a type="button" name="reject" class="reject glyphicon glyphicon-remove inline" href="/admin/requests/reject/<%=user._id%>"></a>
+      </h2>
 
-	<% organizations.forEach(function(o){ %>
-		<a href = "/organization/<%= o._id %>"><%= o.year %></a> &nbsp | &nbsp;
-		<a href = "/organization/edit/<%= o._id %>">Edit</a>
-		<br />
-	<% }) %>
-		<br /> <a class="btn btn-info" href = "/form1">Add another year</a> &nbsp;&nbsp;
-		<a class="btn btn-info" href = "/">Return to Map</a>
-</div>
-	<!--<br /> <a href = "#">Update Profile</a>-->
+        <br />
+        <a class="btn btn-info" href = "/admin/requests">Return to Requests</a>
+    		<a class="btn btn-info" href = "/">Return to Map</a>
+    </div>
 </div>
 
 	    <div id="container-footer">
