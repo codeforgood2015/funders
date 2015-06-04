@@ -154,9 +154,11 @@ router.post('/requests/invite', isAuthenticatedAdmin, function(req, res){
   	shows the admin view of all users
 */
 router.get('/users', isAuthenticatedAdmin, function(req, res){
-	User.find({}).exec(function(err, allUsers){
-		res.render('admin_users', {users: allUsers, error: req.query.e, message: req.query.msg, success: req.query.s});
-	})
+	User.findOne({ _id: req.user}, function (err, user){
+		User.find({ _id: { $ne: req.user}}).exec(function (err, allUsers){
+			res.render('admin_users', {users: allUsers, error: req.query.e, message: req.query.msg, success: req.query.s, currentUser: user});
+		});
+	});
 });
 
 /*

@@ -89,8 +89,16 @@
 
     <h2> Admin Dashboard - Users </h2>
     <h3> Name &nbsp | &nbsp Organization Name &nbsp | &nbsp Email  &nbsp | &nbsp Group </h3>
+    <!-- Current User's details -->
+    <h4> &nbsp &nbsp  &nbsp  
+        <%= currentUser.name %> &nbsp | &nbsp;
+        <%= currentUser.organizationName%> &nbsp | &nbsp;
+        <a href="mailto:<%=currentUser.email%>?Subject=Funders%20Together%20Invitation%20Code" target="_top"><%= currentUser.email%> </a> &nbsp | &nbsp;
+        <%= currentUser.group %> &nbsp | &nbsp;
+    </h4>
+    <!-- All other users -->
     <% users.forEach(function(user){ %>
-      <h4>
+      <h4> 
       <form id ="<%=user._id%>" method="post">
         
         <button type="button" id="remove" class="remove glyphicon glyphicon-remove inline"></button>
