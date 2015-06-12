@@ -277,6 +277,7 @@ router.post('/', function(req, res){
 
     org.save(function(err, docs){
     	if (err){
+    		console.log(err)
 			utils.sendErrResponse(res, 500, 'Could not find / populated all data');
     	}
     	else {

@@ -55,11 +55,10 @@
 						geocoder.geocode({'address': form.state.value}, function(results, status){
 							var addr_type = results[0].types[0];	// type of address inputted that was geocoded
 							if ( status == google.maps.GeocoderStatus.OK ) {
-								latitude = results[0].geometry.location.k;
-								longitude = results[0].geometry.location.D;
+								latitude = results[0].geometry.location.A;
+								longitude = results[0].geometry.location.F;
 								data.latitude = latitude;
 								data.longitude = longitude;	
-								console.log(latitude, longitude)
 
 								$.ajax({
 									url: "/organization/",
@@ -86,8 +85,8 @@
 			else {
 						var addr_type = results[0].types[0];	// type of address inputted that was geocoded
 						if ( status == google.maps.GeocoderStatus.OK ) {
-							latitude = results[0].geometry.location.k;
-							longitude = results[0].geometry.location.D;
+							latitude = results[0].geometry.location.A;
+							longitude = results[0].geometry.location.F;
 							data.latitude = latitude;
 							data.longitude = longitude;	
 
